@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html>
+        
+        
+    <head>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8" async defer></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+            <script src = "life.js" async defer> </script>
+            <link rel="stylesheet" type = "text/css" href="life.css">
+    </head>
+
+    <title>
+        Meet-N-Compete Map + Preferences
+    </title>
+    
+    <body>
+        
+        <div id = "title">
+
+            The Essentials of Life
+            <br></br>
+        </div>
+
+        <div class = "allText">
+            
+            <br></br>
+            Enter an Address: 
+            <input type = "text" id="address"/>
+            
+            <br></br>
+            <br></br>
+            
+        </div>
+        <div class = "allText">
+                Select Preferences (all that apply): 
+                <br></br>
+                Basketball <input type = "checkbox" id="basketball" class="checkbox"/> &nbsp;&nbsp;&nbsp;&nbsp;
+                Football <input type = "checkbox" id="football" class="checkbox"/> &nbsp;&nbsp;&nbsp;&nbsp;
+                Soccer <input type = "checkbox" id="soccer" class="checkbox"/> &nbsp;&nbsp;&nbsp;&nbsp;
+                Baseball <input type = "checkbox" id="baseball" class="checkbox"/>
+                <br></br>
+                <br></br>
+                
+        </div>
+        <div class = "allText">
+                Enter radius: 
+                <input type = "text" id="radius"/>
+                
+                <br></br>
+                <br></br>
+
+                <button id="search">Search</button>
+
+                <br></br>
+                <br></br>
+                
+        </div>
+
+        <div id= "latlng" class = "allText">
+            
+        </div>
+
+
+
+        <div id="map">
+
+        </div>
+
+        <div id = "tableDiv">
+            <table id="travel">
+
+            </table>
+        </div>
+        <div id="placeinfo">
+
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+
+
+        </div>
+
+        
+
+
+
+    </body>
+</html>
