@@ -4,24 +4,24 @@
 
 //new key
 //AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8
+//https://cors-anywhere.herokuapp.com/ to help fix CORS error (or use chrome extension)
 
 $(document).ready(start);
 
 var map;
-var rad = 2000;
+var rad = 3000;
 var latNum = null;
 var lngNum = null;
 var tableCount;
 var results;
 var resCount = 0;
+var checkDataArgument = new Array(2);
 
 
 function start() {
-    getLocation();
-    
-
     $("#search").click(getLatLon);
     $('.checkbox').attr('checked', true);
+    getLocation();
 }
 
 function success(pos) {
@@ -37,8 +37,13 @@ function success(pos) {
 }
 
 function error(err) {
-    console.warn("ERROR(${err.code}): ${err.message}");
-    getLatLon();
+    console.log(`${err.message}`);
+    const div = document.createElement('div');
+    div.id = 'manualLoc';
+    div.className = 'allText';
+    div.innerHTML = '<br></br>Enter a location: <input type = "text" class = "allText" id = "address" /><br></br><br></br>';
+
+    document.getElementById('map').appendChild(div);
 }
 
 function getLocation(){
@@ -71,7 +76,7 @@ function initMap(lati, longi, radi) {
     }else if(radi > 36111 && radi <= 50000){
         zoom = 8;
     }
-    radi += 3000;
+    radi += 2000;
 
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: lati, lng: longi},
@@ -82,47 +87,54 @@ function initMap(lati, longi, radi) {
     //see what essentials are checked, and pass that info off to add markers
     if (document.getElementById("basketball").checked) {
         preqdata = {
-            key: "AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8",
+            key: "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
             radius: radi,
             location: lati +  "," + longi,
-            keyword: "basketball"
+            keyword: "basketball court"
         }
+        checkDataArgument[0] = "basketball";
+        checkDataArgument[1] = "court";
         $.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?", preqdata, gotplacedata, "json");
         //$.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?", preqdata, gotplacedata, "json");
     }
 
-    if (document.getElementById("football").checked) {
+    if (document.getElementById("baseball").checked) {
         breqdata = {
-            key: "AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8",
+            key: "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
             radius: radi,
             location: lati +  "," + longi,
-            keyword: "football"
+            keyword: "baseball field"
         }
+        checkDataArgument[0] = "baseball";
+        checkDataArgument[1] = "field";
         $.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?", breqdata, gotplacedata, "json");
         //$.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?", breqdata, gotplacedata, "json");
     }
 
     if (document.getElementById("soccer").checked) {
         wreqdata = {
-            key: "AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8", 
+            key: "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
             radius: radi,
             location: lati +  "," + longi,
-            keyword: "soccer"
+            keyword: "soccer field"
         }
+        checkDataArgument[0] = "soccer";
+        checkDataArgument[1] = "field";
         $.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?", wreqdata, gotplacedata, "json");
-        //$.get("https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?", wreqdata, gotplacedata, "json");
+        //$.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?", wreqdata, gotplacedata, "json");
     }
-    /*if (document.getElementById("baseball").checked) {
+    if (document.getElementById("tennis").checked) {
         mreqdata = {
-            key: "AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8",
+            key: "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
             radius: radi,
             location: lati +  "," + longi,
-            type: "baseball"
+            keyword: "tennis court"
         }
-        //baseball is being stupid
-        $.get("https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?", mreqdata, gotplacedata, "json");
+        checkDataArgument[0] = "tennis";
+        checkDataArgument[1] = "court";
+        $.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?", mreqdata, gotplacedata, "json");
         //$.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?", mreqdata, gotplacedata, "json");
-    }*/
+    }
 
     //circle to mark radius - was not working as expected so I use the zoom level to show appropriate radius
     /*
@@ -158,56 +170,98 @@ function getLatLon() {
         initMap(latNum, lngNum, rad);
     }else{
         let address = $("#address").val();
-        console.log(address);
         let latreq = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address 
-        + "&key=AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8";
+        + "&key=AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4";
         $.get(latreq, gotData, "json");
-    }
+    } 
 }
     
 
 
 
 function gotData(data) {
-    console.log(data);
-        $("#latlng").html("Latitude:" + parseFloat(data["results"][0]["geometry"]["location"].lat) + 
-        "&Tab;" + "&Tab;" +  "Longitude:" + parseFloat(data["results"][0]["geometry"]["location"].lng) + "</br ");
-    
-    let radi = parseInt($("#radius").val());
+    if(data.results.length == 0){
+        $("#manualLoc").html('<br></br>Enter a location (try again): <input type = "text" class = "allText" id = "address" /><br></br><br></br>'); 
+        return;
+    }
+    $("#manualLoc").remove();
+    //handle radius here as well
     latNum = parseFloat(data["results"][0]["geometry"]["location"].lat);
-    lngNum = parseFloat(data["results"][0]["geometry"]["location"].lng)
-   
+    lngNum = parseFloat(data["results"][0]["geometry"]["location"].lng);
     //create map
-    initMap(latNum, lngNum, radi);
-
+    initMap(latNum, lngNum, rad);
 }
 
 //getting the data for the places to mark on the map
 function gotplacedata(data) {
     console.log(data);
-    results = data.results;
-    
-    //console.log(data["results"][0]["photos"][0].photo_reference);
+    data = checkData(data);
+    console.log(data);
+    //we need a function here to filter out places that don't actually have places to play sports
     
 
-    for (i = 0; i < data["results"].length; i++) {
-        let markLat = parseFloat(data["results"][i]["geometry"]["location"].lat);
-        let markLong = parseFloat(data["results"][i]["geometry"]["location"].lng);
-        let markName = data["results"][i].name;
+    for (i = 0; i < data.length; i++) {
+        let markLat = parseFloat(data[i]["geometry"]["location"].lat);
+        let markLong = parseFloat(data[i]["geometry"]["location"].lng);
+        let markName = data[i].name;
 
         /*if (google.maps.geometry.spherical.computeDistanceBetween((data["results"][i]["geometry"]["location"]), rad.getCenter()) > rad.getRadius()) {
             console.log("ga");
         } else {
             addMarker(markLat, markLong, markName); 
         }*/
-        $.get("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=CmRaAAAA3FyWD-lX8jnskDFxzwFoGMYAH0ogm43Xq4k2PcpgvHPW8J5BKzHzQ6Zo5R8W8xmjhO6sKJ9aJK8bS7CjUETbtB8OBwV0tjUW27cZ5sxXdVwXil2wkPFC4MytzERWGCwCEhA8u40Q7oXNrDrt7DaqIUcBGhSMcJwLmXfWGIjV2x3cXbo_6WplHw&key=AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8", getPic, "json");
-        addMarker(markLat, markLong, markName, data);
+        addMarker(markLat, markLong, markName);
         
-        $.get("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + latNum + "," + lngNum + "&destinations=" + markLat + "," + markLong + "&key=AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8",
-         getTime, "json");
+        //$.get("https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + latNum + "," + lngNum + "&destinations=" + markLat + "," + markLong + "&key=AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
+         //getTime, "json");
         
     }
     
+}
+
+//ERIC TODO: NOT WORKING COMPLETELY - basically need to find a way to pass in the checkDataArgument into this function. It can't be a global variable.
+function checkData(data){
+    var dictionary = new Array("bowling_alley","campground", "church","gym","park","primary_school","school","secondary_school","stadium","university");
+
+
+    var count = 0;
+    var newArray;
+
+    for(var x = 0; x < data.results.length; x++){
+        for(var z = 0; z < data.results[x].types.length; z++){
+            if(data.results[x].name.toUpperCase().includes(checkDataArgument[0].toUpperCase()) || data.results[x].name.toUpperCase().includes(checkDataArgument[1].toUpperCase())){
+                count++;
+                z = data.results[x].types.length;
+            }
+            for(var y = 0; y < dictionary.length; y++){
+                if(data.results[x].types[z] == dictionary[y]){
+                    count++;
+                    z = data.results[x].types.length;
+                }
+            }
+        }
+    }
+
+    newArray = new Array(count);
+    count = 0;
+
+    for(var x = 0; x < data.results.length; x++){
+        for(var z = 0; z < data.results[x].types.length; z++){
+            if(data.results[x].name.toUpperCase().includes(checkDataArgument[0].toUpperCase()) || data.results[x].name.toUpperCase().includes(checkDataArgument[1].toUpperCase())){
+                newArray[count] = data.results[x];
+                count++;
+                z = data.results[x].types.length;
+            }
+            for(var y = 0; y < dictionary.length; y++){
+                if(data.results[x].types[z] == dictionary[y]){
+                    newArray[count] = data.results[x];
+                    count++;
+                    z = data.results[x].types.length;
+                }
+            }
+        }
+    }
+    return newArray;
 }
 
 function addMarker(lati, longi, name, mdata) {
