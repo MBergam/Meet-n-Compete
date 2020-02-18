@@ -166,7 +166,7 @@ function initMap(lati, longi, radi) {
             key: "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
             radius: radi,
             location: lati +  "," + longi,
-            keyword: "soccer"
+            keyword: "soccer field"
         }
 
         var soccer_keyword = new Array("soccer", "field");
