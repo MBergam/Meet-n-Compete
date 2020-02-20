@@ -57,6 +57,14 @@ table, th, td {
 .allText {
     font-family: monospace;
     font-size: 20px;
-    
+}
 
+#placeInfo{
+    height: 100%;
+    width: 100%;
+}
+
+#markerInfo{
+    height: 600px;
+    width: 600px;
 }
