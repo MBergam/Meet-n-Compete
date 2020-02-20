@@ -2,9 +2,7 @@
 
 //AIzaSyDS3p3iX3eIPWNLMuFQNrPRKWyE5un7dtY
 
-//new key
-//AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8
-//https://cors-anywhere.herokuapp.com/ to help fix CORS error (or use chrome extension)
+//https://cors-anywhere.herokuapp.com/
 
 $(document).ready(start);
 
@@ -16,16 +14,14 @@ var tableCount;
 var results;
 var resCount = 0;
 
-
 function start() {
     $("#search").click(getLatLon);
-    $('.checkbox').attr('checked', true);
+    //$('.checkbox').attr('checked', true);
     getLocation();
 }
 
 function success(pos) {
     var crd = pos.coords;
-
     console.log('Your current position is:');
     console.log(`Latitude : ${crd.latitude}`);
     latNum = crd.latitude;
@@ -53,7 +49,9 @@ function getLocation(){
       };
     navigator.geolocation.getCurrentPosition(success, error, options);
 }
+  
 function initMap(lati, longi, radi) {
+    $(".photo").remove();
     
     //set table count to 1 so that values will be enetered in below the title of the tab;le each time
     tableCount = 1;
@@ -381,25 +379,81 @@ function initMap(lati, longi, radi) {
     });*/
 }
 
+/*function addMarker(lati, longi, name) {
+    
+    var marker = new google.maps.Marker({
+        position: {lat: lati, lng: longi},
+        map: map
+    });
+    //add different types of markers here
+    var info = new google.maps.InfoWindow({
+        content: name
+    });
+    marker.addListener('click', function(){
+        info.open(map, marker);
+    });
+    
+}*/
+
+function addMarker(lati, longi, name, mdata, i) {
+    var marker = new google.maps.Marker({
+        position: {lat: lati, lng: longi},
+        map: map
+    });
+
+    var info = new google.maps.InfoWindow({
+        content: name
+    });
+    console.log(mdata);
+    marker.addListener('click', function(){
+        $(".photo").remove();
+        info.open(map, marker);
+
+        var placesService = new google.maps.places.PlacesService(map);
+
+        placesService.getDetails(
+            {placeId: mdata[i].place_id},
+            function(results, status) {
+                console.log(status);
+                console.log(results); 
+            }
+        );
+        
+        if (mdata[i]["photos"] != null) {
+            let photos = document.getElementsByClassName("photo");
+            for(var x = 0; x < photos.length; x++){
+                var toCompare = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + mdata[i]["photos"][0].photo_reference + "&key=AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8";
+                if(toCompare == photos[x].src){
+                    return;
+                }
+            }
+            let div = document.createElement('div');
+            div.id = 'markerInfo';
+            let img = document.createElement('img');
+            img.className = 'photo';
+
+            img.src = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + mdata[i]["photos"][0].photo_reference + "&key=AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8";
+            div.appendChild(img);
+            document.body.appendChild(div);
+        }
+    });
+
+}
+
+function gotPlaceData(data, keyword) {
+    data = checkData(data, keyword);
+    console.log(data);
+    for (i = 0; i < data.length; i++) {
+        let markLat = parseFloat(data[i]["geometry"]["location"].lat);
+        let markLong = parseFloat(data[i]["geometry"]["location"].lng);
+        let markName = data[i].name;
+
+        addMarker(markLat, markLong, markName, data, i);
+    }
+    
+}
+
 function getLatLon() {
-
-    /*
-    //create new table every search
-    $('#travel').remove();
-    let table = document.createElement('table');
-    table.id = "travel";
-
-    document.getElementById("tableDiv").appendChild(table); 
-
-    table = document.getElementById("travel");
-    var row = table.insertRow(0);
-    var destination = row.insertCell(0);
-    var time = row.insertCell(1);
-
-    destination.innerHTML = "<th><b>Destination</b></th>";
-    time.innerHTML = "<th><b>Travel Time</b></th>";
-    */
-
     if(latNum != null && lngNum != null){
         initMap(latNum, lngNum, rad);
     }else{
@@ -407,7 +461,7 @@ function getLatLon() {
         let latreq = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address 
         + "&key=AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4";
         $.get(latreq, gotData, "json");
-    } 
+    }    
 }
 
 
@@ -417,39 +471,14 @@ function gotData(data) {
         return;
     }
     $("#manualLoc").remove();
-    //handle radius here as well
     latNum = parseFloat(data["results"][0]["geometry"]["location"].lat);
     lngNum = parseFloat(data["results"][0]["geometry"]["location"].lng);
     //create map
     initMap(latNum, lngNum, rad);
 }
 
-function gotPlaceData(data, keyword) {
-    console.log(keyword);
-    console.log(data);
-    data = checkData(data, keyword);
-    console.log(data);
 
-    for (i = 0; i < data.length; i++) {
-        let markLat = parseFloat(data[i]["geometry"]["location"].lat);
-        let markLong = parseFloat(data[i]["geometry"]["location"].lng);
-        let markName = data[i].name;
-
-        /*if (google.maps.geometry.spherical.computeDistanceBetween((data["results"][i]["geometry"]["location"]), rad.getCenter()) > rad.getRadius()) {
-            console.log("ga");
-        } else {
-            addMarker(markLat, markLong, markName); 
-        }*/
-        addMarker(markLat, markLong, markName);
-        
-        //$.get("https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + latNum + "," + lngNum + "&destinations=" + markLat + "," + markLong + "&key=AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
-        //getTime, "json");
-        
-    }
-    
-}
-
-//Made by Eric - filters out markers that are not associated with a sport
+//Filters out markers that are not associated with a sport
 function checkData(data, keyword){
     var dictionary = new Array("bar", "bowling_alley","campground", "church","gym","park","primary_school","school","secondary_school","university");
 
@@ -511,46 +540,10 @@ function checkData(data, keyword){
     return newArray;
 }
 
-function addMarker(lati, longi, name, mdata) {
-    
-    var pic;
-    
-    if (mdata["results"][0]["photos"] != null) {
-        console.log("hi");
-        $.get("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + mdata["results"][0]["photos"][0].photo_reference + "&key=AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8", getPic);
-        
-        //$.get("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=CmRaAAAA3FyWD-lX8jnskDFxzwFoGMYAH0ogm43Xq4k2PcpgvHPW8J5BKzHzQ6Zo5R8W8xmjhO6sKJ9aJK8bS7CjUETbtB8OBwV0tjUW27cZ5sxXdVwXil2wkPFC4MytzERWGCwCEhA8u40Q7oXNrDrt7DaqIUcBGhSMcJwLmXfWGIjV2x3cXbo_6WplHw&key=AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8", getPic, "json");
-        //CmRaAAAA3FyWD-lX8jnskDFxzwFoGMYAH0ogm43Xq4k2PcpgvHPW8J5BKzHzQ6Zo5R8W8xmjhO6sKJ9aJK8bS7CjUETbtB8OBwV0tjUW27cZ5sxXdVwXil2wkPFC4MytzERWGCwCEhA8u40Q7oXNrDrt7DaqIUcBGhSMcJwLmXfWGIjV2x3cXbo_6WplHw
-    }
-    
-
-
-
-
-    var marker = new google.maps.Marker({
-        position: {lat: lati, lng: longi},
-        map: map
-    });
-    //let var pic = 
-    
-    //let var infoContent;
-    
-    var info = new google.maps.InfoWindow({
-        content: name
-    });
-    marker.addListener('click', function(){
-        info.open(map, marker);
-    });
-    
-}
-function getPic(data) {
-    console.log("please log this");
-}
-
 //getting and adding the travel time for each marker
 function getTime(data) {
     //console.log(data);
-   /* if (resCount >= results.length) {
+    if (resCount >= results.length) {
         resCount = 0;
     }
     
@@ -568,6 +561,6 @@ function getTime(data) {
         cell2.innerHTML = data["rows"][0]["elements"][0]["duration"]["text"];
         tableCount++;
         resCount++;
-    }*/
+    }
     
 }
