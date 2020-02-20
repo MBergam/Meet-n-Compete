@@ -51,7 +51,7 @@ function getLocation(){
 }
   
 function initMap(lati, longi, radi) {
-    $(".photo").remove();
+    $(".markInfo").remove();
     
     //set table count to 1 so that values will be enetered in below the title of the tab;le each time
     tableCount = 1;
@@ -406,19 +406,9 @@ function addMarker(lati, longi, name, mdata, i) {
     });
     console.log(mdata);
     marker.addListener('click', function(){
-        $(".photo").remove();
+        $(".markInfo").remove();
         info.open(map, marker);
 
-        var placesService = new google.maps.places.PlacesService(map);
-
-        placesService.getDetails(
-            {placeId: mdata[i].place_id},
-            function(results, status) {
-                console.log(status);
-                console.log(results); 
-            }
-        );
-        
         if (mdata[i]["photos"] != null) {
             let photos = document.getElementsByClassName("photo");
             for(var x = 0; x < photos.length; x++){
@@ -427,15 +417,30 @@ function addMarker(lati, longi, name, mdata, i) {
                     return;
                 }
             }
-            let div = document.createElement('div');
-            div.id = 'markerInfo';
             let img = document.createElement('img');
-            img.className = 'photo';
+            img.className = 'photo markInfo';
 
             img.src = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + mdata[i]["photos"][0].photo_reference + "&key=AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8";
+            let div = document.getElementById("markerInfo");
             div.appendChild(img);
-            document.body.appendChild(div);
+            //document.body.appendChild(div);
         }
+
+        var placesService = new google.maps.places.PlacesService(map);
+
+        placesService.getDetails(
+            {placeId: mdata[i].place_id},
+            function(results, status) {
+                let p = document.createElement('p');
+                p.className = "allText markInfo";
+                p.innerText = name + "\n" + results.vicinity + "\nRating: " + results.rating + "/5 (" + results.user_ratings_total + " total)";
+
+                let div = document.getElementById("markerInfo");
+                div.append(p);
+                console.log(status);
+                console.log(results); 
+            }
+        );
     });
 
 }
