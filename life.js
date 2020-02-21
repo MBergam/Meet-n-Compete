@@ -424,7 +424,19 @@ function addMarker(lati, longi, name, mdata, i) {
             let div = document.getElementById("markerInfo");
             div.appendChild(img);
             //document.body.appendChild(div);
+            
+            
         }
+        
+        let directionsButton = document.createElement("button");
+        directionsButton.className = "directions markInfo";
+        directionsButton.innerHTML = "Get Directions";
+
+        directionsButton.onclick = function(){ 
+            window.open("https://www.google.com/maps/dir/?api=1&destination=" + mdata[i].name + "&destination_place_id=" + mdata[i].place_id, "_blank");
+        };
+        infoDiv.appendChild(directionsButton);
+        document.body.appendChild(div);
 
         var placesService = new google.maps.places.PlacesService(map);
 
