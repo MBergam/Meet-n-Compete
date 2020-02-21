@@ -424,18 +424,22 @@ function addMarker(lati, longi, name, mdata, i) {
             let div = document.getElementById("markerInfo");
             div.appendChild(img);
             //document.body.appendChild(div);
-            
-            
         }
-        
+
         let directionsButton = document.createElement("button");
         directionsButton.className = "directions markInfo";
         directionsButton.innerHTML = "Get Directions";
 
-        directionsButton.onclick = function(){ 
+        /*directionsButton.onclick = function(){ 
             window.open("https://www.google.com/maps/dir/?api=1&destination=" + mdata[i].name + "&destination_place_id=" + mdata[i].place_id, "_blank");
+        };*/
+
+        directionsButton.onclick = function(){ 
+            window.open("https://www.google.com/maps/dir/?api=1&origin=" + latNum + "," + lngNum + "&destination=" + mdata[i].name + "&destination_place_id=" + mdata[i].place_id, "_blank");
         };
-        infoDiv.appendChild(directionsButton);
+
+        let div = document.getElementById("markerInfo");
+        div.appendChild(directionsButton);
         document.body.appendChild(div);
 
         var placesService = new google.maps.places.PlacesService(map);
@@ -449,10 +453,27 @@ function addMarker(lati, longi, name, mdata, i) {
 
                 let div = document.getElementById("markerInfo");
                 div.append(p);
-                console.log(status);
+
+                let reviewsButton = document.createElement("button");
+                reviewsButton.className = "reviews markInfo";
+                reviewsButton.innerHTML = "See More Reviews";
+
+                /*directionsButton.onclick = function(){ 
+                    window.open("https://www.google.com/maps/dir/?api=1&destination=" + mdata[i].name + "&destination_place_id=" + mdata[i].place_id, "_blank");
+                };*/
+
+                reviewsButton.onclick = function(){ 
+                    window.open("https://search.google.com/local/reviews?placeid=" + mdata[i].place_id);
+                };
+
+                div.appendChild(reviewsButton);
+                document.body.appendChild(div);
                 console.log(results); 
             }
         );
+
+
+        
     });
 
 }
