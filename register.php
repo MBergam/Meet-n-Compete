@@ -12,6 +12,7 @@ require 'Login_Handler.php';
     <title>
         PHP register
     </title>
+    <link rel="stylesheet" type="text/css" href="/css/register_style.css">
 </head>
 
 <body>
