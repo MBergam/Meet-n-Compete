@@ -9,7 +9,7 @@ require 'config.php';
 <html>
 <head>
     <title>
-        MyPHP
+        Meet-N-Compete
     </title>
 </head>
 
