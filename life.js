@@ -449,14 +449,18 @@ function addMarker(lati, longi, name, mdata, i) {
             function(results, status) {
                 let p = document.createElement('p');
                 p.className = "allText markInfo";
-                p.innerText = name + "\n" + results.vicinity + "\nRating: " + results.rating + "/5 (" + results.user_ratings_total + " total)";
+                if(results.rating == null){
+                    p.innerText = name + "\n" + results.vicinity + "\nNo user ratings available. ";
+                }else{
+                    p.innerText = name + "\n" + results.vicinity + "\nRating: " + results.rating + "/5 (" + results.user_ratings_total + " total)";
+                }
 
                 let div = document.getElementById("markerInfo");
                 div.append(p);
 
                 let reviewsButton = document.createElement("button");
                 reviewsButton.className = "reviews markInfo";
-                reviewsButton.innerHTML = "See More Reviews";
+                reviewsButton.innerHTML = "See Reviews";
 
                 /*directionsButton.onclick = function(){ 
                     window.open("https://www.google.com/maps/dir/?api=1&destination=" + mdata[i].name + "&destination_place_id=" + mdata[i].place_id, "_blank");
