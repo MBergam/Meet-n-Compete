@@ -16,6 +16,8 @@ else{
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>Meet-N-Compete</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
 
     <link href="https://fonts.googleapis.com/css?family=Fjalla+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One&display=swap" rel="stylesheet">
