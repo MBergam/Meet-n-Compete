@@ -1,5 +1,6 @@
 <?php
 include 'header.php';
+session_destroy();
 echo '
 <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -31,21 +32,8 @@ echo '
     <main id="content">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-8" id="mInfo">
                     <div id="map"></div>
-
-                    <!-- Start Map demo -->
-                    <script>
-                        function myMap() {
-                          var mapCanvas = document.getElementById("map");
-                          var mapOptions = {
-                            center: new google.maps.LatLng(47.658779, -117.426048), zoom: 10
-                          };
-                          var map = new google.maps.Map(mapCanvas, mapOptions);
-                        }
-                    </script>
-                    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4&callback=myMap"></script>
-                    <!-- End Map demo -->
 
                     <div class="detail-container">
                         <div class="event-box">
@@ -69,6 +57,25 @@ echo '
                 <div class="col-lg-4">
                     <div class="sidebar-container">
                         <h2>Preferences</h2>
+                        Basketball <input type = "checkbox" id="basketball" class="checkbox"/> <br></br>
+                        Baseball <input type = "checkbox" id="baseball" class="checkbox"/> <br></br>
+                        Soccer <input type = "checkbox" id="soccer" class="checkbox"/> <br></br>
+                        Tennis/Table Tennis <input type = "checkbox" id="tennis" class="checkbox"/><br></br>
+                        Football <input type = "checkbox" id="football" class="checkbox"/><br></br>
+                        Volleyball <input type = "checkbox" id="volleyball" class="checkbox"/><br></br>
+                        Snowboarding <input type = "checkbox" id="snowboarding" class="checkbox"/><br></br>
+                        Swimming <input type = "checkbox" id="swimming" class="checkbox"/><br></br>
+                        Skiing <input type = "checkbox" id="skiing" class="checkbox"/><br></br>
+                        Rugby <input type = "checkbox" id="rugby" class="checkbox"/><br></br>
+                        Bowling <input type = "checkbox" id="bowling" class="checkbox"/><br></br>
+                        Weight lifting <input type = "checkbox" id="weight_lifting" class="checkbox"/><br></br>
+                        Billiards (Pool) <input type = "checkbox" id="billiards" class="checkbox"/> <br></br>
+                        Climbing <input type = "checkbox" id="climbing" class="checkbox"/><br></br>
+                        Golf/Discgolf <input type = "checkbox" id="golf" class="checkbox"/><br></br>
+                        Curling <input type = "checkbox" id="curling" class="checkbox"/><br></br>
+                        Cricket <input type = "checkbox" id="cricket" class="checkbox"/><br></br>
+                        Skateboarding <input type = "checkbox" id="skateboarding" class="checkbox"/><br></br>
+                        <button id="search">Search</button>
                     </div>
                 </div>
             </div>

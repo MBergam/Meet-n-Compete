@@ -1,3 +1,13 @@
+<?php
+require 'config.php';
+
+if(isset($_SESSION['username'])){
+     echo $userLogin = $_SESSION['username'];
+}
+else{
+    header("Location: register.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,6 +32,9 @@
     <script src="js/vendor/jquery-3.3.1.min.js"></script>
     <script src="js/vendor/bootstrap.bundle.min.js"></script>
     <script src="js/vendor/parallax.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8&libraries=places" async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src = "life.js" async defer> </script>
 
 </head>
 <body>
@@ -34,8 +47,8 @@
                 <div class="col-sm-6">
                     <div id="header-right" class="vertical-center">
                         <ul class = "nav-login">
-<!--                            <li><a href="">Login</a></li>-->
-                            <li><a href="register.php">Sign In</a></li>
+                            <li><a href="register.php">Login</a></li>
+                            <li><a href="register.php">Sign Up</a></li>
                         </ul>
                     </div>
                 </div>
@@ -53,7 +66,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Upcoming Events</a>

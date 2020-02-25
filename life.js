@@ -396,6 +396,7 @@ function initMap(lati, longi, radi) {
 }*/
 
 function addMarker(lati, longi, name, mdata, i) {
+
     var marker = new google.maps.Marker({
         position: {lat: lati, lng: longi},
         map: map
@@ -404,55 +405,54 @@ function addMarker(lati, longi, name, mdata, i) {
     var info = new google.maps.InfoWindow({
         content: name
     });
-    console.log(mdata);
-    marker.addListener('click', function(){
+    marker.addListener('click', function() {
+        $(".photo").remove();
+        $(".directions").remove();
         $(".markInfo").remove();
         info.open(map, marker);
 
         if (mdata[i]["photos"] != null) {
             let photos = document.getElementsByClassName("photo");
+            console.log(photos);
             for(var x = 0; x < photos.length; x++){
-                var toCompare = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + mdata[i]["photos"][0].photo_reference + "&key=AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8";
+                var toCompare = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=300&photoreference=" + mdata[i]["photos"][0].photo_reference + "&key=AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8";
                 if(toCompare == photos[x].src){
                     return;
                 }
             }
+            let infoDiv = document.createElement('div');
+            infoDiv.id = "markerInfo";
             let img = document.createElement('img');
             img.className = 'photo markInfo';
+            img.src = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=300&photoreference=" + mdata[i]["photos"][0].photo_reference + "&key=AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8";
+            infoDiv.appendChild(img);
 
-            img.src = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + mdata[i]["photos"][0].photo_reference + "&key=AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8";
-            let div = document.getElementById("markerInfo");
-            div.appendChild(img);
-            //document.body.appendChild(div);
-        }
+            let directionsButton = document.createElement("button");
+            directionsButton.className = "directions";
+            directionsButton.innerHTML = "Get Directions";
 
-        let directionsButton = document.createElement("button");
-        directionsButton.className = "directions markInfo";
-        directionsButton.innerHTML = "Get Directions";
+            directionsButton.onclick = function(){ 
+                window.open("https://www.google.com/maps/dir/?api=1&origin=" + latNum + "," + lngNum + "&destination=" + mdata[i].name + "&destination_place_id=" + mdata[i].place_id, "_blank");
+            };
 
-        /*directionsButton.onclick = function(){ 
-            window.open("https://www.google.com/maps/dir/?api=1&destination=" + mdata[i].name + "&destination_place_id=" + mdata[i].place_id, "_blank");
-        };*/
+            infoDiv.appendChild(directionsButton);
+            
+            
 
-        directionsButton.onclick = function(){ 
-            window.open("https://www.google.com/maps/dir/?api=1&origin=" + latNum + "," + lngNum + "&destination=" + mdata[i].name + "&destination_place_id=" + mdata[i].place_id, "_blank");
-        };
 
-        let div = document.getElementById("markerInfo");
-        div.appendChild(directionsButton);
-        document.body.appendChild(div);
+            var placesService = new google.maps.places.PlacesService(map);
 
-        var placesService = new google.maps.places.PlacesService(map);
-
-        placesService.getDetails(
-            {placeId: mdata[i].place_id},
-            function(results, status) {
+            placesService.getDetails( {placeId: mdata[i].place_id}, function(results, status) {
                 let p = document.createElement('p');
                 p.className = "allText markInfo";
-                p.innerText = name + "\n" + results.vicinity + "\nRating: " + results.rating + "/5 (" + results.user_ratings_total + " total)";
+                if(results.rating == null){
+                    p.innerText = name + "\n" + results.vicinity + "\nNo user ratings available. ";
+                }else{
+                    p.innerText = name + "\n" + results.vicinity + "\nRating: " + results.rating + "/5 (" + results.user_ratings_total + " total)";
+                }
 
-                let div = document.getElementById("markerInfo");
-                div.append(p);
+                //let div = document.getElementById("markerInfo");
+                infoDiv.append(p);
 
                 let reviewsButton = document.createElement("button");
                 reviewsButton.className = "reviews markInfo";
@@ -466,16 +466,14 @@ function addMarker(lati, longi, name, mdata, i) {
                     window.open("https://search.google.com/local/reviews?placeid=" + mdata[i].place_id);
                 };
 
-                div.appendChild(reviewsButton);
-                document.body.appendChild(div);
-                console.log(results); 
-            }
-        );
+                infoDiv.appendChild(reviewsButton);
+                let pla = document.getElementById("mInfo");
+                pla.appendChild(infoDiv);
+             
+            });
 
-
-        
+        }
     });
-
 }
 
 function gotPlaceData(data, keyword) {
