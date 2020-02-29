@@ -3,6 +3,8 @@ require 'config.php';
 
 if(isset($_SESSION['username'])){
      echo $userLogin = $_SESSION['username'];
+     $user_detail_query = mysqli_query($con, "select * from users where user_name = '$userLogin'");
+     $user = mysqli_fetch_array($user_detail_query);
 }
 else{
     header("Location: register.php");
@@ -49,7 +51,17 @@ else{
                 <div class="col-sm-6">
                     <div id="header-right" class="vertical-center">
                         <ul class = "nav-login">
-                            <li><a href="register.php">Login</a></li>
+                            <li>
+                                <a href="register.php">Login
+                                    <?php
+                                    if(isset($_SESSION['username'])){
+                                        echo "as ";
+                                        echo $user['first_name'];
+                                    }
+                                    ?>
+                                </a>
+
+                            </li>
                             <li><a href="register.php">Sign Up</a></li>
                         </ul>
                     </div>
