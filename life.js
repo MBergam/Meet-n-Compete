@@ -1,18 +1,20 @@
 //https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyDS3p3iX3eIPWNLMuFQNrPRKWyE5un7dtY
 
 //AIzaSyDS3p3iX3eIPWNLMuFQNrPRKWyE5un7dtY
+//AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8 -- MAX'S KEY
 
 //https://cors-anywhere.herokuapp.com/
 
 $(document).ready(start);
 
 var map;
-var rad = 3000;
+var rad = 2;
 var latNum = null;
 var lngNum = null;
-var tableCount;
 var results;
 var resCount = 0;
+var info = null;
+var myKey = "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4";
 
 function start() {
     $("#search").click(getLatLon);
@@ -52,10 +54,8 @@ function getLocation(){
   
 function initMap(lati, longi, radi) {
     $(".markInfo").remove();
-    
-    //set table count to 1 so that values will be enetered in below the title of the tab;le each time
-    tableCount = 1;
 
+    radi = (radi * 1609);
     //create map with appropriate zoom level
     var zoom;
     if(radi >= 0 && radi <= 1128){
@@ -72,6 +72,8 @@ function initMap(lati, longi, radi) {
         zoom = 9;
     }else if(radi > 36111 && radi <= 50000){
         zoom = 8;
+    }else{
+        zoom = 7;
     }
 
     map = new google.maps.Map(document.getElementById('map'), {
@@ -81,10 +83,10 @@ function initMap(lati, longi, radi) {
 
     radi += 2000;
 
-    //see what essentials are checked, and pass that info off to add markers
+    //see what preferences are checked, and pass that info off to add markers
     if (document.getElementById("basketball").checked) {
         bask_preqdata = {
-            key: "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
+            key: myKey,
             radius: radi,
             location: lati +  "," + longi,
             keyword: "basketball court"
@@ -102,7 +104,7 @@ function initMap(lati, longi, radi) {
 
     if (document.getElementById("baseball").checked) {
         base_reqdata = {
-            key: "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
+            key: myKey,
             radius: radi,
             location: lati +  "," + longi,
             keyword: "baseball field"
@@ -119,7 +121,7 @@ function initMap(lati, longi, radi) {
 
     if (document.getElementById("soccer").checked) {
         soc_reqdata = {
-            key: "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
+            key: myKey,
             radius: radi,
             location: lati +  "," + longi,
             keyword: "soccer field"
@@ -135,7 +137,7 @@ function initMap(lati, longi, radi) {
     }
     if (document.getElementById("tennis").checked) {
         ten_reqdata = {
-            key: "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
+            key: myKey,
             radius: radi,
             location: lati +  "," + longi,
             keyword: "tennis"
@@ -150,7 +152,7 @@ function initMap(lati, longi, radi) {
         "json");
 
         tennis_reqdata = {
-            key: "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
+            key: myKey,
             radius: radi,
             location: lati +  "," + longi,
             keyword: "tennis court"
@@ -164,7 +166,7 @@ function initMap(lati, longi, radi) {
     }
     if (document.getElementById("volleyball").checked) {
         volley_reqdata = {
-            key: "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
+            key: myKey,
             radius: radi,
             location: lati +  "," + longi,
             keyword: "volleyball court"
@@ -180,7 +182,7 @@ function initMap(lati, longi, radi) {
     }
     if (document.getElementById("football").checked) {
         foot_reqdata = {
-            key: "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
+            key: myKey,
             radius: radi,
             location: lati +  "," + longi,
             keyword: "snowboarding"
@@ -196,7 +198,7 @@ function initMap(lati, longi, radi) {
     }
     if (document.getElementById("swimming").checked) {
         swim_reqdata = {
-            key: "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
+            key: myKey,
             radius: radi,
             location: lati +  "," + longi,
             keyword: "swimming pool"
@@ -212,7 +214,7 @@ function initMap(lati, longi, radi) {
     }
     if (document.getElementById("skiing").checked) {
         ski_reqdata = {
-            key: "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
+            key: myKey,
             radius: radi,
             location: lati +  "," + longi,
             keyword: "skiing"
@@ -227,7 +229,7 @@ function initMap(lati, longi, radi) {
     }
     if (document.getElementById("rugby").checked) {
         rug_reqdata = {
-            key: "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
+            key: myKey,
             radius: radi,
             location: lati +  "," + longi,
             keyword: "rugby field"
@@ -243,7 +245,7 @@ function initMap(lati, longi, radi) {
     }
     if (document.getElementById("bowling").checked) {
         bowl_reqdata = {
-            key: "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
+            key: myKey,
             radius: radi,
             location: lati +  "," + longi,
             keyword: "bowling alley"
@@ -259,7 +261,7 @@ function initMap(lati, longi, radi) {
     }
     if (document.getElementById("weight_lifting").checked) {
         weight_reqdata = {
-            key: "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
+            key: myKey,
             radius: radi,
             location: lati +  "," + longi,
             keyword: "weight lifting"
@@ -275,7 +277,7 @@ function initMap(lati, longi, radi) {
     }
     if (document.getElementById("billiards").checked) {
         bill_reqdata = {
-            key: "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
+            key: myKey,
             radius: radi,
             location: lati +  "," + longi,
             keyword: "billiard table"
@@ -291,7 +293,7 @@ function initMap(lati, longi, radi) {
     }
     if (document.getElementById("climbing").checked) {
         climb_reqdata = {
-            key: "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
+            key: myKey,
             radius: radi,
             location: lati +  "," + longi,
             keyword: "climbing"
@@ -307,7 +309,7 @@ function initMap(lati, longi, radi) {
     }
     if (document.getElementById("golf").checked) {
         golf_reqdata = {
-            key: "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
+            key: myKey,
             radius: radi,
             location: lati +  "," + longi,
             keyword: "golf course"
@@ -323,7 +325,7 @@ function initMap(lati, longi, radi) {
     }
     if (document.getElementById("curling").checked) {
         curl_reqdata = {
-            key: "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
+            key: myKey,
             radius: radi,
             location: lati +  "," + longi,
             keyword: "curling sheet"
@@ -339,7 +341,7 @@ function initMap(lati, longi, radi) {
     }
     if (document.getElementById("cricket").checked) {
         crick_reqdata = {
-            key: "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
+            key: myKey,
             radius: radi,
             location: lati +  "," + longi,
             keyword: "cricket field"
@@ -355,7 +357,7 @@ function initMap(lati, longi, radi) {
     }
     if (document.getElementById("skateboarding").checked) {
         skate_reqdata = {
-            key: "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4",
+            key: myKey,
             radius: radi,
             location: lati +  "," + longi,
             keyword: "skateboarding"
@@ -370,30 +372,7 @@ function initMap(lati, longi, radi) {
         "json");
     }
 
-    //circle to mark radius - was not working as expected so I use the zoom level to show appropriate radius
-    /*
-    rad = new google.maps.Circle({
-        center: new google.maps.LatLng(lati, longi),
-        radius: radi,
-        map: map
-    });*/
 }
-
-/*function addMarker(lati, longi, name) {
-    
-    var marker = new google.maps.Marker({
-        position: {lat: lati, lng: longi},
-        map: map
-    });
-    //add different types of markers here
-    var info = new google.maps.InfoWindow({
-        content: name
-    });
-    marker.addListener('click', function(){
-        info.open(map, marker);
-    });
-    
-}*/
 
 function addMarker(lati, longi, name, mdata, i) {
 
@@ -402,78 +381,68 @@ function addMarker(lati, longi, name, mdata, i) {
         map: map
     });
 
-    var info = new google.maps.InfoWindow({
-        content: name
-    });
+    if (!info) {
+        info = new google.maps.InfoWindow();
+    }
+
     marker.addListener('click', function() {
         $(".photo").remove();
         $(".directions").remove();
         $(".markInfo").remove();
-        info.open(map, marker);
-
+        info.close();
+        
+        infoDiv = document.createElement('div');
+        infoDiv.id = "markerInfo";
+        let img = document.createElement('img');
+        img.className = 'photo markInfo';
+        
         if (mdata[i]["photos"] != null) {
-            let photos = document.getElementsByClassName("photo");
-            console.log(photos);
-            for(var x = 0; x < photos.length; x++){
-                var toCompare = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=300&photoreference=" + mdata[i]["photos"][0].photo_reference + "&key=AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8";
-                if(toCompare == photos[x].src){
-                    return;
-                }
-            }
-            let infoDiv = document.createElement('div');
-            infoDiv.id = "markerInfo";
-            let img = document.createElement('img');
-            img.className = 'photo markInfo';
-            img.src = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=300&photoreference=" + mdata[i]["photos"][0].photo_reference + "&key=AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8";
-            infoDiv.appendChild(img);
-
-            let directionsButton = document.createElement("button");
-            directionsButton.className = "directions";
-            directionsButton.innerHTML = "Get Directions";
-
-            directionsButton.onclick = function(){ 
-                window.open("https://www.google.com/maps/dir/?api=1&origin=" + latNum + "," + lngNum + "&destination=" + mdata[i].name + "&destination_place_id=" + mdata[i].place_id, "_blank");
-            };
-
-            infoDiv.appendChild(directionsButton);
-            
-            
-
-
-            var placesService = new google.maps.places.PlacesService(map);
-
-            placesService.getDetails( {placeId: mdata[i].place_id}, function(results, status) {
-                let p = document.createElement('p');
-                p.className = "allText markInfo";
-                if(results.rating == null){
-                    p.innerText = name + "\n" + results.vicinity + "\nNo user ratings available. ";
-                }else{
-                    p.innerText = name + "\n" + results.vicinity + "\nRating: " + results.rating + "/5 (" + results.user_ratings_total + " total)";
-                }
-
-                //let div = document.getElementById("markerInfo");
-                infoDiv.append(p);
-
-                let reviewsButton = document.createElement("button");
-                reviewsButton.className = "reviews markInfo";
-                reviewsButton.innerHTML = "See More Reviews";
-
-                /*directionsButton.onclick = function(){ 
-                    window.open("https://www.google.com/maps/dir/?api=1&destination=" + mdata[i].name + "&destination_place_id=" + mdata[i].place_id, "_blank");
-                };*/
-
-                reviewsButton.onclick = function(){ 
-                    window.open("https://search.google.com/local/reviews?placeid=" + mdata[i].place_id);
-                };
-
-                infoDiv.appendChild(reviewsButton);
-                let pla = document.getElementById("mInfo");
-                pla.appendChild(infoDiv);
-             
-            });
-
+            img.src = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=250&photoreference=" + mdata[i]["photos"][0].photo_reference + "&key=" + myKey; 
+        }else{
+            img.src = "./img/no-image-available.png"; 
         }
+        infoDiv.appendChild(img);
+
+        var placesService = new google.maps.places.PlacesService(map);
+
+        placesService.getDetails( {placeId: mdata[i].place_id}, function(results, status) {
+        let p = document.createElement('p');
+        p.className = "allText markInfo";
+        if(results.rating == null){
+            p.innerText = name + "\n" + results.vicinity + "\nNo user ratings available. ";
+        }else{
+            p.innerText = name + "\n" + results.vicinity + "\nRating: " + results.rating + "/5 (" + results.user_ratings_total + " total)";
+        }
+        infoDiv.append(p);
+
+
+        let reviewsButton = document.createElement("button");
+        reviewsButton.className = "reviews markInfo button";
+        reviewsButton.innerHTML = "See Reviews";
+
+        reviewsButton.onclick = function(){ 
+            window.open("https://search.google.com/local/reviews?placeid=" + mdata[i].place_id);
+        };
+        infoDiv.appendChild(reviewsButton);
+
+
+        let directionsButton = document.createElement("button");
+        directionsButton.className = "directions button markInfo";
+        directionsButton.innerHTML = "Get Directions";
+        directionsButton.onclick = function(){ 
+            window.open("https://www.google.com/maps/dir/?api=1&origin=" + latNum + "," + lngNum + "&destination=" + mdata[i].name + "&destination_place_id=" + mdata[i].place_id, "_blank");
+        };
+
+        infoDiv.appendChild(directionsButton);
+
+        let pla = document.getElementById("mInfo");
+        pla.appendChild(infoDiv);
+        info.setContent(infoDiv);
+        info.open(map, marker);
+            
+        });
     });
+    
 }
 
 function gotPlaceData(data, keyword) {
@@ -485,21 +454,29 @@ function gotPlaceData(data, keyword) {
         let markName = data[i].name;
 
         addMarker(markLat, markLong, markName, data, i);
-    }
-    
+    }   
 }
 
 function getLatLon() {
+    var tempRad = $("#radius").val();
+    if(isNumber(tempRad) && tempRad.length >= 1){
+        rad = parseInt(tempRad);
+    }else{
+        $("#radius").val(2);
+    }
     if(latNum != null && lngNum != null){
         initMap(latNum, lngNum, rad);
     }else{
         let address = $("#address").val();
         let latreq = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address 
-        + "&key=AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4";
+        + "&key=" + myKey;
         $.get(latreq, gotData, "json");
     }    
 }
 
+function isNumber(n) {
+    return !isNaN(parseInt(n)) && isFinite(n) && !n.includes(".");
+}
 
 function gotData(data) {
     if(data.results.length == 0){
@@ -577,7 +554,7 @@ function checkData(data, keyword){
 }
 
 //getting and adding the travel time for each marker
-function getTime(data) {
+/*function getTime(data) {
     //console.log(data);
     if (resCount >= results.length) {
         resCount = 0;
@@ -599,4 +576,4 @@ function getTime(data) {
         resCount++;
     }
     
-}
+}*/
