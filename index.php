@@ -74,7 +74,7 @@ echo '
                         Curling <input type = "checkbox" id="curling" class="checkbox"/><br></br>
                         Cricket <input type = "checkbox" id="cricket" class="checkbox"/><br></br>
                         Skateboarding <input type = "checkbox" id="skateboarding" class="checkbox"/><br></br>
-                        Radius: <input type = "text" class = "allText" id = "radius" value="3000" required minlength="3" maxlength="6" size="5" <p> meters</p><br>
+                        Radius: <input type = "text" class = "allText" id = "radius" value="2" required minlength="1" maxlength="2" size="4" <p> miles</p><br>
                         <button id="search">Search</button>
                     </div>
                 </div>
