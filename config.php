@@ -8,5 +8,3 @@ $con = mysqli_connect("localhost", "root","","meetncompete");
 if(mysqli_connect_errno()){
     echo "Failed to connect DB: ".mysqli_connect_errno();
 }
-
-?>

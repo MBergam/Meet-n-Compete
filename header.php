@@ -2,9 +2,10 @@
 require 'config.php';
 
 if(isset($_SESSION['username'])){
-     echo $userLogin = $_SESSION['username'];
+     $userLogin = $_SESSION['username'];
      $user_detail_query = mysqli_query($con, "select * from users where user_name = '$userLogin'");
      $user = mysqli_fetch_array($user_detail_query);
+     $logged_in_bool  = true;
 }
 else{
     header("Location: register.php");
@@ -51,18 +52,16 @@ else{
                 <div class="col-sm-6">
                     <div id="header-right" class="vertical-center">
                         <ul class = "nav-login">
-                            <li>
-                                <a href="register.php">Login
-                                    <?php
-                                    if(isset($_SESSION['username'])){
-                                        echo "as ";
-                                        echo $user['first_name'];
-                                    }
-                                    ?>
-                                </a>
-
-                            </li>
-                            <li><a href="register.php">Sign Up</a></li>
+                         <?php
+                            if($logged_in_bool){
+                                echo "<li><a href='#'>$userLogin</a></li>";
+                                echo "<li><a href='index.php'>Logout</a></li>";
+//                                echo "<input type='submit' name='logout_button' value='Logout'>";
+                            }
+                            else{
+                                echo "<li><a href='register.php'>Login</a></li>";
+                            }
+                          ?>
                         </ul>
                     </div>
                 </div>
@@ -80,7 +79,7 @@ else{
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="Logged.php">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Upcoming Events</a>

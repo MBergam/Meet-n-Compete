@@ -53,8 +53,8 @@ require 'Login_Handler.php';
             <div class="col-sm-6">
                 <div id="header-right" class="vertical-center">
                     <ul class = "nav-login">
-                        <li><a href="register.php">Login</a></li>
-                        <li><a href="register.php">Sign Up</a></li>
+<!--                        <li><a href="register.php">Login</a></li>-->
+<!--                        <li><a href="register.php">Sign Up</a></li>-->
                     </ul>
                 </div>
             </div>
