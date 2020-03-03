@@ -302,13 +302,81 @@ footer ul li a:hover{
 
 .button:hover{
     color:#fff;
-    background-color:#273353;
+    background-color:#2b2b2b;
     text-decoration: none;
     transition: .7s;
-    border:1px solid #0f3768;
+    border:1px solid #1d1a1a;
 }
 .dropdown-item:hover {
     color:#fff;
     text-decoration:none;
     background-color:#346951;
+}
+
+
+/* End Home Template CSS - Start Upcoming Event Page CSS */
+.f-container {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: normal;
+    max-width: 1140px;
+    margin: auto;
+    padding: 0 15px;
+}
+.event-container{
+    display: flex;
+    flex-direction: row;
+    margin: 1rem 2rem;
+    padding: 10px 20px;
+    border: 2px solid #346951;
+    border-radius: 5px;
+    width: 40%;
+    background-color:rgba(240, 197, 197,0.5);
+}
+.event-container .date-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #2b2b2b;
+    border-radius: 5px;
+    padding: 0 10px;
+}
+.event-container .date-container p{
+    width: 70px;
+    height: 80px;
+    background-color: #B899DF;
+    border: 2px solid #ffffff;
+    border-radius: 5px;
+    text-align: center;
+    padding-top: 10px;
+    line-height: 1.5rem;
+    margin: 1rem 0;
+}
+.event-container .date-container p .month{
+    font-size: 1.4rem;
+    display: block;
+}
+.event-container .date-container p .day{
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+}
+.event-container .detail{
+    padding-left: 20px;
+}
+.event-container .detail .button{
+    padding: 5px 20px;
+    font-size: 1rem;
+}
+.event-container .detail h3{
+    font-size: 2rem;
+    color: #137ebe;
+}
+.event-container .detail h4{
+    font-size: 1.2rem;
+    font-weight: normal;
 }

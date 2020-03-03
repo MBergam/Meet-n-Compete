@@ -62,7 +62,7 @@ echo '
                         </div>
                     </div>
                     <div class="button-box">
-                        <a class="button" href="">Learn More</a>
+                        <a class="button" href="upcoming-events.php">Learn More</a>
                         <a class="button" href="">Create Event</a>
                     </div>
                 </div>
