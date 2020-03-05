@@ -1,10 +1,3 @@
-<?php
-    $p_ini = parse_ini_file("config.ini",true);
-	$servername = $p_ini['Database']['servername'];
-	$username = $p_ini['Database']['username'];
-	$password = $p_ini['Database']['password'];
-    $database = "meetncompete";
-echo'
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,6 +22,9 @@ echo'
     <script src="js/vendor/jquery-3.3.1.min.js"></script>
     <script src="js/vendor/bootstrap.bundle.min.js"></script>
     <script src="js/vendor/parallax.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4&libraries=places" async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src = "meetncompete.js" async defer> </script>
 
 </head>
 <body>
@@ -41,8 +37,8 @@ echo'
                 <div class="col-sm-6">
                     <div id="header-right" class="vertical-center">
                         <ul class = "nav-login">
-                            <li><a href="">Login</a></li>
-                            <li><a href="">Sign Up</a></li>
+                            <li><a href="register.php">Login</a></li>
+                            <li><a href="register.php">Sign Up</a></li>
                         </ul>
                     </div>
                 </div>
@@ -59,11 +55,11 @@ echo'
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php">Home</a>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="upcoming-events.php">Upcoming Events</a>
+                        <a class="nav-link" href="#">Upcoming Events</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">My Events</a>
@@ -75,5 +71,3 @@ echo'
             </div>
         </div>
     </nav>
-';
-?>
