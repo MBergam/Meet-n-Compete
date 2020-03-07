@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 session_start();
 include 'config.php';
@@ -12,8 +11,7 @@ else{
     header("Location: register.php");
 }
 ?>
-=======
->>>>>>> remotes/origin/master
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,11 +20,9 @@ else{
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>Meet-N-Compete</title>
-<<<<<<< HEAD
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
-=======
->>>>>>> remotes/origin/master
+
 
     <link href="https://fonts.googleapis.com/css?family=Fjalla+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One&display=swap" rel="stylesheet">
@@ -43,12 +39,10 @@ else{
     <script src="js/vendor/jquery-3.3.1.min.js"></script>
     <script src="js/vendor/bootstrap.bundle.min.js"></script>
     <script src="js/vendor/parallax.min.js"></script>
-<<<<<<< HEAD
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8&libraries=places" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src = "life.js" async defer> </script>
-=======
->>>>>>> remotes/origin/master
+
 
 </head>
 <body>
@@ -61,7 +55,6 @@ else{
                 <div class="col-sm-6">
                     <div id="header-right" class="vertical-center">
                         <ul class = "nav-login">
-<<<<<<< HEAD
                          <?php
                             if($logged_in_bool){
                                 echo "<li><a href='#'>$userLogin</a></li>";
@@ -72,10 +65,6 @@ else{
                                 echo "<li><a href='register.php'>Login</a></li>";
                             }
                           ?>
-=======
-                            <li><a href="">Login</a></li>
-                            <li><a href="">Sign Up</a></li>
->>>>>>> remotes/origin/master
                         </ul>
                     </div>
                 </div>
@@ -93,11 +82,7 @@ else{
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-<<<<<<< HEAD
                         <a class="nav-link" href="Logged.php">Home <span class="sr-only">(current)</span></a>
-=======
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
->>>>>>> remotes/origin/master
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Upcoming Events</a>
