@@ -1,6 +1,16 @@
 <?php
 session_start();
 include 'config.php';
+
+//THIS IS THE DATABASE CREDENTIALS FOR WHOEVER USING PDO CONNECTING METHOD
+$p_ini = parse_ini_file("config.ini",true);
+$servername = $p_ini['Database']['servername'];
+$username = $p_ini['Database']['username'];
+$password = $p_ini['Database']['password'];
+$database = "meetncompete";
+
+
+//THIS IS FOR LOGIN CHECK-KHANH's CODE
 if(isset($_SESSION['username'])){
      $userLogin = $_SESSION['username'];
      $user_detail_query = mysqli_query($con, "select * from users where user_name = '$userLogin'");
@@ -10,6 +20,7 @@ if(isset($_SESSION['username'])){
 else{
     header("Location: register.php");
 }
+//END OF LOGIN CHECK
 ?>
 
 <!DOCTYPE html>

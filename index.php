@@ -1,5 +1,9 @@
 <?php
 include 'header.php';
+session_destroy();
+header("refresh:0");
+
+
 echo '
 <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
