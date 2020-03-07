@@ -1,8 +1,11 @@
 <?php
 include 'header.php';
+<<<<<<< HEAD
 session_destroy();
 header("refresh:0");
 
+=======
+>>>>>>> remotes/origin/master
 echo '
 <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -34,9 +37,28 @@ echo '
     <main id="content">
         <div class="container">
             <div class="row">
+<<<<<<< HEAD
                 <div class="col-lg-8" id="mInfo">
                     <div id="map"></div>
 
+=======
+                <div class="col-lg-8">
+                    <div id="map"></div>
+
+                    <!-- Start Map demo -->
+                    <script>
+                        function myMap() {
+                          var mapCanvas = document.getElementById("map");
+                          var mapOptions = {
+                            center: new google.maps.LatLng(47.658779, -117.426048), zoom: 10
+                          };
+                          var map = new google.maps.Map(mapCanvas, mapOptions);
+                        }
+                    </script>
+                    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4&callback=myMap"></script>
+                    <!-- End Map demo -->
+
+>>>>>>> remotes/origin/master
                     <div class="detail-container">
                         <div class="event-box">
                             <a href=""><img src="https://via.placeholder.com/200" alt=""></a>
@@ -59,6 +81,7 @@ echo '
                 <div class="col-lg-4">
                     <div class="sidebar-container">
                         <h2>Preferences</h2>
+<<<<<<< HEAD
                         Basketball <input type = "checkbox" id="basketball" class="checkbox"/> <br></br>
                         Baseball <input type = "checkbox" id="baseball" class="checkbox"/> <br></br>
                         Soccer <input type = "checkbox" id="soccer" class="checkbox"/> <br></br>
@@ -78,13 +101,18 @@ echo '
                         Cricket <input type = "checkbox" id="cricket" class="checkbox"/><br></br>
                         Skateboarding <input type = "checkbox" id="skateboarding" class="checkbox"/><br></br>
                         <button id="search">Search</button>
+=======
+>>>>>>> remotes/origin/master
                     </div>
                 </div>
             </div>
         </div>
     </main>';
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> remotes/origin/master
 include 'footer.php';
 ?>
