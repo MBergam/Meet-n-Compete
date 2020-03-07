@@ -1,4 +1,6 @@
 <?php
+session_start();
+require 'config.php';
 if(isset($_POST['login_button'])){
     $username = $_POST['user_login'];
     $_SESSION['user_login'] = $username;
@@ -7,7 +9,8 @@ if(isset($_POST['login_button'])){
     $check_database_query = mysqli_query($con,"select * from users where user_name = '$username' AND password = '$password'");
 
     $check_login_query = mysqli_num_rows($check_database_query);
-    if($check_login_query == 1){
+
+    if($check_database_query == 1){
         $row = mysqli_fetch_array($check_database_query);
         $username = $row['user_name'];
 
@@ -24,3 +27,5 @@ if(isset($_POST['login_button'])){
         array_push($error_array,"Username or password is incorrect<br>");
     }
 }
+
+$con->close();

@@ -1,6 +1,6 @@
 <?php
-require 'config.php';
-
+session_start();
+include 'config.php';
 if(isset($_SESSION['username'])){
      $userLogin = $_SESSION['username'];
      $user_detail_query = mysqli_query($con, "select * from users where user_name = '$userLogin'");

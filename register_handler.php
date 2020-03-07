@@ -1,4 +1,6 @@
+
 <?php
+require 'config.php';
 $fname = "";
 $lname="";
 $email="";
@@ -41,12 +43,13 @@ if(isset($_POST['register_button'])){
         $password = md5($password); //encrypt the password before sending to database
 
         $query = mysqli_query($con,"insert into users values ('', '$fname', '$lname', '$username', '$email', '$password', '$date', '', '0', '0', 'no', ',')");
+
         array_push($error_array, "<span style='color: #14C800'>Welcome friend! You have successfully created an account with us!");
 
-        $_SESSION['reg_fname'] = "";
-        $_SESSION['reg_lname'] = "";
-        $_SESSION['reg_email'] = "";
-        $_SESSION['reg_username'] = "";
+        $_SESSION['reg_fname'] = " ";
+        $_SESSION['reg_lname'] = " ";
+        $_SESSION['reg_email'] = " ";
+        $_SESSION['reg_username'] = " ";
 
     }
 
@@ -97,4 +100,4 @@ function checkValidation(mysqli $con, $fname, $lname, $username, $password, $pas
     }
 }
 
-?>
+$con->close();

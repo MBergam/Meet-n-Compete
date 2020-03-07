@@ -110,11 +110,18 @@ require 'Login_Handler.php';
         <br>
         <div class="login_form">
             <form action="register.php" method="post">
+                <label for="user_login">
+                    <i class="fas fa-user"></i>
+                </label>
                 <input type="text" name="user_login" placeholder="Username" value =
                 "<?php
                 if(isset($_SESSION['login_username'])){
                     echo $_SESSION['login_username'];
                 } ?>" required>
+
+                <label for="password">
+                    <i class="fas fa-lock"></i>
+                </label>
                 <input type="password" name="password_login" placeholder="Password">
                 <br>
                 <input type="submit" name="login_button" value="Login" >
@@ -199,6 +206,7 @@ require 'Login_Handler.php';
                     echo "<span style='color: #14C800'>Welcome friend! You have successfully created an account with us!";
                 }
                 ?>
+                <br>
                 <a href="#" id="signin" class="signin">Already have an account? Click here</a>
 
             </form>
@@ -211,4 +219,5 @@ require 'Login_Handler.php';
 
 <?php
 require 'footer.php';
+$con->close();
 ?>
