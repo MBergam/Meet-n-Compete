@@ -9,7 +9,7 @@ $username = $p_ini['Database']['username'];
 $password = $p_ini['Database']['password'];
 $database = "meetncompete";
 
-
+$user = "";
 //THIS IS FOR LOGIN CHECK-KHANH's CODE
 if(isset($_SESSION['username'])){
      $userLogin = $_SESSION['username'];
@@ -104,10 +104,9 @@ else{
                         <a class="nav-link" href="#">My Events</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Account</a>
+                        <a class="nav-link" href="Account.php">Account</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-
