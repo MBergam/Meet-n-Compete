@@ -134,7 +134,7 @@ echo '
             <script>
                 var j = jQuery.noConflict();
                 j( function() {
-                    j( "#evtTime" ).timepicker({\'step\': 15 });
+                    j( "#evtTime" ).timepicker({\'step\': 5 });
                 } );
             </script>
             <p>Enter Date: <input type = "text" id = "datepicker"></p>
