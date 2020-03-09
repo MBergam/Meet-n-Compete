@@ -16,6 +16,7 @@ include 'header.php'
         ?>
         </a>
         <br>
+
         <?php
         echo "Past Events: " . $user['past_events'] . "<br>";
         echo "Current Events: " . $user['current_events'];
