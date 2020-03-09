@@ -85,7 +85,7 @@ echo '
             <!-- Popup Div Starts Here -->
             <div id="popupContact">
             <!-- Create New Event -->
-            <form action="#" id="form" method="post" name="form">
+            <form action="#" id="createEventForm" method="post" name="createEventForm">
             <img id="close" src="img/close.jpg" onclick= "div_hide()">
             <h2 id="contact">Create Event</h2>
             <hr>
