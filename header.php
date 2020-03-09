@@ -60,7 +60,7 @@ else{
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4&libraries=places" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src = "meetncompete.js" async defer> </script>
-    <script src = "js/jquery.timepicker.min.js" async defer> </script>
+    <script src = "js/jquery.timepicker.min.js"> </script>
 
 </head>
 <body>
