@@ -2,7 +2,7 @@
 session_start();
 include 'config.php';
 
-//THIS IS THE DATABASE CREDENTIALS FOR WHOEVER USING PDO CONNECTING METHOD
+////THIS IS THE DATABASE CREDENTIALS FOR WHOEVER USING PDO CONNECTING METHOD
 $p_ini = parse_ini_file("config.ini",true);
 $servername = $p_ini['Database']['servername'];
 $username = $p_ini['Database']['username'];
@@ -13,7 +13,7 @@ $user = "";
 //THIS IS FOR LOGIN CHECK-KHANH's CODE
 if(isset($_SESSION['username'])){
      $userLogin = $_SESSION['username'];
-     $user_detail_query = mysqli_query($con, "select * from users where user_name = '$userLogin'");
+    $user_detail_query = mysqli_query($con, "select * from users where user_name = '$userLogin'");
      $user = mysqli_fetch_array($user_detail_query);
      $logged_in_bool  = true;
 }
@@ -44,8 +44,12 @@ else{
     <link rel="stylesheet" href="css/hover-min.css" />
     <link rel="stylesheet" href="css/animate.min.css" />
     <link rel="stylesheet" href="css/vendor/fontawesome-free-5.12.0-web/css/all.min.css" />
+    <link rel="stylesheet" href="css/dropdown.css" />
     <link rel="stylesheet" href="style.css" />
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
 
+    <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js" async defer></script>
     <script src="js/vendor/modernizr-3.6.0.min.js"></script>
     <script src="js/vendor/jquery-3.3.1.min.js"></script>
     <script src="js/vendor/bootstrap.bundle.min.js"></script>
@@ -53,9 +57,6 @@ else{
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4&libraries=places" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src = "meetncompete.js" async defer> </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8&libraries=places" async defer></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src = "life.js" async defer> </script>
 
 
 </head>

@@ -57,29 +57,98 @@ echo '
                 <div class="col-lg-4">
                     <div class="sidebar-container">
                         <h2>Preferences</h2>
-                        Basketball <input type = "checkbox" id="basketball" class="checkbox"/> <br></br>
                         Baseball <input type = "checkbox" id="baseball" class="checkbox"/> <br></br>
-                        Soccer <input type = "checkbox" id="soccer" class="checkbox"/> <br></br>
-                        Tennis/Table Tennis <input type = "checkbox" id="tennis" class="checkbox"/><br></br>
-                        Football <input type = "checkbox" id="football" class="checkbox"/><br></br>
-                        Volleyball <input type = "checkbox" id="volleyball" class="checkbox"/><br></br>
-                        Snowboarding <input type = "checkbox" id="snowboarding" class="checkbox"/><br></br>
-                        Swimming <input type = "checkbox" id="swimming" class="checkbox"/><br></br>
-                        Skiing <input type = "checkbox" id="skiing" class="checkbox"/><br></br>
-                        Rugby <input type = "checkbox" id="rugby" class="checkbox"/><br></br>
-                        Bowling <input type = "checkbox" id="bowling" class="checkbox"/><br></br>
-                        Weight lifting <input type = "checkbox" id="weight_lifting" class="checkbox"/><br></br>
+                        Basketball <input type = "checkbox" id="basketball" class="checkbox"/> <br></br>
                         Billiards (Pool) <input type = "checkbox" id="billiards" class="checkbox"/> <br></br>
+                        Bowling <input type = "checkbox" id="bowling" class="checkbox"/><br></br>
                         Climbing <input type = "checkbox" id="climbing" class="checkbox"/><br></br>
-                        Golf/Discgolf <input type = "checkbox" id="golf" class="checkbox"/><br></br>
-                        Curling <input type = "checkbox" id="curling" class="checkbox"/><br></br>
                         Cricket <input type = "checkbox" id="cricket" class="checkbox"/><br></br>
+                        Curling <input type = "checkbox" id="curling" class="checkbox"/><br></br>
+                        Football <input type = "checkbox" id="football" class="checkbox"/><br></br>
+                        Golf/Discgolf <input type = "checkbox" id="golf" class="checkbox"/><br></br>
+                        Rugby <input type = "checkbox" id="rugby" class="checkbox"/><br></br>
                         Skateboarding <input type = "checkbox" id="skateboarding" class="checkbox"/><br></br>
+                        Skiing <input type = "checkbox" id="skiing" class="checkbox"/><br></br>
+                        Snowboarding <input type = "checkbox" id="snowboarding" class="checkbox"/><br></br>
+                        Soccer <input type = "checkbox" id="soccer" class="checkbox"/> <br></br>
+                        Swimming <input type = "checkbox" id="swimming" class="checkbox"/><br></br>
+                        Tennis/Table Tennis <input type = "checkbox" id="tennis" class="checkbox"/><br></br>
+                        Volleyball <input type = "checkbox" id="volleyball" class="checkbox"/><br></br>
+                        Weightlifting <input type = "checkbox" id="weight_lifting" class="checkbox"/><br></br>               
+                        Radius: <input type = "text" class = "allText" id = "radius" value="2" required minlength="1" maxlength="2" size="4" <p> miles</p><br>
                         <button id="search">Search</button>
                     </div>
                 </div>
             </div>
         </div>
+        <div id="createEvtPopup">
+            <!-- Popup Div Starts Here -->
+            <div id="popupContact">
+            <!-- Create New Event -->
+            <form action="#" id="form" method="post" name="form">
+            <img id="close" src="img/close.jpg" onclick= "div_hide()">
+            <h2 id="contact">Create Event</h2>
+            <hr>
+            <p id="createEvtLocation">Event location</p>
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="sportText" data-toggle="dropdown">Select Sport</button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                <li role="presentation"><a role="menuitem" tabindex="-1">Baseball</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Basketball</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Billiards (Pool)</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Bowling</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Climbing</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Cricket</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Curling</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Football</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Golf/Discgolf</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Rugby</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Skateboarding</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Skiing </a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Snowboarding</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Soccer</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Swimming</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Tennis/Table Tennis</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Volleyball</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Weightlifting</a></li>
+                </ul>
+            </div>
+            <input id="evtTime" name="evtTime" placeholder="Event Time" type="text">
+            <p>Enter Date: <input type = "text" id = "datepicker"></p>
+            <script>
+                var j = jQuery.noConflict();
+                j( function() {
+                    j( "#datepicker" ).datepicker();
+                } );
+            </script>
+            <div class="slidecontainer">
+                <p id="createEvtLength">Length: </p>
+                <input type="range" min="15" max="120" value="30" class="slider" id="myRange">
+            </div>
+            <p id="sliderVal"></p>
+            <textarea id="desc" name="description" placeholder="Description"></textarea>
+            <a href="javascript:%20check_empty()" id="submit">Send</a>
+            </form>
+            </div>
+        </div>
+        <!-- Popup Div Ends Here -->
     </main>';
 
 

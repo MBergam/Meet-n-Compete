@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Mar 01, 2020 at 11:33 PM
--- Server version: 5.7.24
--- PHP Version: 7.3.7
+-- Host: 127.0.0.1
+-- Generation Time: Feb 24, 2020 at 03:24 AM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -34,22 +34,8 @@ CREATE TABLE `events` (
   `event_time` date NOT NULL,
   `event_type` varchar(10) NOT NULL,
   `event_description` text NOT NULL,
-  `user_name` int(11) NOT NULL,
-  `location` varchar(255) NOT NULL,
-  `event_name` varchar(255) NOT NULL
+  `user_name` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `events`
---
-
-INSERT INTO `events` (`event_id`, `event_marker_id`, `event_time`, `event_type`, `event_description`, `user_name`, `location`, `event_name`) VALUES
-(1, 1, '2020-03-31', '', '', 1, 'Glass Park, Spokane, WA', 'Glass Park 1'),
-(2, 1, '2020-03-31', '', '', 1, 'Glass Park, Spokane, WA', 'Glass Park 2'),
-(3, 1, '2020-03-31', '', '', 1, 'Glass Park, Spokane, WA', 'Glass Park 3'),
-(4, 1, '2020-03-31', '', '', 1, 'Glass Park, Spokane, WA', 'Glass Park 4'),
-(5, 1, '2020-03-31', '', '', 1, 'Glass Park, Spokane, WA', 'Glass Park 5'),
-(6, 1, '2020-03-31', '', '', 1, 'Glass Park, Spokane, WA', 'Glass Park 6');
 
 -- --------------------------------------------------------
 
