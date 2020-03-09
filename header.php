@@ -47,7 +47,10 @@ else{
     <link rel="stylesheet" href="css/dropdown.css" />
     <link rel="stylesheet" href="style.css" />
     <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
-
+    <link rel="stylesheet" href="css/jquery.timepicker.css" />
+    
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
     <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js" async defer></script>
     <script src="js/vendor/modernizr-3.6.0.min.js"></script>
@@ -57,7 +60,7 @@ else{
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4&libraries=places" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src = "meetncompete.js" async defer> </script>
-
+    <script src = "js/jquery.timepicker.min.js"> </script>
 
 </head>
 <body>

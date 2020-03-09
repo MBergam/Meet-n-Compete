@@ -416,14 +416,26 @@ footer ul li a:hover{
     overflow:auto
 }
 
-img#close {
+a.boxclose{
+    margin-top:-30px;
+    margin-right:-30px;
     position:absolute;
-    width:10%;
-    height:10%;
-    right:-14px;
-    top:-14px;
-    background-color: transparent;
-    cursor:pointer
+    right:18px;
+    top:18px;
+    cursor:pointer;
+    color: #fff;
+    border: 1px solid gray;
+    border-radius: 30px;
+    background: #605F61;
+    font-size: 31px;
+    font-weight: bold;
+    line-height: 0px;
+    padding: 11px 3px;       
+}
+
+.boxclose:before {
+    content: "×";
+
 }
 
 div#popupContact {
