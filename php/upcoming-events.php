@@ -1,12 +1,6 @@
 <?php
 include 'header.php';
 
-    $p_ini = parse_ini_file("config.ini",true);
-	$servername = $p_ini['Database']['servername'];
-	$username = $p_ini['Database']['username'];
-	$password = $p_ini['Database']['password'];
-    $database = "meetncompete";
-
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$database",$username,$password);
     //set the error code to exception
@@ -79,7 +73,7 @@ function monthConvert($month){
 }
 function printEvent($event_id, $month, $day, $location, $event_name)
 {
-    $url = "itemDetail.php?item=" . urlencode($event_id);
+    $url = "eventDetail.php?item=" . urlencode($event_id);
     
     echo '<!-- layout each event !-->
     <div class="event-container">
@@ -90,8 +84,8 @@ function printEvent($event_id, $month, $day, $location, $event_name)
         <div class="detail">
             <h3>'.$event_name.'</h3>
             <h4>'.$location.'</h4>
-            <button class="button">More...</button>
-            <button class="button">Join Event</button>
+            <a href="'.$url.'" class="button">Learn More</a>
+            <a href="#" class="button">Join Event</a>
         </div>
     </div>';
 }
