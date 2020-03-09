@@ -157,6 +157,7 @@ main .content{
 }
 
 #map{
+    margin-top: 20px;
     width: 100%;
     height: 500px;
 }
@@ -337,6 +338,26 @@ footer ul li a:hover{
     width: 40%;
     background-color:rgba(240, 197, 197,0.5);
 }
+/* Start CSS for eventDetail page */
+#eventDetail .event-container{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+#eventDetail .event-container .date-container{
+    flex-direction: column;
+}
+#eventDetail .event-container .date-container p{
+    height: 100px;
+}
+#eventDetail .event-container .detail .button-container{
+    position: absolute;
+    bottom: 20px;
+}
+#eventDetail .event-container .detail .button-container .button {
+    padding: 10px 50px;
+}
+/* End CSS for eventDetail page */
 .event-container .date-container{
     display: flex;
     justify-content: center;

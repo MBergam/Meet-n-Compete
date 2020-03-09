@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Feb 24, 2020 at 03:24 AM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.2
+-- Host: localhost:3306
+-- Generation Time: Mar 08, 2020 at 10:35 PM
+-- Server version: 5.7.24
+-- PHP Version: 7.3.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -34,8 +34,25 @@ CREATE TABLE `events` (
   `event_time` date NOT NULL,
   `event_type` varchar(10) NOT NULL,
   `event_description` text NOT NULL,
-  `user_name` int(11) NOT NULL
+  `user_id` int(11) NOT NULL,
+  `location` varchar(255) NOT NULL,
+  `event_name` varchar(255) NOT NULL,
+  `ImgFullSize` varchar(255) NOT NULL,
+  `Start` varchar(255) NOT NULL,
+  `End` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `events`
+--
+
+INSERT INTO `events` (`event_id`, `event_marker_id`, `event_time`, `event_type`, `event_description`, `user_id`, `location`, `event_name`, `ImgFullSize`, `Start`, `End`) VALUES
+(1, 1, '2020-03-31', 'Basketball', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', 1, 'Glass Park, Spokane, WA', 'Glass Park 1', 'playbasketball.jpg', '2 PM', '4 PM'),
+(2, 1, '2020-03-31', 'Basketball', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', 1, 'Glass Park, Spokane, WA', 'Glass Park 2', 'playbasketball.jpg', '2 PM', '4 PM'),
+(3, 1, '2020-03-31', 'Basketball', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', 1, 'Glass Park, Spokane, WA', 'Glass Park 3', 'playbasketball.jpg', '2 PM', '4 PM'),
+(4, 1, '2020-03-31', 'Soccer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', 1, 'Glass Park, Spokane, WA', 'Glass Park 4', 'soccer.jpg', '2 PM', '4 PM'),
+(5, 1, '2020-03-31', 'Soccer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', 1, 'Glass Park, Spokane, WA', 'Glass Park 5', 'soccer.jpg', '2 PM', '4 PM'),
+(6, 1, '2020-03-31', 'Soccer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', 1, 'Glass Park, Spokane, WA', 'Glass Park 6', 'soccer.jpg', '2 PM', '4 PM');
 
 -- --------------------------------------------------------
 
@@ -44,7 +61,7 @@ CREATE TABLE `events` (
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `first_name` varchar(25) NOT NULL,
   `last_name` varchar(25) NOT NULL,
   `user_name` varchar(100) NOT NULL,
@@ -62,7 +79,7 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `user_name`, `email`, `password`, `signup_date`, `profile_picture`, `num_posts`, `num_likes`, `user_closed`, `friend_array`) VALUES
+INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `user_name`, `email`, `password`, `signup_date`, `profile_picture`, `num_posts`, `num_likes`, `user_closed`, `friend_array`) VALUES
 (1, 'Khanh', 'Luu', 'kingofsky1995', 'kingofsky1995@gmail.com', 'samplepassword', '2020-02-06', 'AWD', 1, 1, 'NO', ''),
 (2, 'Test', 'Test', 'newtestuser', 'test@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '2020-02-12', '', 0, 0, 'no', ','),
 (3, 'Another', 'Test', 'anothertestuser', 'test1@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '2020-02-12', '', 0, 0, 'no', ','),
@@ -73,20 +90,32 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `user_name`, `email`, `pas
 --
 
 --
+-- Indexes for table `events`
+--
+ALTER TABLE `events`
+  ADD PRIMARY KEY (`event_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`user_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
+-- AUTO_INCREMENT for table `events`
+--
+ALTER TABLE `events`
+  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
