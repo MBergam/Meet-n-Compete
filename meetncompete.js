@@ -20,6 +20,7 @@ var myKey = "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4";
 //Function called when the document is first loaded - gets the user's location either manually or by requesting permission
 function start() {
     $("#search").click(getLatLong);
+    $("a[role='menuitem']").click(dropdownTxtChange);
     //$('.checkbox').attr('checked', true);
     getLocation();
 }
@@ -423,6 +424,7 @@ function addMarker(lati, longi, name, mdata, i) {
         var placesService = new google.maps.places.PlacesService(map);
 
         placesService.getDetails( {placeId: mdata[i].place_id}, function(results, status) {
+            console.log(results);
             //Get user ratings
             let p = document.createElement('p');
             p.className = "allText markInfo";
@@ -452,6 +454,25 @@ function addMarker(lati, longi, name, mdata, i) {
             };
             infoDiv.appendChild(directionsButton);
 
+            //Create 'Create Event' button
+            let createEventButton = document.createElement("button");
+            createEventButton.className = "createEvent button markInfo";
+            createEventButton.innerHTML = "Create Event";
+            createEventButton.onclick = function(){ 
+                document.getElementById('createEvtPopup').style.display = "block";
+                $('.carousel-indicators').hide();
+                document.getElementById('createEvtLocation').innerHTML = "<b>" + results.name + "</b>";
+                var slider = document.getElementById("myRange");
+                var output = document.getElementById("sliderVal");
+                output.innerHTML = slider.value + " minutes"; // Display the default slider value
+
+                // Update the current slider value (each time you drag the slider handle)
+                slider.oninput = function() {
+                    output.innerHTML = this.value + " minutes";
+                }
+            };
+            infoDiv.appendChild(createEventButton);
+
             //Set the content of the InfoWindow to the clicked on marker and open it
             let pla = document.getElementById("mInfo");
             pla.appendChild(infoDiv);
@@ -462,6 +483,26 @@ function addMarker(lati, longi, name, mdata, i) {
     });
     
 }
+
+// Validating Empty Field
+function check_empty() {
+    if (document.getElementById('name').value == "" || document.getElementById('email').value == "" || document.getElementById('msg').value == "") {
+        alert("Fill All Fields !");
+    } else {
+        document.getElementById('form').submit();
+    }
+}
+
+function dropdownTxtChange(evt){
+    $("#sportText").html(evt.target.text);
+}
+
+//Function to Hide Popup
+function div_hide(){
+    document.getElementById('createEvtPopup').style.display = "none";
+    $('.carousel-indicators').show();
+}
+
 
 //Callback function that extracts information from Google Nearby Search GET request API calls
 function gotPlaceData(data, keyword) {
