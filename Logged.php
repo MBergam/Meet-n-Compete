@@ -86,7 +86,7 @@ echo '
             <div id="popupContact">
             <!-- Create New Event -->
             <form action="#" id="createEventForm" method="post" name="createEventForm">
-            <img id="close" src="img/close.jpg" onclick= "div_hide()">
+            <a class="boxclose" id="boxclose" onclick= "div_hide()"></a>
             <h2 id="contact">Create Event</h2>
             <hr>
             <p id="createEvtLocation">Event location</p>
@@ -131,6 +131,12 @@ echo '
                 </ul>
             </div>
             <input id="evtTime" name="evtTime" placeholder="Event Time" type="text">
+            <script>
+                var j = jQuery.noConflict();
+                j( function() {
+                    j( "#evtTime" ).timepicker({\'step\': 15 });
+                } );
+            </script>
             <p>Enter Date: <input type = "text" id = "datepicker"></p>
             <script>
                 var j = jQuery.noConflict();
