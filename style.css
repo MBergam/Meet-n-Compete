@@ -688,14 +688,34 @@ textarea {
 }
 
 .post_form textarea{
-    width: 90%;
+    width: 80%;
     height: 60px;
     border-radius: 5px;
     margin-right: 5px;
     border: 1px solid #D3D3D3;
-    font-size: 12px;
+    font-size: 18px;
+    padding: 5px;
 }
 
 textarea:focus{
     outline: 0;
+}
+
+.post_form input[type = "submit"]{
+    width: 10%;
+    height: 60px;
+    border: none;
+    border-radius: 10px;
+    background-color: #9fcdff;
+    font-family: 'Fjalla One', sans-serif;
+    color: #fff;
+    text-shadow: #73B6E2 1px 1px 0px;
+    font-size: 90%;
+    position: absolute;
+    outline: 0;
+    margin: 30px 0 0;
+}
+
+.post_form input[type = "submit"]:active{
+    padding: 5px 4px 4px 5px;
 }

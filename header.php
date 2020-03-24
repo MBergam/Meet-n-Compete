@@ -10,6 +10,7 @@ $password = $p_ini['Database']['password'];
 $database = "meetncompete";
 
 $user = "";
+$userLogin = "";
 //THIS IS FOR LOGIN CHECK-KHANH's CODE
 if(isset($_SESSION['username'])){
      $userLogin = $_SESSION['username'];
@@ -75,7 +76,7 @@ else{
                         <ul class = "nav-login">
                          <?php
                             if($logged_in_bool){
-                                echo "<li><a href='Account.php'>$userLogin</a></li>";
+                                echo "<li><a href='$userLogin'>$userLogin</a></li>";
                                 echo "<li><a href='index.php'>Logout</a></li>";
                             }
                             else{
