@@ -562,7 +562,7 @@ function validateLocations(data, keyword){
 
     var count = 0;
 
-    //intitalize array of valid locations
+    //initialize array of valid locations
     var newArray = new Array();
 
     //same code as previous loops, just adds the location this time

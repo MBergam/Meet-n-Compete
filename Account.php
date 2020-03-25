@@ -1,5 +1,13 @@
 <?php
-include 'header.php'
+include 'header.php';
+include 'User.php';
+include 'Post.php';
+
+if(isset($_POST['post'])){
+    $post = new Post($con,$userLogin);
+    $post->submitPost($_POST['post_text'], 'none');
+    header("Location: Account.php");
+}
 
 ?>
     <div class="account_wrapper">
@@ -18,6 +26,7 @@ include 'header.php'
                 <br>
 
                 <?php
+                echo "Number of Post(s): ". $user['num_posts'] . "<br>";
                 echo "Past Events: " . $user['past_events'] . "<br>";
                 echo "Current Events: " . $user['current_events'];
                 ?>
@@ -30,6 +39,11 @@ include 'header.php'
                 <input type="submit" name="post" id="post_button" value="Post">
                 <hr>
             </form>
+
+            <?php
+                $user_obj = new User($con, $userLogin);
+                echo $user_obj->getFullName();
+            ?>
 
 
         </div>

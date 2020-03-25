@@ -77,7 +77,7 @@ else{
                          <?php
                             if($logged_in_bool){
                                 echo "<li><a href='$userLogin'>$userLogin</a></li>";
-                                echo "<li><a href='index.php'>Logout</a></li>";
+                                echo "<li><a href='Logout.php'>Logout</a></li>";
                             }
                             else{
                                 echo "<li><a href='register.php'>Login</a></li>";
