@@ -37,9 +37,7 @@ require 'Login_Handler.php';
     <script src="js/vendor/jquery-3.3.1.min.js"></script>
     <script src="js/vendor/bootstrap.bundle.min.js"></script>
     <script src="js/vendor/parallax.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8&libraries=places" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src = "life.js" async defer> </script>
 
 </head>
 
@@ -53,8 +51,7 @@ require 'Login_Handler.php';
             <div class="col-sm-6">
                 <div id="header-right" class="vertical-center">
                     <ul class = "nav-login">
-<!--                        <li><a href="register.php">Login</a></li>-->
-<!--                        <li><a href="register.php">Sign Up</a></li>-->
+
                     </ul>
                 </div>
             </div>
@@ -219,5 +216,5 @@ require 'Login_Handler.php';
 
 <?php
 require 'footer.php';
-$con->close();
+//$con->close();
 ?>

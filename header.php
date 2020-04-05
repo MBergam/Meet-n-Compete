@@ -9,7 +9,8 @@ $username = $p_ini['Database']['username'];
 $password = $p_ini['Database']['password'];
 $database = "meetncompete";
 
-
+$user = "";
+$userLogin = "";
 //THIS IS FOR LOGIN CHECK-KHANH's CODE
 if(isset($_SESSION['username'])){
      $userLogin = $_SESSION['username'];
@@ -44,8 +45,15 @@ else{
     <link rel="stylesheet" href="css/hover-min.css" />
     <link rel="stylesheet" href="css/animate.min.css" />
     <link rel="stylesheet" href="css/vendor/fontawesome-free-5.12.0-web/css/all.min.css" />
+    <link rel="stylesheet" href="css/dropdown.css" />
     <link rel="stylesheet" href="style.css" />
-
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+    <link rel="stylesheet" href="css/jquery.timepicker.css" />
+    
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+    <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js" async defer></script>
     <script src="js/vendor/modernizr-3.6.0.min.js"></script>
     <script src="js/vendor/jquery-3.3.1.min.js"></script>
     <script src="js/vendor/bootstrap.bundle.min.js"></script>
@@ -53,10 +61,7 @@ else{
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4&libraries=places" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src = "meetncompete.js" async defer> </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8&libraries=places" async defer></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src = "life.js" async defer> </script>
-
+    <script src = "js/jquery.timepicker.min.js"> </script>
 
 </head>
 <body>
@@ -71,9 +76,8 @@ else{
                         <ul class = "nav-login">
                          <?php
                             if($logged_in_bool){
-                                echo "<li><a href='#'>$userLogin</a></li>";
-                                echo "<li><a href='index.php'>Logout</a></li>";
-//                                echo "<input type='submit' name='logout_button' value='Logout'>";
+                                echo "<li><a href='$userLogin'>$userLogin</a></li>";
+                                echo "<li><a href='Logout.php'>Logout</a></li>";
                             }
                             else{
                                 echo "<li><a href='register.php'>Login</a></li>";
@@ -95,7 +99,7 @@ else{
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="Logged.php">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
@@ -105,7 +109,7 @@ else{
                         <a class="nav-link" href="#">My Events</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Account</a>
+                        <a class="nav-link" href="Account.php">Account</a>
                     </li>
                 </ul>
             </div>
