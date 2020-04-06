@@ -403,6 +403,25 @@ footer ul li a:hover{
     font-weight: normal;
 }
 
+/* Start CSS for My Events page */
+.title-container{
+    position: relative;
+}
+.title-container .button{
+    position: absolute;
+    top:0;
+    right: 0;
+}
+.button-small{
+    padding: 10px 10px !important; 
+}
+.md-height{
+    height: 360px;
+}
+/* End CSS for My Events page */
+
+
+
 /*THIS IS THE DESIGN FOR THE CREATE EVENT WHEN YOU CLICK ON THE MARKER*/
 #createEvtPopup {
     width:100%;

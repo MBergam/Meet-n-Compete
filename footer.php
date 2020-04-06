@@ -6,9 +6,9 @@
                 </div>
                 <div class="col-md-6">
                     <ul class = "footer-menu">
-                        <li><a href="">Home</a></li>
-                        <li><a href="">Upcoming Events</a></li>
-                        <li><a href="">My Events</a></li>
+                        <li><a href="index.php">Home</a></li>
+                        <li><a href="upcoming-events.php">Upcoming Events</a></li>
+                        <li><a href="my-events.php">My Events</a></li>
                         <li><a href="">Account</a></li>
                     </ul>
                 </div>

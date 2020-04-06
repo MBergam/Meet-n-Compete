@@ -106,7 +106,7 @@ else{
                         <a class="nav-link" href="upcoming-events.php">Upcoming Events</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">My Events</a>
+                        <a class="nav-link" href="my-events.php">My Events</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="Account.php">Account</a>
