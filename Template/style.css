@@ -11,6 +11,7 @@ h1,h2,h3,h4,h5,h6{
 h1{
     font-size:2.6rem;
     text-align: center;
+    text-transform: uppercase;
     padding:0;
 }
 
@@ -401,3 +402,19 @@ footer ul li a:hover{
     font-size: 1.2rem;
     font-weight: normal;
 }
+/* Start CSS for My Events page */
+.title-container{
+    position: relative;
+}
+.title-container .button{
+    position: absolute;
+    top:0;
+    right: 0;
+}
+.button-small{
+    padding: 10px 10px !important; 
+}
+.md-height{
+    height: 360px;
+}
+/* End CSS for My Events page */

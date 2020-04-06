@@ -34,8 +34,8 @@
                 <div class="col-sm-6">
                     <div id="header-right" class="vertical-center">
                         <ul class = "nav-login">
-                            <li><a href="">Login</a></li>
-                            <li><a href="">Sign Up</a></li>
+                            <li><a href="">Username</a></li>
+                            <li><a href="">Sign Out</a></li>
                         </ul>
                     </div>
                 </div>
@@ -97,55 +97,110 @@
     </div>
 
     <main id="content">
-        <div class="f-container">
-            <div class="event-container">
-                <div class="date-container">
-                    <p><span class="month">Mar</span>
-                        <span class="day">1</span></p>
+        <div class="container">
+            <div class="title-container">
+                <h1>My events</h1>
+                <hr>
+                <a class="button" href="">Create Event</a>
+            </div>
+            <!-- Loop list of current events -->
+            <br>
+            <h2>Current events:</h2>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="img/playbasketball.jpg" alt="">
                 </div>
-                <div class="detail">
-                    <h3>Name of Events</h3>
-                    <h4>Glass Park, Spokane, WA</h4>
-                    <button class="button">More...</button>
-                    <button class="button">Join Event</button>
+                <div class="col-md-6" id="eventDetail">
+                    <div class="event-container">
+                        <div class="date-container">
+                            <p><span class="month">Mar</span>-
+                                <span class="day">1</span></p>
+                            <p><span class="month">2 PM</span>-
+                                <span class="month">4 PM</span></p>
+                        </div>
+
+                        <div class="detail">
+                            <h3>Event type</h3>
+                            <h4>Glass Park, Spokane, WA</h4>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.</p>
+                            <h4>Member:</h4>
+                            <a href="">User 1</a>
+                            <a href="">User 2</a>
+                            <a href="">User 3</a>
+                            <div class="button-container">
+                                <button class="button button-small">View</button>
+                                <button class="button button-small">Edit</button>
+                                <button class="button button-small">Delete</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="event-container">
-                <div class="date-container">
-                    <p><span class="month">Mar</span>
-                        <span class="day">1</span></p>
+            <br>
+            <!-- Loop list of past events -->
+            <h2>Past events:</h2>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <img class="md-height" src="img/tennis.jpg" alt="">
                 </div>
-                <div class="detail">
-                    <h3>Name of Events</h3>
-                    <h4>Glass Park, Spokane, WA</h4>
-                    <button class="button">More...</button>
-                    <button class="button">Join Event</button>
-                </div>
-            </div>
-            <div class="event-container">
-                <div class="date-container">
-                    <p><span class="month">Mar</span>
-                        <span class="day">1</span></p>
-                </div>
-                <div class="detail">
-                    <h3>Name of Events</h3>
-                    <h4>Glass Park, Spokane, WA</h4>
-                    <button class="button">More...</button>
-                    <button class="button">Join Event</button>
-                </div>
-            </div>
-            <div class="event-container">
-                <div class="date-container">
-                    <p><span class="month">Mar</span>
-                        <span class="day">1</span></p>
-                </div>
-                <div class="detail">
-                    <h3>Name of Events</h3>
-                    <h4>Glass Park, Spokane, WA</h4>
-                    <button class="button">More...</button>
-                    <button class="button">Join Event</button>
+                <div class="col-md-6" id="eventDetail">
+                    <div class="event-container">
+                        <div class="date-container">
+                            <p><span class="month">Mar</span>-
+                                <span class="day">1</span></p>
+                            <p><span class="month">2 PM</span>-
+                                <span class="month">4 PM</span></p>
+                        </div>
+
+                        <div class="detail">
+                            <h3>Event type</h3>
+                            <h4>Glass Park, Spokane, WA</h4>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.</p>
+                            <h4>Member:</h4>
+                            <a href="">User 1</a>
+                            <a href="">User 2</a>
+                            <a href="">User 3</a>
+                            <div class="button-container">
+                                <button class="button">View</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <!-- end row -->
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="img/soccer.jpg" alt="">
+                </div>
+                <div class="col-md-6" id="eventDetail">
+                    <div class="event-container">
+                        <div class="date-container">
+                            <p><span class="month">Mar</span>-
+                                <span class="day">1</span></p>
+                            <p><span class="month">2 PM</span>-
+                                <span class="month">4 PM</span></p>
+                        </div>
+
+                        <div class="detail">
+                            <h3>Event type</h3>
+                            <h4>Glass Park, Spokane, WA</h4>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.</p>
+                            <h4>Member:</h4>
+                            <a href="">User 1</a>
+                            <a href="">User 2</a>
+                            <a href="">User 3</a>
+                            <div class="button-container">
+                                <button class="button">View</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+            <br>
         </div>
     </main>
 
@@ -187,16 +242,5 @@
             </div>
         </div>
     </footer>
-    <!-- Map demo -->
-    <script>
-        function myMap() {
-          var mapCanvas = document.getElementById("map");
-          var mapOptions = {
-            center: new google.maps.LatLng(47.658779, -117.426048), zoom: 10
-          };
-          var map = new google.maps.Map(mapCanvas, mapOptions);
-        }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4&callback=myMap"></script>
 </body>
 </html>
