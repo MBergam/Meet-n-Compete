@@ -90,6 +90,7 @@ echo '
             <h2 id="contact">Create Event</h2>
             <hr>
             <p id="createEvtLocation">Event location</p>
+            <textarea id="evtName" name="name" placeholder="Event Name (Optional)"></textarea>
             <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" id="sportText" data-toggle="dropdown">Select Sport</button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">

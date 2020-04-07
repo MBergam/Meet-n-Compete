@@ -606,6 +606,16 @@ textarea {
 #desc{
     font-family: 'Open Sans', sans-serif;
     padding-left: 8px;
+    margin-top:10px;
+}
+
+#evtName{
+    width:100%;
+    height:40px;
+    font-family: 'Open Sans', sans-serif;
+    padding-left: 8px;
+    margin-top:0px;
+    margin-bottom:10px
 }
 
 #submit{

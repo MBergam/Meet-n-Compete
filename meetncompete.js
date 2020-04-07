@@ -495,10 +495,12 @@ function addMarker(lati, longi, name, mdata, i) {
 
 // Validating Empty Field
 function check_empty() {
-    if (document.getElementById('name').value == "" || document.getElementById('email').value == "" || document.getElementById('msg').value == "") {
+    if (document.getElementById('datepicker').value == "" || document.getElementById('evtTime').value == "" || $("#sportText").text() == "Select Sport") {
+        //Handle showing what to fill in (we'll do this later)
         alert("Fill All Fields !");
     } else {
-        document.getElementById('form').submit();
+        document.getElementById('createEventForm').submit();
+        //call search button handler here again to show map with newly created event
     }
 }
 
