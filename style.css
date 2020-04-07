@@ -434,6 +434,18 @@ footer ul li a:hover{
     overflow:auto
 }
 
+div#popupAccount {
+    position:absolute;
+    left:50%;
+    top:37%;
+    margin-left:-202px;
+    font-family:'Raleway',sans-serif
+}
+
+#popupAccount p{
+    font-family: 'Open Sans', sans-serif;
+}
+
 
 /*THIS IS THE DESIGN FOR THE CREATE EVENT WHEN YOU CLICK ON THE MARKER*/
 #createEvtPopup {

@@ -164,7 +164,7 @@ echo '
         </div>
         <div id="promptAccountPopup">
             <!-- Popup Div Starts Here -->
-            <div id="popupContact">
+            <div id="popupAccount">
             <!-- Create New Event -->
             <form action="#" id="createEventForm" method="post" name="createEventForm">
             <a class="boxclose" id="boxclose" onclick= "div_hide()"></a>
