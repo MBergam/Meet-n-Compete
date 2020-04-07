@@ -464,7 +464,6 @@ function addMarker(lati, longi, name, mdata, i) {
                     document.getElementById('promptAccountPopup').style.display = "block";
                     $('.carousel-indicators').hide();
                     document.getElementById('promptForAccount').innerHTML = "<b> Please create an account to create an event at " + results.name + "</b>";
-                    console.log("fuck");
                 }
                 //Registered User clicks on the Create Event
                 else{
