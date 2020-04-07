@@ -421,6 +421,19 @@ footer ul li a:hover{
 /* End CSS for My Events page */
 
 
+/*-- GUEST USER -- THIS IS THE DESIGN FOR THE ACCOUNT LOGIN PROMPT WHEN YOU CLICK ON THE MARKER'S CREATE EVENT*/
+#promptAccountPopup {
+    width:100%;
+    height:100%;
+    opacity:.95;
+    top:0;
+    left:0;
+    display:none;
+    position:fixed;
+    background-color:#313131;
+    overflow:auto
+}
+
 
 /*THIS IS THE DESIGN FOR THE CREATE EVENT WHEN YOU CLICK ON THE MARKER*/
 #createEvtPopup {
@@ -465,7 +478,7 @@ div#popupContact {
     font-family:'Raleway',sans-serif
 }
 #createEventForm {
-    max-width:300px;
+    max-width:400px;
     min-width:250px;
     padding:10px 50px;
     border:2px solid gray;
@@ -474,8 +487,12 @@ div#popupContact {
     background-color:#fff
 }
 
+#createEvtLocation {
+    font-size: 18px;
+}
+
 #contact {
-    background-color:#FEFFED;
+    background-color:#c5c5c5;
     padding:20px 35px;
     margin:-10px -50px;
     text-align:center;
@@ -490,11 +507,7 @@ hr {
     background-repeat:no-repeat;
     background-position:5px 7px
 }
-#evtTime {
-    background-repeat:no-repeat;
-    font-family: 'Open Sans', sans-serif;
-    background-position:5px 7px
-}
+
 textarea {
     background-repeat:no-repeat;
     background-position:5px 7px;
@@ -515,9 +528,9 @@ textarea {
     width:100%;
     text-align:center;
     display:block;
-    background-color:#FFBC00;
+    background-color: #346951;
     color:#fff;
-    border:1px solid #FFCB00;
+    border: 1px solid #346a51;
     padding:10px 0;
     font-size:20px;
     cursor:pointer;
@@ -580,6 +593,7 @@ textarea {
 
 #desc{
     font-family: 'Open Sans', sans-serif;
+    padding-left: 8px;
 }
 
 #submit{
@@ -640,11 +654,13 @@ textarea {
 }
 
 #evtTime {
-    background-repeat:no-repeat;
-    font-family: 'Open Sans', sans-serif;
-    background-position:5px 7px;
-    margin-top: 10px;
+    margin-top: 20px;
     margin-bottom: 10px
+}
+
+/*search button on preferences*/
+#search{
+    color: #fff;
 }
 
 
