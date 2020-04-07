@@ -54,7 +54,7 @@ class Post{
 
         $page = $data['page'];
 
-        $userLogin = $this->user_obj->getFullName();
+        $userLogin = $this->user_obj->getUsername();
 
         if($page == 1){
             $start = 0;
@@ -92,105 +92,109 @@ class Post{
                     continue;
                 }
 
-                if($num_iteration++ < $start){
-                    continue;
-                }
 
-                //Once 10 posts have been loaded,break
+                $user_logged_obj = new User($this->con, $userLogin);
+                if($user_logged_obj->isFriend($added_by)){
 
-                if($count > $limit)
-                    break;
-
-                else
-                    $count++;
-
-                $user_details_query = mysqli_query($this->con, "select first_name, last_name, profile_picture from users 
-                                                where user_name = '$added_by'");
-                $user_row = mysqli_fetch_array($user_details_query);
-                $firs_name = $user_row['first_name'];
-                $last_name = $user_row['last_name'];
-                $profile_picture = $user_row['profile_picture'];
-
-
-
-                //Timeframe
-
-                $date_time_now = date("Y-m-d H:i:s");
-                $start_date = new DateTime($date_time);
-                $end_date = new DateTime($date_time_now);
-                $interval = $start_date->diff($end_date);
-
-                if($interval->y >= 1){
-                    if($interval == 1){
-                        $time_message = $interval->y . "year ago";
+                    if($num_iteration++ < $start){
+                        continue;
                     }
+
+                    //Once 10 posts have been loaded,break
+
+                    if($count > $limit)
+                        break;
 
                     else
-                        $time_message = $interval->y . "year ago";
-                }
+                        $count++;
 
-                elseif($interval->m >= 1){
-                    if($interval -> d == 0){
-                        $days = "ago";
+                    $user_details_query = mysqli_query($this->con, "select first_name, last_name, profile_picture from users 
+                                                where user_name = '$added_by'");
+                    $user_row = mysqli_fetch_array($user_details_query);
+                    $firs_name = $user_row['first_name'];
+                    $last_name = $user_row['last_name'];
+                    $profile_picture = $user_row['profile_picture'];
+
+
+
+                    //Timeframe
+
+                    $date_time_now = date("Y-m-d H:i:s");
+                    $start_date = new DateTime($date_time);
+                    $end_date = new DateTime($date_time_now);
+                    $interval = $start_date->diff($end_date);
+
+                    if($interval->y >= 1){
+                        if($interval == 1){
+                            $time_message = $interval->y . "year ago";
+                        }
+
+                        else
+                            $time_message = $interval->y . "year ago";
                     }
 
-                    elseif ($interval->d == 1){
-                        $days = $interval ->d . " day ago";
+                    elseif($interval->m >= 1){
+                        if($interval -> d == 0){
+                            $days = "ago";
+                        }
+
+                        elseif ($interval->d == 1){
+                            $days = $interval ->d . " day ago";
+                        }
+
+                        else{
+                            $days = $interval->d. " days ago";
+                        }
+
+                        if($interval->m == 1){
+                            $time_message = $interval->m . " month". $days;
+                        }
+
+                        else{
+                            $time_message = $interval->m . " months". $days;
+                        }
                     }
 
+                    elseif ($interval->d >= 1){
+                        if ($interval->d == 1){
+                            $time_message = "Yesterday";
+                        }
+
+                        else{
+                            $time_message = $interval->d. " days ago";
+                        }
+                    }
+
+                    elseif($interval->h >= 1){
+                        if ($interval->h == 1){
+                            $time_message = $interval ->h . " hour ago";
+                        }
+
+                        else{
+                            $time_message = $interval->h. " hours ago";
+                        }
+                    }
+
+                    elseif($interval->i >= 1){
+                        if ($interval->i == 1){
+                            $time_message = $interval ->i . " minute ago";
+                        }
+
+                        else{
+                            $time_message = $interval->i. " minutes ago";
+                        }
+                    }
                     else{
-                        $days = $interval->d. " days ago";
+                        if ($interval->s < 30){
+                            $time_message =" just now";
+                        }
+
+                        else{
+                            $time_message = $interval->s. " seconds ago";
+                        }
                     }
 
-                    if($interval->m == 1){
-                        $time_message = $interval->m . " month". $days;
-                    }
-
-                    else{
-                        $time_message = $interval->m . " months". $days;
-                    }
-                }
-
-                elseif ($interval->d >= 1){
-                    if ($interval->d == 1){
-                        $time_message = "Yesterday";
-                    }
-
-                    else{
-                        $time_message = $interval->d. " days ago";
-                    }
-                }
-
-                elseif($interval->h >= 1){
-                    if ($interval->h == 1){
-                        $time_message = $interval ->h . " hour ago";
-                    }
-
-                    else{
-                        $time_message = $interval->h. " hours ago";
-                    }
-                }
-
-                elseif($interval->i >= 1){
-                    if ($interval->i == 1){
-                        $time_message = $interval ->i . " minute ago";
-                    }
-
-                    else{
-                        $time_message = $interval->i. " minutes ago";
-                    }
-                }
-                else{
-                    if ($interval->s < 30){
-                        $time_message =" just now";
-                    }
-
-                    else{
-                        $time_message = $interval->s. " seconds ago";
-                    }
-                }
-
-                $str .= "<div class = 'status_post'>
+                    $str .= "<div class = 'status_post'>
                         <div class = 'post_profile_pic'>
                             <img src = '$profile_picture' width='75' >
                             </div>
@@ -202,11 +206,11 @@ class Post{
                         <div id='post_body'>
                         $body
                         <br>
-                        $count
                         </div>
                         
                         
                       </div><hr>";
+                }
             }
 
             if($count > $limit){
@@ -216,7 +220,7 @@ class Post{
             else{
                 $str .= "<input type='hidden' class='noMorePosts' value='true'><p style='text-align: center;'> No more posts to show! </p>";
             }
-       }
+        }
 
         echo $str;
     }

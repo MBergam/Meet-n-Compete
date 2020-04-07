@@ -46,4 +46,19 @@ class User{
         }
 
     }
+
+    public function isFriend($username_to_check){
+        $usernameComma = "," . $username_to_check . ",";
+
+
+        if(strstr($this->user['friend_array'], $usernameComma) || $username_to_check == $this->user['user_name']){
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public function addFriends(){
+
+    }
 }

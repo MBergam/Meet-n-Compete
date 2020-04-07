@@ -42,7 +42,7 @@ if(isset($_POST['register_button'])){
     if(empty($error_array)){
         $password = md5($password); //encrypt the password before sending to database
 
-        $query = mysqli_query($con,"insert into users values ('', '$fname', '$lname', '$username', '$email', '$password', '$date', '', '0', '0', 'no', ',')");
+        $query = mysqli_query($con,"insert into users values ('', '$fname', '$lname', '$username', '$email', '$password', '$date', '', '0', '0','0', 'no', ',')");
 
         array_push($error_array, "<span style='color: #14C800'>Welcome friend! You have successfully created an account with us!");
 
@@ -52,6 +52,8 @@ if(isset($_POST['register_button'])){
         $_SESSION['reg_username'] = " ";
 
     }
+
+
 
 }
 
