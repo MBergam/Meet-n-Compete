@@ -459,16 +459,26 @@ function addMarker(lati, longi, name, mdata, i) {
             createEventButton.className = "createEvent button markInfo";
             createEventButton.innerHTML = "Create Event";
             createEventButton.onclick = function(){ 
-                document.getElementById('createEvtPopup').style.display = "block";
-                $('.carousel-indicators').hide();
-                document.getElementById('createEvtLocation').innerHTML = "<b>" + results.name + "</b>";
-                var slider = document.getElementById("myRange");
-                var output = document.getElementById("sliderVal");
-                output.innerHTML = slider.value + " minutes"; // Display the default slider value
-
-                // Update the current slider value (each time you drag the slider handle)
-                slider.oninput = function() {
-                    output.innerHTML = this.value + " minutes";
+                //Guest User clicks on the Create Event
+                if(document.getElementById('createEvtPopup') == null){
+                    document.getElementById('promptAccountPopup').style.display = "block";
+                    $('.carousel-indicators').hide();
+                    document.getElementById('promptForAccount').innerHTML = "<b> Please create an account to create an event at " + results.name + "</b>";
+                    console.log("fuck");
+                }
+                //Registered User clicks on the Create Event
+                else{
+                    document.getElementById('createEvtPopup').style.display = "block";
+                    $('.carousel-indicators').hide();
+                    document.getElementById('createEvtLocation').innerHTML = "<b>" + results.name + "</b>";
+                    var slider = document.getElementById("myRange");
+                    var output = document.getElementById("sliderVal");
+                    output.innerHTML = slider.value + " minutes"; // Display the default slider value
+    
+                    // Update the current slider value (each time you drag the slider handle)
+                    slider.oninput = function() {
+                        output.innerHTML = this.value + " minutes";
+                    }
                 }
             };
             infoDiv.appendChild(createEventButton);
@@ -499,7 +509,14 @@ function dropdownTxtChange(evt){
 
 //Function to Hide Popup
 function div_hide(){
-    document.getElementById('createEvtPopup').style.display = "none";
+    //Guest User clicks on the close button
+    if(document.getElementById('createEvtPopup') == null){
+        document.getElementById('promptAccountPopup').style.display = "none";
+    }
+    //Registered User clicks on the close button
+    else{
+        document.getElementById('createEvtPopup').style.display = "none";
+    }
     $('.carousel-indicators').show();
 }
 
