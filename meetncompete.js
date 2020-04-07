@@ -463,7 +463,7 @@ function addMarker(lati, longi, name, mdata, i) {
                 if(document.getElementById('createEvtPopup') == null){
                     document.getElementById('promptAccountPopup').style.display = "block";
                     $('.carousel-indicators').hide();
-                    document.getElementById('promptForAccount').innerHTML = "<b> Please create an account to create an event at " + results.name + "</b>";
+                    document.getElementById('promptForAccount').innerHTML = "<b>Login or signup for an account to create events</b>";
                 }
                 //Registered User clicks on the Create Event
                 else{

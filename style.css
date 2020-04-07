@@ -444,6 +444,8 @@ div#popupAccount {
 
 #popupAccount p{
     font-family: 'Open Sans', sans-serif;
+    font-size: 17px;
+    text-align: center;
 }
 
 
@@ -601,6 +603,13 @@ textarea {
 
 #createEvtLocation{
     font-family: 'Open Sans', sans-serif;
+}
+
+.loginSignup{
+    margin-left: 70px;
+    cursor: pointer;
+    background-color: #1FC8FF;
+    border: 1px solid #1FC8FF;
 }
 
 #desc{

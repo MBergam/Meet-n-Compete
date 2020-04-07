@@ -1,5 +1,7 @@
 <?php
 include 'header.php';
+include 'config.php';
+include 'submitEvent.php';
 
 echo '
 <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
@@ -90,9 +92,8 @@ echo '
             <h2 id="contact">Create Event</h2>
             <hr>
             <p id="createEvtLocation">Event location</p>
-            <textarea id="evtName" name="name" placeholder="Event Name (Optional)"></textarea>
             <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" id="sportText" data-toggle="dropdown">Select Sport</button>
+                <button class="btn btn-default dropdown-toggle" type="button" name="sportText" id="sportText" data-toggle="dropdown">Select Sport</button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                 <li role="presentation"><a role="menuitem" tabindex="-1">Baseball</a></li>
                 <li role="presentation" class="divider"></li>
@@ -131,7 +132,7 @@ echo '
                 <li role="presentation"><a role="menuitem" tabindex="-1">Weightlifting</a></li>
                 </ul>
             </div>
-            <p>Enter Time: <input type = "text" id ="evtTime" name="evtTime"></p>
+            <p>Enter Time: <input type = "text" name="evtTime" id ="evtTime" name="evtTime"></p>
             <script>
                 var j = jQuery.noConflict();
                 j( function() {
@@ -142,7 +143,7 @@ echo '
                      });
                 } );
             </script>
-            <p>Enter Date: <input type = "text" id = "datepicker"></p>
+            <p>Enter Date: <input type = "text" name = "datepicker" id = "datepicker"></p>
             <script>
                 var j = jQuery.noConflict();
                 j( function() {
@@ -158,7 +159,7 @@ echo '
             </div>
             <p id="sliderVal"></p>
             <textarea id="desc" name="description" placeholder="Description (Optional)"></textarea>
-            <a href="javascript:%20check_empty()" id="submit">Send</a>
+            <button href="javascript:%20check_empty()" name="submitBtn" id="submit">Send</button>
             </form>
             </div>
         </div>
