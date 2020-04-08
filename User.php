@@ -58,7 +58,10 @@ class User{
             return false;
     }
 
-    public function addFriends(){
-
+    public function getProfilePicture(){
+        $username = $this->user['user_name'];
+        $query = mysqli_query($this->con, "select profile_picture from users where user_name = '$username'");
+        $row = mysqli_fetch_array($query);
+        return $row['profile_picture'];
     }
 }

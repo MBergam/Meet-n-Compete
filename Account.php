@@ -91,7 +91,7 @@ if(isset($_POST['post'])){
                                 inProgress = false;
                             }
                         });
-                    },1000);
+                    },500);
 
                 }
 

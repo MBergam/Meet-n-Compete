@@ -216,5 +216,5 @@ require 'Login_Handler.php';
 
 <?php
 require 'footer.php';
-$con->close();
+//$con->close();
 ?>
