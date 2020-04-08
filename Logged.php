@@ -91,7 +91,8 @@ echo '
             <a class="boxclose" id="boxclose" onclick= "div_hide()"></a>
             <h2 id="contact">Create Event</h2>
             <hr>
-            <p id="createEvtLocation">Event location</p>
+            <p id="createEvtLocation" name="createEvtLocation">Event location</p>
+            <textarea id="evtName" name="eventName" placeholder="Event Name (Optional)"></textarea>
             <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" name="sportText" id="sportText" data-toggle="dropdown">Select Sport</button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">

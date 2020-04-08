@@ -1,59 +1,58 @@
 <?php
 
 require 'config.php';
+//include 'Logged.php';
 
-    //$event_id
-    /*$event_marker_id = $_POST['event_marker_id'];
-    $event_time = $_POST['event_time'];
-    $event_type = $_POST['event_type'];
-    $event_description = $_POST['event_description'];
-    $user_name = $_POST['user_name'];
-    $location = $_POST['location'];
-    $event_name = $_POST['event_name'];*/
 
+
+    //$event_id will be autoincremented in the database so no need to do anything with it here
     $event_marker_id = "";
     $event_time = "";
     $event_type = "";
     $event_description = "";
     $user_name = "";
     $location = "";
-    $event_name = "test";
+    $event_name = "";
 
 
 if(isset($_POST['submitBtn'])){
 
-    /*$event_marker_id = strip_tags($_POST['reg_fname']);//remove html tags
-    $fname = str_replace(' ','',$fname); //remove spaces
-    $fname = ucfirst(strtolower($fname));
-    $_SESSION['reg_fname'] = $fname;
 
-    $event_time = strip_tags($_POST['evtTime']);//remove html tags
-    $lname = str_replace(' ','',$lname); //remove spaces
-    $lname = ucfirst(strtolower($lname));
-    $_SESSION['reg_lname'] = $lname;
+    $event_marker_id = strip_tags($_POST['place_id']);//remove html tags
+    //echo($event_marker_id);
+    $_SESSION['place_id'] = $event_marker_id;
+    
+    $event_time = strip_tags($_POST['datepicker']);//remove html tags
+    //echo($event_time);
+    $_SESSION['datepicker'] = $event_time;
 
-    $email = strip_tags($_POST['reg_email']);//remove html tags
-    $email = str_replace(' ','',$email); //remove spaces
-    $_SESSION['reg_email'] = $email;
+    //NOTE: will need to add a field to event table in db for event_time_of_day to store the start time for an event
 
-    $username = strip_tags($_POST['reg_username']);
-    $username = str_replace(' ', '',$username);
-    $_SESSION['reg_username'] = $username;
+    $event_type = strip_tags($_POST['sportText']);//remove html tags
+    //echo($event_time);
+    $_SESSION['sportText'] = $event_time;
 
-    $password = strip_tags($_POST['reg_pass']);//remove html tags
-    $_SESSION['reg_pass'] = $password;
-    $password2 = strip_tags($_POST['reg_pass2']);//remove html tags
-    $_SESSION['reg_pass2'] = $password2;
+    $event_description = strip_tags($_POST['description']);//remove html tags
+    //echo($event_description);
+    $_SESSION['description'] = $event_description;
 
-    $date = date("Y-m-d");*/
 
-    //checkValidation($con, $fname, $lname, $username,$password,$password2,$email);
+    //--not sure how/where to get the user name--
+    /*$user_name = strip_tags($_POST['']);//remove html tags
+    //echo($user_name);
+    $_SESSION[''] = $user_name;*/
 
-    //if(empty($error_array)){
-        //$password = md5($password); //encrypt the password before sending to database
+    $location = strip_tags($_POST['createEvtLocation']);//remove html tags
+    //echo($location);
+    $_SESSION['createEvtLocation'] = $location;
 
-    //$query = mysqli_query($con,"insert into events values ('', '$fname', '$lname', '$username', '$email', '$password', '$date', '', '0', '0','0', 'no', ',')");
-    $query = mysqli_query($con, "insert into events values ('', '9', '2020-08-04', 'Basketball', '', 'yeah', 'Spokane', '$event_name')");
+    //THIS ONE WORKS, THE EVENT NAME IS ABLE TO BE GRABBED AND SENT TO DATABASE. ALL THE OTHER ONES DO NOT WORK
+    $event_name = strip_tags($_POST['eventName']);//remove html tags
+    //echo($event_name);
+    $_SESSION['eventName'] = $event_name;
+
+
+    $query = mysqli_query($con, "insert into events values ('', '$event_marker_id', '$event_time', '$event_type', '$event_description', ' $user_name', '$location', '$event_name')");
 
 }
 

@@ -463,7 +463,7 @@ function addMarker(lati, longi, name, mdata, i) {
                 if(document.getElementById('createEvtPopup') == null){
                     document.getElementById('promptAccountPopup').style.display = "block";
                     $('.carousel-indicators').hide();
-                    document.getElementById('promptForAccount').innerHTML = "<b>Login or signup for an account to create events</b>";
+                    document.getElementById('promptForAccount').innerHTML = "<b> Please create an account to create an event at " + results.name + "</b>";
                 }
                 //Registered User clicks on the Create Event
                 else{
@@ -478,6 +478,10 @@ function addMarker(lati, longi, name, mdata, i) {
                     slider.oninput = function() {
                         output.innerHTML = this.value + " minutes";
                     }
+
+                    var place_id_element = document.createElement('input');
+                    place_id_element.id = "place_id";
+                    place_id_element.innerHTML = 'name="place_id" type="hidden" value="' +  mdata[i].place_id + "'";
                 }
             };
             infoDiv.appendChild(createEventButton);
@@ -496,11 +500,9 @@ function addMarker(lati, longi, name, mdata, i) {
 // Validating Empty Field
 function check_empty() {
     if (document.getElementById('datepicker').value == "" || document.getElementById('evtTime').value == "" || $("#sportText").text() == "Select Sport") {
-        //Handle showing what to fill in (we'll do this later)
         alert("Fill All Fields !");
     } else {
         document.getElementById('createEventForm').submit();
-        //call search button handler here again to show map with newly created event
     }
 }
 
