@@ -75,8 +75,8 @@ echo '
                         Tennis/Table Tennis <input type = "checkbox" id="tennis" class="checkbox"/><br></br>
                         Volleyball <input type = "checkbox" id="volleyball" class="checkbox"/><br></br>
                         Weightlifting <input type = "checkbox" id="weight_lifting" class="checkbox"/><br></br>               
-                        Radius: <input type = "text" class = "allText" id = "radius" value="2" required minlength="1" maxlength="2" size="4" <p> miles</p><br>
-                        <button id="search">Search</button>
+                        Radius: <input type = "text" class = "allText" id = "radius" value="2" required minlength="1" maxlength="2" size="4" <p> miles</p>
+                        <a id="search" class="button">Search</a>
                     </div>
                 </div>
             </div>
@@ -130,18 +130,25 @@ echo '
                 <li role="presentation"><a role="menuitem" tabindex="-1">Weightlifting</a></li>
                 </ul>
             </div>
-            <input id="evtTime" name="evtTime" placeholder="Event Time" type="text">
+            <p>Enter Time: <input type = "text" id ="evtTime" name="evtTime"></p>
             <script>
                 var j = jQuery.noConflict();
                 j( function() {
-                    j( "#evtTime" ).timepicker({\'step\': 5 });
+                    var dateToday = new Date();
+                    j( "#evtTime" ).timepicker({
+                        \'step\': 5,
+                        \'scrollDefault\': \'now\'
+                     });
                 } );
             </script>
             <p>Enter Date: <input type = "text" id = "datepicker"></p>
             <script>
                 var j = jQuery.noConflict();
                 j( function() {
-                    j( "#datepicker" ).datepicker();
+                    j( "#datepicker" ).datepicker({
+                        minDate: 0,
+                        maxDate: "+1m"
+                    });
                 } );
             </script>
             <div class="slidecontainer">
@@ -149,7 +156,7 @@ echo '
                 <input type="range" min="15" max="120" value="30" class="slider" id="myRange">
             </div>
             <p id="sliderVal"></p>
-            <textarea id="desc" name="description" placeholder="Description"></textarea>
+            <textarea id="desc" name="description" placeholder="Description (Optional)"></textarea>
             <a href="javascript:%20check_empty()" id="submit">Send</a>
             </form>
             </div>
