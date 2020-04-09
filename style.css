@@ -630,6 +630,21 @@ textarea {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 ==================================
 !!!THIS IS FOR THE ACCOUNT.PHP !!!
@@ -745,6 +760,7 @@ textarea:focus{
 #comment_iframe{
     max-height: 250px;
     width: 100%;
+    margin-top: 5px;
 }
 
 #comment_form textarea{
@@ -781,4 +797,35 @@ textarea:focus{
 
 .post_comment{
     background-color: #e6dee2;
+}
+
+.newsfeedPostOption{
+    padding: 0px;
+    text-decoration: none;
+    color: #9fcdff;
+    border: none;
+}
+
+.newsfeedPostOption iframe{
+    border: 0px;
+    height: 17px;
+    width: 120px;
+}
+
+
+
+.comment_like{
+    background-color: transparent;
+    border: none;
+    font-size: 14px;
+    color: #035bbb;
+    padding: 0;
+    height: auto;
+    width: auto;
+    margin: 0;
+}
+
+.like_value{
+    display: inline;
+    font-size: 14px;
 }

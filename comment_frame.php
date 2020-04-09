@@ -171,9 +171,12 @@ if(isset($_POST['postComment' . $post_id])) {
 
             <?php
 
-
-
         }
+
+    }
+
+    else{
+        echo "<center> <br>No comments to show... </center>";
     }
 ?>
 
