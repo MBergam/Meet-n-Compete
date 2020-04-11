@@ -1,7 +1,6 @@
 <?php
 include 'header.php';
-include 'User.php';
-include 'Post.php';
+
 
 if(isset($_POST['post'])){
     $post = new Post($con,$userLogin);
@@ -11,7 +10,7 @@ if(isset($_POST['post'])){
 
 ?>
     <div class="account_wrapper">
-        <div class="user_details flex-column">
+        <div class="user_details column">
             <a href="<?php echo $userLogin; ?>" class="user_profile_image"> <img src="<?php echo $user['profile_picture'] ?>"></a>
 
             <div class="user_details_left_right">
@@ -33,7 +32,7 @@ if(isset($_POST['post'])){
             </div>
 
         </div>
-        <div class="main_column_new_feed flex-column">
+        <div class="main_column_new_feed column">
             <form class="post_form" action="Account.php" method="POST">
                 <textarea name="post_text" id="post_text" placeholder="What are you thinking...? "></textarea>
                 <input type="submit" name="post" id="post_button" value="Post">

@@ -698,7 +698,7 @@ textarea {
 }
 
 /*this is for the profile box*/
-.flex-column {
+.column {
     background-color: whitesmoke;
     padding: 10px;
     border: 1px solid #D3D3D3;
@@ -727,7 +727,6 @@ textarea {
 }
 
 .main_column_new_feed{
-    /*float: right;*/
     width: 70%;
     z-index: -1;
     min-height: 160px;
@@ -863,4 +862,78 @@ textarea:focus{
 .like_value{
     display: inline;
     font-size: 14px;
+}
+
+/*
+==================================
+THIS CODE BELOW IS FOR PROFILE.PHP
+==================================
+*/
+
+.profile_left{
+    top: -10px;
+    width: 17%;
+    max-width: 240px;
+    min-width: 130px;
+    height: 100%;
+    float: left;
+    position: relative;
+    background-color: #616060;
+    border-right: 10px solid #83D6FE;
+    color: #CBEAF8;
+    margin-right: 20px;
+}
+
+.profile_left img{
+    min-width: 80px;
+    width: 55%;
+    margin: 20px;
+    border: 5px solid #9fcdff;
+    border-radius: 100px;
+}
+
+.profile_left input[type = "submit"]{
+    width: 90%;
+    height: 30px;
+    border-radius: 5px;
+    margin: 7px 0 7px 7px;
+    border: none;
+    color: #ffffff;
+}
+
+.profile_info{
+    display: list-item;
+    background-color: #1d1a1a;
+    width: 100%;
+    padding: 10px 0px 10px 0;
+}
+
+.profile_info p{
+    margin: 0 0 0 20px;
+    word-wrap: break-word ;
+}
+
+.danger{
+    background-color: #e74c3c;
+
+}
+
+.warning{
+    background-color: #f0ad4e;
+}
+
+.default{
+    background-color: #bdc3c7;
+}
+
+.success{
+    background-color: #2ecc71;
+}
+
+.info{
+    background-color: #3498db;
+}
+
+.deep_blue{
+    background-color: #0043f0;
 }

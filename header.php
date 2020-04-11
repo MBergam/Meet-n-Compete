@@ -1,6 +1,8 @@
 <?php
 session_start();
 include 'config.php';
+include 'User.php';
+include 'Post.php';
 
 ////THIS IS THE DATABASE CREDENTIALS FOR WHOEVER USING PDO CONNECTING METHOD
 $p_ini = parse_ini_file("config.ini",true);
@@ -77,6 +79,7 @@ else{
                          <?php
                             if($logged_in_bool){
                                 echo "<li><a href='$userLogin'>$userLogin</a></li>";
+                                echo "<li><a href='friendRequests.php'>Friend Requests</a></li>";
                                 echo "<li><a href='Logout.php'>Logout</a></li>";
                             }
                             else{
