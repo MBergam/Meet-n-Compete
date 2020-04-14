@@ -62,8 +62,12 @@ if(isset($_GET['profile_username'])){
                         echo '<input type="submit" name="add_friend" class="success" value="Add Friend"><br>';
 
                 }
+
             ?>
+
+
         </form>
+        <input type="submit" class="deep_blue" data-toggle="modal" data-target="#post_form" value="Post Something">
 
     </div>
 
@@ -71,41 +75,43 @@ if(isset($_GET['profile_username'])){
             <?php
                 echo $username;
             ?>
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-            Launch demo modal
-        </button>
+
     </div>
 
-
-
-
-
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    <div class="modal fade" id="post_form" tabindex="-1" role="dialog" aria-labelledby="postModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
+
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="postModalLabel">Post something</h4>
                 </div>
+
                 <div class="modal-body">
-                    ...
+                    <p>This will appear on the newsfeed for your friends to see. </p>
+
+                    <form class="profile_post" action="profile.php" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <textarea class="form-control" name="post_body"></textarea>
+                            <input type="hidden" name="user_from" value="<?php echo $userLogin; ?>">
+                            <input type="hidden" name="user_to" value="<?php echo $username; ?>">
+                        </div>
+                    </form>
                 </div>
+
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" name="post_button" id="submit_profile_post">Post</button>
                 </div>
             </div>
         </div>
     </div>
 
 
-
     </div>
     </body>
+
     </html>
 
 
