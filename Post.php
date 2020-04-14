@@ -85,7 +85,7 @@ class Post{
                 else{
                     $user_to_object = new User($this->con, $row['user_to']);
                     $user_to_name = $user_to_object->getFullName();
-                    $user_to = "to <a href=''". $row['user_to']."'".$user_to_name . "</a>";
+                    $user_to = "to <a href='" . $row['user_to'] ."'>" . $user_to_name . "</a>";
                 }
                 $added_by_obj = new User($this->con, $added_by);
                 if( $added_by_obj -> isClosed()){
@@ -111,7 +111,7 @@ class Post{
                     $user_details_query = mysqli_query($this->con, "select first_name, last_name, profile_picture from users 
                                                 where user_name = '$added_by'");
                     $user_row = mysqli_fetch_array($user_details_query);
-                    $firs_name = $user_row['first_name'];
+                    $first_name = $user_row['first_name'];
                     $last_name = $user_row['last_name'];
                     $profile_picture = $user_row['profile_picture'];
 
@@ -221,8 +221,9 @@ class Post{
                             <img src = '$profile_picture' width='75' >
                             </div>
                         <div class='posted_by' style='color: #ACACAC;'>
-                            <a href='$added_by'> $firs_name $last_name </a> $user_to &nbsp;&nbsp;&nbsp;&nbsp;
-                            posted $time_message   
+                            <a href='$added_by'> $first_name $last_name </a> 
+                            $user_to &nbsp;&nbsp;
+                            was posted $time_message   
                         </div>
                         
                         <div id='post_body'>
