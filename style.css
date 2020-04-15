@@ -958,10 +958,12 @@ THIS CODE BELOW IS FOR PROFILE.PHP
     background-color: #f0ad4e;
 }
 
-/*.modal-backdrop {*/
-/*    z-index: 1040;*/
-/*}*/
-
-/*.modal-dialog{*/
-/*    z-index: 1100;*/
-/*}*/
+.delete_button{
+    height: 22px;
+    width: 22px;
+    padding: 0;
+    float: right;
+    border-radius: 4px;
+    right: -15px;
+    position: relative;
+}
