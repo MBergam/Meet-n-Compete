@@ -716,7 +716,6 @@ textarea {
 
 .user_details{
     width: 270px;
-    /*float: left;*/
     margin-bottom: 20px;
 }
 
@@ -870,13 +869,12 @@ THIS CODE BELOW IS FOR PROFILE.PHP
 */
 
 .profile_left{
+    float: left;
     top: -10px;
-    width: 17%;
+    width: 270px;
     max-width: 240px;
     min-width: 130px;
     height: 100%;
-    float: left;
-    position: relative;
     background-color: #616060;
     border-right: 10px solid #83D6FE;
     color: #CBEAF8;
@@ -900,6 +898,13 @@ THIS CODE BELOW IS FOR PROFILE.PHP
     color: #ffffff;
 }
 
+.profile_main_column{
+    min-width: 675px;
+    /*float: right;*/
+    width: 70%;
+    z-index: -1;
+}
+
 .profile_info{
     display: list-item;
     background-color: #1d1a1a;
@@ -910,6 +915,10 @@ THIS CODE BELOW IS FOR PROFILE.PHP
 .profile_info p{
     margin: 0 0 0 20px;
     word-wrap: break-word ;
+}
+
+.profile_info_bottom{
+    margin: 10px 0px 0px 7px;
 }
 
 .danger{
@@ -966,3 +975,5 @@ THIS CODE BELOW IS FOR PROFILE.PHP
     right: -15px;
     position: relative;
 }
+
+

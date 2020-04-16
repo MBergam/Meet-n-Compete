@@ -32,16 +32,18 @@ if(isset($_GET['profile_username'])){
 
     </style>
 
+<div class="container account_wrapper">
+<div class="row">
+    <div class="col-lg-3">
+        <div class="profile_left column">
+            <img src="<?php echo $user_array['profile_picture'];?>">
+            <div class="profile_info">
+                <p><?php echo "Posts: " . $user_array['num_posts'] ?> </p>
+                <p><?php echo "Friends: " . $num_friends ?> </p>
+            </div>
 
-    <div class="profile_left">
-        <img src="<?php echo $user_array['profile_picture'];?>">
-        <div class="profile_info">
-            <p><?php echo "Posts: " . $user_array['num_posts'] ?> </p>
-            <p><?php echo "Friends: " . $num_friends ?> </p>
-        </div>
-
-        <form action="<?php echo $username; ?>" method="POST">
-            <?php
+            <form action="<?php echo $username; ?>" method="POST">
+                <?php
                 $profile_user_obj = new User($con, $username);
                 if($profile_user_obj->isClosed()){
                     header("Location: user_close.php");
@@ -63,20 +65,34 @@ if(isset($_GET['profile_username'])){
 
                 }
 
+                ?>
+
+
+            </form>
+            <input type="submit" class="deep_blue" data-toggle="modal" data-target="#post_form" value="Post Something">
+
+            <?php
+                if($userLogin != $username){
+                    echo '<div class="profile_info_bottom">';
+                    echo $logged_in_user_obj->getMutualFriends($username). " Mutual friends";
+                    echo '</div>';
+                }
+
             ?>
 
-
-        </form>
-        <input type="submit" class="deep_blue" data-toggle="modal" data-target="#post_form" value="Post Something">
-
+        </div>
     </div>
 
-    <div class="main_column_new_feed column">
-        <div class="posts_area"></div>
-        <img id="loading" src="img/loading.gif">
 
-
+    <div class="col-lg-8">
+        <div class="profile_main_column column">
+            <div class="posts_area"></div>
+            <img id="loading" src="img/loading.gif">
+        </div>
     </div>
+</div>
+</div>
+
 
     <!-- Modal -->
     <!-- Modal -->
