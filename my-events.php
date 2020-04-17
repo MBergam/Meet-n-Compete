@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 include 'header.php';
 // get the id of event selected
 if(isset($_GET['user_id']))

@@ -91,9 +91,11 @@ echo '
             <a class="boxclose" id="boxclose" onclick= "div_hide()"></a>
             <h2 id="contact">Create Event</h2>
             <hr>
-            <p id="createEvtLocation" name="createEvtLocation">Event location</p>
+            <input type="hidden" name="createEvtLocationToDB" id="createEvtLocationToDB" value="Event Location"></input>
+            <p id="createEvtLocation">Event location</p>
             <textarea id="evtName" name="eventName" placeholder="Event Name (Optional)"></textarea>
             <div class="dropdown">
+                <input type="hidden" name="sportTextToDB" id="sportTextToDB" value=""></input>
                 <button class="btn btn-default dropdown-toggle" type="button" name="sportText" id="sportText" data-toggle="dropdown">Select Sport</button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                 <li role="presentation"><a role="menuitem" tabindex="-1">Baseball</a></li>
@@ -133,7 +135,8 @@ echo '
                 <li role="presentation"><a role="menuitem" tabindex="-1">Weightlifting</a></li>
                 </ul>
             </div>
-            <p>Enter Time: <input type = "text" name="evtTime" id ="evtTime" name="evtTime"></p>
+            <input type="hidden" name="evtTimeToDB" id="evtTimeToDB" value=""></input>
+            <p>Enter Time: <input type = "text" id ="evtTime" name="evtTime"></p>
             <script>
                 var j = jQuery.noConflict();
                 j( function() {
@@ -142,8 +145,9 @@ echo '
                         \'step\': 5,
                         \'scrollDefault\': \'now\'
                      });
-                } );
+                });
             </script>
+            <input type="hidden" name="datepickerToDB" id="datepickerToDB" value=""></input>
             <p>Enter Date: <input type = "text" name = "datepicker" id = "datepicker"></p>
             <script>
                 var j = jQuery.noConflict();
@@ -156,11 +160,12 @@ echo '
             </script>
             <div class="slidecontainer">
                 <p id="createEvtLength">Length: </p>
+                <input type="hidden" name="myRangeToDB" id="myRangeToDB" value=""></input>
                 <input type="range" min="15" max="120" value="30" class="slider" id="myRange">
             </div>
             <p id="sliderVal"></p>
             <textarea id="desc" name="description" placeholder="Description (Optional)"></textarea>
-            <button href="javascript:%20check_empty()" name="submitBtn" id="submit">Send</button>
+            <button href="javascript:%20check_empty()" name="submitBtn" id="submitBtn">Send</button>
             </form>
             </div>
         </div>

@@ -537,7 +537,7 @@ textarea {
     margin-bottom:30px
 }
 
-#submit {
+#submitBtn {
     text-decoration:none;
     width:100%;
     text-align:center;
@@ -627,7 +627,7 @@ textarea {
     margin-bottom:10px
 }
 
-#submit{
+#submitBtn {
     font-family: 'Open Sans', sans-serif;
 }
 

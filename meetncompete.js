@@ -392,22 +392,50 @@ function properZoom(radi){
 
 //Adds a marker to map
 function addMarker(lati, longi, name, mdata, i) {
-    //create marker
-    var marker = new google.maps.Marker({
-        position: {lat: lati, lng: longi},
-        map: map
-    });
-
     //intitialize info variable if this is the very first marker added to the map
     if (!info) {
         info = new google.maps.InfoWindow();
     }
 
+    var marker;
+    $.ajax({
+        url: "event-data.php",
+        data: {
+            "place_id": mdata[i].place_id
+        },
+        success: function(response) {
+            //no place_ids found in database
+            if(response == "[]"){
+                marker = new google.maps.Marker({
+                    position: {lat: lati, lng: longi},
+                    map: map
+                });
+            }
+            //place_id found in database -- event found -- makes a blue marker to indicate
+            else{
+                marker = new google.maps.Marker({
+                    position: {lat: lati, lng: longi},
+                    map: map,
+                    icon: {
+                        url: "./img/blue-marker.png"
+                    }
+                });
+            }
+            addMarkerHandler(marker, info, mdata, name, i);
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    });
+    
+}
+
+//adds marker handler (info box on click)
+function addMarkerHandler(marker, info, mdata, name, i) {
     marker.addListener('click', function() {
         //close other marker that could have been clicked before
         info.close();
         
-
         infoDiv = document.createElement('div');
         infoDiv.id = "markerInfo";
         let img = document.createElement('img');
@@ -463,7 +491,7 @@ function addMarker(lati, longi, name, mdata, i) {
                 if(document.getElementById('createEvtPopup') == null){
                     document.getElementById('promptAccountPopup').style.display = "block";
                     $('.carousel-indicators').hide();
-                    document.getElementById('promptForAccount').innerHTML = "<b> Please create an account to create an event at " + results.name + "</b>";
+                    document.getElementById('promptForAccount').innerHTML = "<b>Login or signup for an account to create events</b>";
                 }
                 //Registered User clicks on the Create Event
                 else{
@@ -479,9 +507,24 @@ function addMarker(lati, longi, name, mdata, i) {
                         output.innerHTML = this.value + " minutes";
                     }
 
-                    var place_id_element = document.createElement('input');
+                    //Setting all the hidden inputs to the correct value to pass to DB
+                    document.getElementById('createEvtLocationToDB').value = results.name;
+                    //document.getElementById('myRangeToDB').value = slider.value; //for sending to DB
+
+                    //console.log(document.getElementById('evtTimeToDB').value);
+                    document.getElementById('evtTimeToDB').value = document.getElementById('evtTime').value;
+                    //console.log(document.getElementById('evtTimeToDB').value);
+
+                    var place_id_element = document.createElement('INPUT');
                     place_id_element.id = "place_id";
-                    place_id_element.innerHTML = 'name="place_id" type="hidden" value="' +  mdata[i].place_id + "'";
+                    place_id_element.type = "hidden";
+                    place_id_element.name = "place_id";
+                    place_id_element.value = mdata[i].place_id;
+
+                    let sendBtn = document.getElementById("submitBtn");
+                    sendBtn.appendChild(place_id_element);
+
+                    sendBtn.onclick = check_empty;
                 }
             };
             infoDiv.appendChild(createEventButton);
@@ -491,23 +534,48 @@ function addMarker(lati, longi, name, mdata, i) {
             pla.appendChild(infoDiv);
             info.setContent(infoDiv);
             info.open(map, marker);
-            
         });
     });
-    
 }
 
 // Validating Empty Field
 function check_empty() {
     if (document.getElementById('datepicker').value == "" || document.getElementById('evtTime').value == "" || $("#sportText").text() == "Select Sport") {
-        alert("Fill All Fields !");
+        //Handle showing what to fill in (we'll do this later)
+        alert("Fill All Fields!");
     } else {
+        document.getElementById('myRangeToDB').value = document.getElementById("myRange").value; //for sending event duration to DB
+        //document.getElementById('evtTimeToDB').value = (document.getElementById("evtTime").value).replace(/[a-z]/gi, '') //for sending event start time to db as a Time object
+        document.getElementById('evtTimeToDB').value = document.getElementById("evtTime").value//for sending event start time to db as a varchar
+        document.getElementById('datepickerToDB').value = moment(document.getElementById("datepicker").value).format("YYYY-MM-DD"); //for sending event date to db
+
+        //var place_id = document.getElementById('place_id').value;
+        //console.log(place_id);
+
+        //let sendBtn = document.getElementById("submitBtn");
+        //sendBtn.value = "set";
+        /*var submitButton = document.createElement('button');
+        submitButton.style = 'style="display: none"';
+        submitButton.name = "submitBtn";
+        submitButton.id = "submitDB";
+
+        let sendBtn = document.getElementById("submit");
+        sendBtn.appendChild(submitButton);*/
+
+        //Clicks the hidden submit button to send info off to database
+        //$('#submitDB').click();
+
         document.getElementById('createEventForm').submit();
+        //call search button handler here again to show map with newly created event
     }
 }
 
 function dropdownTxtChange(evt){
     $("#sportText").html(evt.target.text);
+
+    //setting value so it can be passed to db
+    let typeOfSport = $("#sportText").html();
+    document.getElementById('sportTextToDB').value = typeOfSport; //for sending type of sport to DB
 }
 
 //Function to Hide Popup

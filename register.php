@@ -2,7 +2,7 @@
 require 'config.php';
 require 'register_handler.php';
 require 'Login_Handler.php';
-//require 'header.php';
+require 'submitEvent.php';
 
 ?>
 
