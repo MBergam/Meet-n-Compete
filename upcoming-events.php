@@ -119,6 +119,10 @@ function printCarouselIndicators(){
     </div>
 
     <main id="content">
+        <div class="title-container">
+            <h1>Upcoming events</h1>
+            <hr>
+        </div>
         <div class="f-container">
     ';
 }

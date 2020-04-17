@@ -111,53 +111,138 @@ echo '
     </div>
 
     <main id="content">
+        <article id="search-bar">
+            <form>
+                <div class="text-box">
+                    <i class="fas fa-search-location"></i>
+                    <input type="text" id="location" name="location" placeholder="Enter a location" />
+                </div>
+                <a class="button" type="submit" id="search">Search</a>
+            </form>
+        </article>
+
         <div class="container">
             <div class="row">
                 <div class="col-lg-8" id="mInfo">
                     <div id="map"></div>
-
-                    <div class="detail-container">
-                        <div class="event-box">
-                            <a href=""><img src="https://via.placeholder.com/200" alt=""></a>
-                            <div class="title-box"><a href=""><h3>Event Title</h3></a></div>
-                        </div>
-                        <div class="event-box">
-                            <a href=""><img src="https://via.placeholder.com/200" alt=""></a>
-                            <div class="title-box"><a href=""><h3>Event Title</h3></a></div>
-                        </div>
-                        <div class="event-box">
-                            <a href=""><img src="https://via.placeholder.com/200" alt=""></a>
-                            <div class="title-box"><a href=""><h3>Event Title</h3></a></div>
-                        </div>
-                    </div>
-                    <div class="button-box">
-                        <a class="button" href="upcoming-events.php">Learn More</a>
-                        <a class="button" href="">Create Event</a>
-                    </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="sidebar-container">
-                    <h2>Preferences</h2>
-                    Baseball <input type = "checkbox" id="baseball" class="checkbox"/> <br></br>
-                    Basketball <input type = "checkbox" id="basketball" class="checkbox"/> <br></br>
-                    Billiards (Pool) <input type = "checkbox" id="billiards" class="checkbox"/> <br></br>
-                    Bowling <input type = "checkbox" id="bowling" class="checkbox"/><br></br>
-                    Climbing <input type = "checkbox" id="climbing" class="checkbox"/><br></br>
-                    Cricket <input type = "checkbox" id="cricket" class="checkbox"/><br></br>
-                    Curling <input type = "checkbox" id="curling" class="checkbox"/><br></br>
-                    Football <input type = "checkbox" id="football" class="checkbox"/><br></br>
-                    Golf/Discgolf <input type = "checkbox" id="golf" class="checkbox"/><br></br>
-                    Rugby <input type = "checkbox" id="rugby" class="checkbox"/><br></br>
-                    Skateboarding <input type = "checkbox" id="skateboarding" class="checkbox"/><br></br>
-                    Skiing <input type = "checkbox" id="skiing" class="checkbox"/><br></br>
-                    Snowboarding <input type = "checkbox" id="snowboarding" class="checkbox"/><br></br>
-                    Soccer <input type = "checkbox" id="soccer" class="checkbox"/> <br></br>
-                    Swimming <input type = "checkbox" id="swimming" class="checkbox"/><br></br>
-                    Tennis/Table Tennis <input type = "checkbox" id="tennis" class="checkbox"/><br></br>
-                    Volleyball <input type = "checkbox" id="volleyball" class="checkbox"/><br></br>
-                    Weightlifting <input type = "checkbox" id="weight_lifting" class="checkbox"/><br></br>               
-                    Radius: <input type = "text" class = "allText" id = "radius" value="2" required minlength="1" maxlength="2" size="4" <p> miles</p>
-                    <a id="search" class="button">Search</a>
+                        <h2 class ="w3-light-grey">Preferences</h2>
+                        <ul class="w3-card w3-light-grey w3-ul">
+                            <li>
+                                <label class="label-container">Baseball
+                                    <input type="checkbox" checked="checked" id="baseball">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="label-container">Basketball
+                                    <input type="checkbox" id="basketball">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="label-container">Billiards
+                                    <input type="checkbox" id="billiards">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="label-container">Bowling
+                                    <input type="checkbox" id="bowling">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="label-container">Climbing
+                                    <input type="checkbox" id="climbing">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="label-container">Cricket
+                                    <input type="checkbox" id="cricket">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="label-container">Curling
+                                    <input type="checkbox" id="curling">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="label-container">Football
+                                    <input type="checkbox" id="football">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="label-container">Golf
+                                    <input type="checkbox" id="golf">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="label-container">Rugby
+                                    <input type="checkbox" id="rugby">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="label-container">Skateboarding
+                                    <input type="checkbox" id="skateboarding">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="label-container">Skiing
+                                    <input type="checkbox" id="skiing">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="label-container">Snowboarding
+                                    <input type="checkbox" id="snowboarding">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="label-container">Soccer
+                                    <input type="checkbox" id="soccer">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="label-container">Swimming
+                                    <input type="checkbox" id="swimming">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="label-container">Tennis
+                                    <input type="checkbox" id="tennis">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="label-container">Volleyball
+                                    <input type="checkbox" id="volleyball">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="label-container">Weightlifting
+                                    <input type="checkbox" id="weightlifting">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                            Radius: <input type = "text" class = "allText" id = "radius" value="2" required minlength="1" maxlength="2" size="4" <p> miles</p>
+                            </li>
+                        </ul>
+                       
                     </div>
                 </div>
             </div>
@@ -173,6 +258,85 @@ echo '
             </div>
         </div>
         <!-- Popup Div Ends Here -->
+
+        <section id="about-us">
+            <div class="container box padding-inside">
+                <div class="title-container">
+                    <h1>About Us</h1>
+                    <hr>
+                </div>
+                <p>As many people have experienced, finding people to organize pick up games with can be difficult. 
+                    Often a person will head over to a local park just to find out that the park is already being used, 
+                    there aren’t enough people, or the people that are there are all different ages.</p>
+                <p>This project will help bring a solution to these problems, allowing users to view events and locations via a map, 
+                    while also being able to create events of their own for others to see and join.</p>
+                <p>Meet-N-Compete will provide an online means to help people organize pick-up games and reduce the difficulties and confusion that usually accompany.</p>
+            </div>
+        </section>
+
+        <section>
+            <div id="upcoming-events" class="container box">
+                <div class="title-container">
+                    <h1>Upcoming Events</h1>
+                    <hr>
+                </div>
+
+                <div class="f-container">
+                    <div class="event-container">
+                        <div class="date-container">
+                            <p><span class="month">Mar</span>
+                                <span class="day">1</span></p>
+                        </div>
+                        <div class="detail">
+                            <h3>Name of Events</h3>
+                            <h4>Glass Park, Spokane, WA</h4>
+                            <button class="button">More...</button>
+                            <button class="button">Join Event</button>
+                        </div>
+                    </div>
+                    <div class="event-container">
+                        <div class="date-container">
+                            <p><span class="month">Mar</span>
+                                <span class="day">1</span></p>
+                        </div>
+                        <div class="detail">
+                            <h3>Name of Events</h3>
+                            <h4>Glass Park, Spokane, WA</h4>
+                            <button class="button">More...</button>
+                            <button class="button">Join Event</button>
+                        </div>
+                    </div>
+                    <div class="event-container">
+                        <div class="date-container">
+                            <p><span class="month">Mar</span>
+                                <span class="day">1</span></p>
+                        </div>
+                        <div class="detail">
+                            <h3>Name of Events</h3>
+                            <h4>Glass Park, Spokane, WA</h4>
+                            <button class="button">More...</button>
+                            <button class="button">Join Event</button>
+                        </div>
+                    </div>
+                    <div class="event-container">
+                        <div class="date-container">
+                            <p><span class="month">Mar</span>
+                                <span class="day">1</span></p>
+                        </div>
+                        <div class="detail">
+                            <h3>Name of Events</h3>
+                            <h4>Glass Park, Spokane, WA</h4>
+                            <button class="button">More...</button>
+                            <button class="button">Join Event</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="button-box">
+                    <a class="button" href="">View More</a>
+                </div>
+            </div>
+        </section>
+        
     </main>';
 
 include 'footer.php';
