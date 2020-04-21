@@ -2,8 +2,8 @@
 include 'header.php';
 include 'config.php';
 include 'submitEvent.php';
+?>
 
-echo '
 <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
         <li data-target="#carouselIndicators" data-slide-to="0" class="active"></li>
@@ -85,14 +85,14 @@ echo '
         </div>
         <div id="createEvtPopup">
             <!-- Popup Div Starts Here -->
-            <div id="popupContact">
+            <div class="popupContact" id="popupCreateEvt">
             <!-- Create New Event -->
             <form action="#" id="createEventForm" method="post" name="createEventForm">
-            <a class="boxclose" id="boxclose" onclick= "div_hide()"></a>
+            <a class="boxclose" id="createEvt_boxclose" onclick= "div_hide()"></a>
             <h2 id="contact">Create Event</h2>
             <hr>
             <input type="hidden" name="createEvtLocationToDB" id="createEvtLocationToDB" value="Event Location"></input>
-            <p id="createEvtLocation">Event location</p>
+            <p class="eventLocation" id="createEvtLocation">Event location</p>
             <textarea id="evtName" name="eventName" placeholder="Event Name (Optional)"></textarea>
             <div class="dropdown">
                 <input type="hidden" name="sportTextToDB" id="sportTextToDB" value=""></input>
@@ -142,8 +142,8 @@ echo '
                 j( function() {
                     var dateToday = new Date();
                     j( "#evtTime" ).timepicker({
-                        \'step\': 5,
-                        \'scrollDefault\': \'now\'
+                        'step': 5,
+                        'scrollDefault': 'now'
                      });
                 });
             </script>
@@ -169,10 +169,18 @@ echo '
             </form>
             </div>
         </div>
+        <div id="seeEventsPopup">
+            <!-- Popup Div Starts Here -->
+            <div class="popupContact" id="popupSeeEvts">
+            <div id="seeEvents" class="f-container">
+            <a class="boxclose" id="seeEvts_boxclose" onclick= "hideEvents()"></a>
+            <h4 class="eventLocation" id="seeEventsLocation">Event location</h4>
+            </div>
+            </div>
+        </div>
         <!-- Popup Div Ends Here -->
-    </main>';
+    </main>
 
-
-
+<?php
 include 'footer.php';
 ?>

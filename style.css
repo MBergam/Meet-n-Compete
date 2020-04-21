@@ -462,6 +462,34 @@ div#popupAccount {
     overflow:auto
 }
 
+/*THIS IS THE DESIGN FOR THE SEE EVENT POPUP WHEN YOU CLICK ON THE MARKER*/
+#seeEventsPopup {
+    width:100%;
+    height:100%;
+    opacity:.95;
+    top:0;
+    left:0;
+    display:none;
+    position:fixed;
+    background-color:#313131;
+    overflow:auto
+}
+
+.see-event-container{
+    width: 444px;
+    height: 137px;
+}
+
+#seeEvents {
+    max-width:600px;
+    min-width:250px;
+    padding:10px 50px;
+    border:2px solid gray;
+    border-radius:10px;
+    font-family: 'Open Sans', sans-serif;
+    background-color:#fff
+}
+
 a.boxclose{
     margin-top:-30px;
     margin-right:-30px;
@@ -484,25 +512,30 @@ a.boxclose{
 
 }
 
-div#popupContact {
+.popupContact {
     position:absolute;
     left:50%;
     top:17%;
     margin-left:-202px;
     font-family:'Raleway',sans-serif
 }
+
+#popupSeeEvts{
+    left: 45%;
+}
+
 #createEventForm {
     max-width:400px;
     min-width:250px;
     padding:10px 50px;
     border:2px solid gray;
     border-radius:10px;
-    font-family:raleway;
+    font-family: 'Open Sans',sans-serif;
     background-color:#fff
 }
 
-#createEvtLocation {
-    font-size: 18px;
+.eventLocation {
+    font-size: 24px;
 }
 
 #contact {
@@ -627,7 +660,7 @@ textarea {
     margin-bottom:10px
 }
 
-#submitBtn {
+#submitBtn{
     font-family: 'Open Sans', sans-serif;
 }
 
@@ -694,7 +727,22 @@ textarea {
     color: #fff;
 }
 
+/*Used for hyperlinks across site (such as Get Directions or See Reviews)*/
+.hyperLink{
+    font-weight: bold;
+    text-decoration: underline;
+    color: blue;
+    cursor:pointer;
+}
 
+/*allText (inside of info when clicking on a marker on the Home page map)*/
+.allText{
+    display: inline-block;
+}
+
+.placeInfo{
+    margin-bottom: 0;
+}
 
 /*
 ==================================

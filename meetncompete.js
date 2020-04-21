@@ -50,12 +50,15 @@ function success(pos) {
 //If user blocks location or there was an error trying to access their location - then prompts for manual location
 function error(err) {
     console.log(`${err.message}`);
-    const div = document.createElement('div');
+
+    //commented out code below to fit with Tam's new code. This shouldn't be used, but it's here just in case we need to revert
+
+    /*const div = document.createElement('div');
     div.id = 'manualLoc';
     div.className = 'allText';
     div.innerHTML = '<br></br>Enter a location: <input type = "text" class = "allText" id = "address" /><br></br><br></br>';
 
-    document.getElementById('map').appendChild(div);
+    document.getElementById('map').appendChild(div);*/
 }
 
 //Function to intialize the Google map
@@ -398,6 +401,10 @@ function addMarker(lati, longi, name, mdata, i) {
     }
 
     var marker;
+    var hasEvent = false;
+
+    //Database call to find events with the same place_id as the location data
+    //If so, a blue marker will indicate that the location has an event
     $.ajax({
         url: "event-data.php",
         data: {
@@ -405,7 +412,7 @@ function addMarker(lati, longi, name, mdata, i) {
         },
         success: function(response) {
             //no place_ids found in database
-            if(response == "[]"){
+            if(response.includes("[]")){
                 marker = new google.maps.Marker({
                     position: {lat: lati, lng: longi},
                     map: map
@@ -420,8 +427,10 @@ function addMarker(lati, longi, name, mdata, i) {
                         url: "./img/blue-marker.png"
                     }
                 });
+                hasEvent = true;
             }
-            addMarkerHandler(marker, info, mdata, name, i);
+            //calls function to add the marker handler which basically sets up the info window interaction on the marker's click
+            addMarkerHandler(marker, info, mdata, name, i, hasEvent);
         },
         error: function(xhr) {
             console.log(xhr);
@@ -431,7 +440,7 @@ function addMarker(lati, longi, name, mdata, i) {
 }
 
 //adds marker handler (info box on click)
-function addMarkerHandler(marker, info, mdata, name, i) {
+function addMarkerHandler(marker, info, mdata, name, i, hasEvent) {
     marker.addListener('click', function() {
         //close other marker that could have been clicked before
         info.close();
@@ -441,7 +450,7 @@ function addMarkerHandler(marker, info, mdata, name, i) {
         let img = document.createElement('img');
         img.className = 'photo markInfo';
         
-        //set an image for a marker. If image, then use default.
+        //set an image for a marker. If no image, then use default.
         if (mdata[i]["photos"] != null) {
             img.src = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=250&photoreference=" + mdata[i]["photos"][0].photo_reference + "&key=" + myKey; 
         }else{
@@ -455,32 +464,102 @@ function addMarkerHandler(marker, info, mdata, name, i) {
             console.log(results);
             //Get user ratings
             let p = document.createElement('p');
-            p.className = "allText markInfo";
-            if(results.rating == null){
-                p.innerText = name + "\n" + results.vicinity + "\nNo user ratings available. ";
-            }else{
-                p.innerText = name + "\n" + results.vicinity + "\nRating: " + results.rating + "/5 (" + results.user_ratings_total + " total)";
-            }
-            infoDiv.append(p);
+            p.className = "markInfo placeInfo";
 
-            //Create 'See Reviews' button
-            let reviewsButton = document.createElement("button");
-            reviewsButton.className = "reviews markInfo button";
-            reviewsButton.innerHTML = "See Reviews";
-
-            reviewsButton.onclick = function(){ 
-                window.open("https://search.google.com/local/reviews?placeid=" + mdata[i].place_id);
-            };
-            infoDiv.appendChild(reviewsButton);
-
-            //Create 'Directions' button
-            let directionsButton = document.createElement("button");
-            directionsButton.className = "directions button markInfo";
-            directionsButton.innerHTML = "Get Directions";
-            directionsButton.onclick = function(){ 
+            //Create 'Directions' link
+            let directionsLink = document.createElement('p');
+            directionsLink.id = "directionsLink";
+            directionsLink.className = "hyperLink allText markInfo";
+            directionsLink.innerHTML = "Get Directions";
+            directionsLink.onclick = function(){ 
                 window.open("https://www.google.com/maps/dir/?api=1&origin=" + latNum + "," + lngNum + "&destination=" + mdata[i].name + "&destination_place_id=" + mdata[i].place_id, "_blank");
             };
-            infoDiv.appendChild(directionsButton);
+
+            p.innerText = name + "\n" + results.vicinity + " ";
+
+            p.appendChild(directionsLink);
+
+            //Get user ratings
+            let p2 = document.createElement('p');
+            p2.className = "markInfo placeInfo";
+
+            //Create 'See Reviews' link
+            let reviewsLink = document.createElement('p');
+            reviewsLink.id = "reviewsLink";
+            reviewsLink.className = "hyperLink allText markInfo";
+            reviewsLink.innerHTML = "See Reviews";
+            reviewsLink.onclick = function(){ 
+                window.open("https://search.google.com/local/reviews?placeid=" + mdata[i].place_id);
+            };
+
+            //Show reviews preview
+            if(results.rating == null){
+                p2.innerText += "\nNo user ratings available. ";
+            }else{
+                p2.innerText += "\nRating: " + results.rating + "/5 (" + results.user_ratings_total + " total) ";
+            }
+            
+            p2.appendChild(reviewsLink);
+            infoDiv.append(p);
+            infoDiv.append(p2);
+
+            //If the marker has an event attached to it, set up the 'See Events' button
+            if(hasEvent){
+                //Create 'See Events' button
+                let seeEventsButton = document.createElement("button");
+                seeEventsButton.className = "seeEvents button markInfo";
+                seeEventsButton.innerHTML = "See Events";
+                seeEventsButton.onclick = function(){ 
+                    //Guest User clicks on See Events
+                    if(document.getElementById('createEvtPopup') == null){
+                        //Prompt user to login/signup for an account
+                        document.getElementById('promptAccountPopup').style.display = "block";
+                        $('.carousel-indicators').hide();
+                        document.getElementById('promptForAccount').innerHTML = "<b>Login or signup for an account to see and join events</b>";
+                    }
+                    //Registered User clicks on See Events
+                    else{
+                        //Remove previously created event list from popup if needed
+                        $('.see-event-container').remove();
+
+                        $.ajax({
+                            url: "event-data.php",
+                            data: {
+                                //passing in 'seeEvents' parameter makes the database query specifically for showing a list of events later on
+                                "place_id": mdata[i].place_id,
+                                "seeEvents": "true"
+                            },
+                            success: function(response) {
+                                var json = JSON.parse(response);
+
+                                //sort json data from earliest to latest date, put it into the orderedResponse variable
+                                orderedResponse = json.sort(function(a,b){
+                                                                return Date.parse(a.event_date) > Date.parse(b.event_date);
+                                                            });
+
+                                //go through every event from the results and add them to the list of events in the popup window
+                                for(var x = 0; x < orderedResponse.length; x++){
+                                    //calls printEvent, which is used to create the list of events in the popup window
+                                    printEvent(orderedResponse[x], results, x+1); 
+                                }
+
+                                //show the 'See Events' popup after the events are added to it
+                                document.getElementById('seeEventsPopup').style.display = "block";
+                                $('.carousel-indicators').hide();
+                                
+                                //at the top of the popup window, show the name of the location
+                                document.getElementById('seeEventsLocation').innerHTML = "<b><u> Events at " + results.name + "</u></b>";
+                            },
+                            error: function(xhr) {
+                                console.log(xhr);
+                            }
+                        });
+
+                    }
+                };
+
+            infoDiv.appendChild(seeEventsButton);
+            }
 
             //Create 'Create Event' button
             let createEventButton = document.createElement("button");
@@ -538,11 +617,139 @@ function addMarkerHandler(marker, info, mdata, name, i) {
     });
 }
 
+//this function is used to convert a month from a number to a String. It's used when a user clicks on the 'See Events' button to show all events at a specific location
+function convertMonth(month){
+    switch (month){
+        case "01":
+            return "Jan";
+        case "02":
+            return "Feb";
+        case "03":
+            return "Mar";
+        case "04":
+            return "Apr";
+        case "05":
+            return "May";
+        case "06":
+            return "Jun";
+        case "07":
+            return "Jul";
+        case "08":
+            return "Aug";
+        case "09":
+            return "Sep";
+        case "10":
+            return "Oct";
+        case "11":
+            return "Nov";
+        case "12":
+            return "Dec";
+        default:
+    }
+}
+
+//Used to create the list of events in the popup window
+//This function does the exact code from upcoming-events.php's printEvent, but is translated to javascript and is created dynamically instead of at the beginning of page load
+//HTML Code of what is being created in printEvent is shown below
+/*<div class="event-container">
+        <div class="date-container">
+            <p><span class="month">'.$month.'</span>
+                <span class="day">'.$day.'</span></p>
+        </div>
+        <div class="detail">
+            <h3>'.$event_name.'</h3>
+            <h4>'.$location.'</h4>
+            <a href="'.$url.'" class="button">Learn More</a>
+            <form method = "post" action="my-events.php">
+            <input type="submit" name="btnJoin" value="Join Event" class="button">
+            <input type="hidden" name="hd_event_id" value="'. $event_id .'" />
+            </form>
+        </div>
+    </div>
+*/
+function printEvent(response, results, x){
+    var event_container = document.createElement('div');
+    event_container.className = "event-container see-event-container";
+
+    var date_container = document.createElement('div');
+    date_container.className = "date-container";
+
+    var p = document.createElement('p');
+
+    var month = convertMonth(response.event_date.substring(5, 7));
+
+    p.innerHTML = "<span class='month'>" + month
+    + "</span><span class='day'>" + response.event_date.substring(8, response.event_date.length)  + "</span>";
+
+    var detail = document.createElement('div');
+    detail.className = "detail";
+
+    var h3 = document.createElement('h3');
+    if(response.event_name == ""){
+        h3.innerText = "Event " + x;
+    }else{
+        h3.innerText = response.event_name;
+    }
+    
+    var h4 = document.createElement('h4');
+    h4.innerText = results.name;
+    
+
+    var a1 = document.createElement('a');
+    a1.className = "button";
+    a1.innerText = "Learn More";
+    a1.href = "eventDetail.php?item=" + encodeURIComponent(response.event_id);
+
+    /*var a2 = document.createElement('a');
+    a2.className = "button";
+    a2.innerText = "Join Event";
+
+    // MAX -- THIS IS THE LINK THE BUTTON WILL TAKE YOU TO. REPLACE THE "#" WITH YOUR URL. (You could set an onclick too)
+    a2.href = "#";
+    
+
+    date_container.appendChild(p);
+    detail.appendChild(h3);
+    detail.appendChild(h4);
+    detail.appendChild(a1);
+    detail.appendChild(a2);*/
+
+    var joinEventContainer = document.createElement('form');
+    joinEventContainer.method = "post";
+    joinEventContainer.action = "my-events.php";
+
+    var joinEventBtn = document.createElement("input");
+    joinEventBtn.type = "submit";
+    joinEventBtn.name = "btnJoin";
+    joinEventBtn.value = "Join Event";
+    joinEventBtn.className = "button";
+
+    var joinEventHiddenIdToDB = document.createElement("input");
+    joinEventHiddenIdToDB.type = "hidden";
+    joinEventHiddenIdToDB.name = "hd_event_id";
+    joinEventHiddenIdToDB.value = response.event_id;
+
+    joinEventContainer.appendChild(joinEventBtn);
+    joinEventContainer.appendChild(joinEventHiddenIdToDB);
+
+    date_container.appendChild(p);
+    detail.appendChild(h3);
+    detail.appendChild(h4);
+    detail.appendChild(a1);
+    detail.appendChild(joinEventContainer);
+    event_container.appendChild(date_container);
+    event_container.appendChild(detail);
+
+    //Put the event_container inside of the 'See Events' popup window, so it now displays on the page
+    let popup = document.getElementById("seeEvents");
+    popup.appendChild(event_container);
+}
+
 // Validating Empty Field
 function check_empty() {
     if (document.getElementById('datepicker').value == "" || document.getElementById('evtTime').value == "" || $("#sportText").text() == "Select Sport") {
         //Handle showing what to fill in (we'll do this later)
-        alert("Fill All Fields!");
+        alert("Fill All Fields!");  
     } else {
         document.getElementById('myRangeToDB').value = document.getElementById("myRange").value; //for sending event duration to DB
         //document.getElementById('evtTimeToDB').value = (document.getElementById("evtTime").value).replace(/[a-z]/gi, '') //for sending event start time to db as a Time object
@@ -565,7 +772,7 @@ function check_empty() {
         //Clicks the hidden submit button to send info off to database
         //$('#submitDB').click();
 
-        document.getElementById('createEventForm').submit();
+        //document.getElementById('createEventForm').submit();
         //call search button handler here again to show map with newly created event
     }
 }
@@ -588,6 +795,12 @@ function div_hide(){
     else{
         document.getElementById('createEvtPopup').style.display = "none";
     }
+    $('.carousel-indicators').show();
+}
+
+//Function to hide 'See Events' Popup
+function hideEvents(){
+    $('#seeEventsPopup').hide();
     $('.carousel-indicators').show();
 }
 
