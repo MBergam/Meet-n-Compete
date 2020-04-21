@@ -200,6 +200,10 @@ main .content{
 
 #about-us{
     margin-top: 4rem;
+    text-align: center;
+}
+#about-us p{
+    font-size: 1.2rem;
 }
 .padding-inside{
     padding: 2rem 4rem !important;
@@ -425,6 +429,7 @@ footer ul li a:hover{
     border-radius: 5px;
     font-size:1.2rem;
     border:1px solid #346a51;
+    line-height: 24px;
 }
 
 .button:hover{
@@ -490,6 +495,9 @@ footer ul li a:hover{
 #eventDetail .event-container .detail .button-container .button {
     padding: 10px 50px;
 }
+.detail-img img{
+    height: 350px;
+}
 /* End CSS for eventDetail page */
 .event-container .date-container{
     display: flex;
@@ -530,6 +538,7 @@ footer ul li a:hover{
 .event-container .detail h3{
     font-size: 2rem;
     color: #137ebe;
+    text-transform: capitalize;
 }
 .event-container .detail h4{
     font-size: 1.2rem;
@@ -547,9 +556,20 @@ footer ul li a:hover{
 }
 .button-small{
     padding: 10px 10px !important; 
+    line-height: 18px;
 }
 .md-height{
     height: 360px;
+}
+#editModal .modal-body{
+    margin: 0 auto;
+}
+#editModal #createEventForm{
+    width: 400px;
+}
+#editModal #createEventForm .dropdown{
+    border: 1px solid #000;
+    border-radius: 5px;
 }
 /* End CSS for My Events page */
 
