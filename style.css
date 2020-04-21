@@ -976,4 +976,56 @@ THIS CODE BELOW IS FOR PROFILE.PHP
     position: relative;
 }
 
+#message_textarea{
+    width: 80%;
+    margin-right: 8px;
+    border-radius: 5px;
+    border: 1px solid #D3D3D3;
+    font-size: 18px;
+    height: 50%;
+    margin-top: 25px;
+}
+
+#message_submit{
+    border: none;
+    background-color: #9fcdff;
+    color: whitesmoke;
+    border-radius: 5px;
+    width: 10%;
+    height: 60px;
+    margin-top: 26px;
+    position: absolute;
+    font-family: 'Fjalla One', sans-serif;
+    text-shadow: #73B6E2 1px 1px 0px;
+}
+
+.message{
+    border: 1px solid #000000;
+    border-radius: 5px;
+    padding: 5px 10px;
+    display: inline-block;
+    color: white;
+}
+
+.message#blue{
+    background-color: #3498db;
+    border-color: #2980b9;
+    float: right;
+    margin-bottom: 5px;
+}
+
+.message#green{
+    background-color: #2ecc71;
+    border-color: #27ae60;
+    float: left;
+    margin-bottom: 5px;
+}
+
+.loaded_messages{
+    height: 65%;
+    min-height: 300px;
+    max-height: 400px;
+    overflow: scroll;
+    margin-bottom: 10px;
+}
 

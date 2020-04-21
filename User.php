@@ -22,10 +22,6 @@ class User{
         return$this->user['user_name'];
     }
 
-    public function updatePostCount(){
-
-    }
-
     public function getNumPosts(){
         $username = $this->user['user_name'];
         $query = mysqli_query($this->con, "select num_posts from users where user_name = '$username'");

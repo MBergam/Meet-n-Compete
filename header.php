@@ -3,6 +3,7 @@ session_start();
 include 'config.php';
 include 'User.php';
 include 'Post.php';
+include 'Message.php';
 
 ////THIS IS THE DATABASE CREDENTIALS FOR WHOEVER USING PDO CONNECTING METHOD
 $p_ini = parse_ini_file("config.ini",true);
@@ -116,7 +117,7 @@ else{
                         <a class="nav-link" href="my-events.php">My Events</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="Account.php">Account</a>
+                        <a class="nav-link" href="Account.php">News Feed</a>
                     </li>
                 </ul>
             </div>

@@ -28,8 +28,8 @@ if(isset($_POST['post'])){
 
                             <?php
                             echo "Number of Post(s): ". $user['num_posts'] . "<br>";
-                            echo "Past Events: " . $user['past_events'] . "<br>";
-                            echo "Current Events: " . $user['current_events'];
+//                            echo "Past Events: " . $user['past_events'] . "<br>";
+//                            echo "Current Events: " . $user['current_events'];
                             ?>
                         </div>
 
