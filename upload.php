@@ -6,9 +6,9 @@ $result_path = "";
 $msg = "";
 
 if(isset($_FILES['image']['name'])){
-    /***********************************************************
-    1 - Upload Original Image To Server
-     ***********************************************************/
+
+    //TODO: will going to implement remove previous image after uploading the new one
+
     //Delete users temp image
     $temppath = 'img/'.$profile_id.'_temp.jpeg';
     if (file_exists ($temppath)){ @unlink($temppath); }
@@ -41,16 +41,7 @@ if(isset($_FILES['image']['name'])){
         $insert_pic_query = mysqli_query($con, "UPDATE users SET profile_picture='$result_path' WHERE user_name='$userLogin'");
         header("Location: ".$userLogin);
     }
-
-
-
-
 }//ADD Image
-
-
-
-
-
 ?>
 <div id="Overlay" style=" width:100%; height:100%; border:0px #990000 solid; position:absolute; top:0px; left:0px; z-index:2000; display:none;"></div>
 <div class="main_column column">
@@ -73,18 +64,7 @@ if(isset($_FILES['image']['name'])){
         </form><br /><br />
 
     </div> <!-- Form-->
-
-
-
 </div>
-
-
-
-
-
-
-
-
 <br /><br />
 
 <?php
