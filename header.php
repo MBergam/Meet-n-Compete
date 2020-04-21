@@ -85,6 +85,7 @@ else{
                             if($logged_in_bool){
                                 echo "<li><a href='$userLogin'>$userLogin</a></li>";
                                 echo "<li><a href='friendRequests.php'>Friend Requests</a></li>";
+                                echo "<li><a href='messages.php'>Chit Chat</a></li>";
                                 echo "<li><a href='Logout.php'>Logout</a></li>";
                             }
                             else{

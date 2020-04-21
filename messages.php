@@ -43,6 +43,16 @@ if(isset($_POST['post_message'])){
                 ?>
             </div>
         </div>
+        <div class="user_details column" id="conversations">
+            <h4>Conversations</h4>
+            <div class="loaded_conversations">
+                <?php
+                echo $message_obj->getConversation();
+                ?>
+            </div>
+            <br>
+            <a href="messages.php?u=new">New Message</a>
+        </div>
     </div>
 
     <div class="col-lg-8">
@@ -50,7 +60,7 @@ if(isset($_POST['post_message'])){
             <?php
             if($user_to!= "new"){
                 echo "<h4> You and <a href='$user_to'>". $user_to_obj->getFullName()."</a></h4><hr><br>";
-                echo "<div class='loaded_messages'>";
+                echo "<div class='loaded_messages' id='scrollable'>";
                 echo $message_obj->getMessages($user_to);
                 echo"</div>";
             }
@@ -76,7 +86,13 @@ if(isset($_POST['post_message'])){
                 </form>
             </div>
 
+            <script>
+                var div = document.getElementById("scrollable")
+                div.scrollTop = div.scrollHeight;
+            </script>
+
         </div>
+
     </div>
 
 </div>
