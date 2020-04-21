@@ -11,6 +11,7 @@ h1,h2,h3,h4,h5,h6{
 h1{
     font-size:2.6rem;
     text-align: center;
+    text-transform: uppercase;
     padding:0;
 }
 
@@ -156,18 +157,146 @@ main .content{
     object-fit: cover;
 }
 
+#search-bar{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 1rem 0;
+    background-color: #333030;
+    border-bottom: 10px solid #524c4c;
+    margin-bottom: 2rem;
+}
+#search-bar .text-box{
+    display: inline-block;
+    padding-bottom: .5rem;
+    margin: 1rem;
+    color: #fff;
+    border-bottom: 1px solid #fff;
+}
+#search-bar .text-box input[type="text"]{
+    border: none;
+    outline: none;
+    background: none;
+    color: #fff;
+    margin: 0 .5rem;
+    width: 30rem;
+}
+#search-bar button[type="submit"]{
+    padding: .8rem 1.5rem;
+    border: none;
+    margin-left: 1rem;
+    font-size: 1rem;
+}
+#search-bar button[type="submit"]:hover{
+    cursor: pointer;
+}
+
 #map{
     margin-top: 20px;
     width: 100%;
-    height: 500px;
+    height: 600px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
 }
 
-.sidebar-container{
-    padding: 20px;
+#about-us{
+    margin-top: 4rem;
     text-align: center;
-    height: 100%;
-    background-color: #c5c5c5;
 }
+#about-us p{
+    font-size: 1.2rem;
+}
+.padding-inside{
+    padding: 2rem 4rem !important;
+}
+/* Style for Preferences list */
+.sidebar-container{
+    margin-top: 20px;
+    padding: 10px;
+    text-align: left;
+    height: 600px;
+    overflow: auto;
+}
+.sidebar-container h2{
+    padding: .5rem 0;
+    font-size: 1.5rem;
+    text-align: center;
+    color: #000;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+    width: 100%;
+    margin-bottom: 1rem;
+}
+.w3-light-grey, .w3-hover-light-grey:hover, .w3-light-gray, .w3-hover-light-gray:hover {
+    color: #000 !important;
+    background-color:#f1f1f1 !important;
+}
+.w3-card, .w3-card-2 {
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0
+    rgba(0,0,0,0.12);
+}
+.w3-ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.w3-ul li {
+    padding: 8px 16px;
+    border-bottom: 1px solid 
+    #ddd;
+}
+
+.label-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 0;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.label-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+.checkmark {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    height: 20px;
+    width: 25px;
+    background-color: #bfbcbc;
+}
+.label-container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+.label-container input:checked ~ .checkmark {
+    background-color: #524c4c;
+}
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+.label-container input:checked ~ .checkmark:after {
+    display: block;
+}
+.label-container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+
 
 .detail-container{
     display: grid;
@@ -300,6 +429,7 @@ footer ul li a:hover{
     border-radius: 5px;
     font-size:1.2rem;
     border:1px solid #346a51;
+    line-height: 24px;
 }
 
 .button:hover{
@@ -314,7 +444,15 @@ footer ul li a:hover{
     text-decoration:none;
     background-color:#346951;
 }
-
+#upcoming-events{
+    padding: 1rem 0;
+    margin-top: 2rem;
+}
+.box{
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
+    padding: 16px 16px 32px 16px;
+    margin-bottom: 4rem;
+}
 
 /* End Home Template CSS - Start Upcoming Event Page CSS */
 .f-container {
@@ -357,6 +495,9 @@ footer ul li a:hover{
 #eventDetail .event-container .detail .button-container .button {
     padding: 10px 50px;
 }
+.detail-img img{
+    height: 350px;
+}
 /* End CSS for eventDetail page */
 .event-container .date-container{
     display: flex;
@@ -397,6 +538,7 @@ footer ul li a:hover{
 .event-container .detail h3{
     font-size: 2rem;
     color: #137ebe;
+    text-transform: capitalize;
 }
 .event-container .detail h4{
     font-size: 1.2rem;
@@ -414,9 +556,20 @@ footer ul li a:hover{
 }
 .button-small{
     padding: 10px 10px !important; 
+    line-height: 18px;
 }
 .md-height{
     height: 360px;
+}
+#editModal .modal-body{
+    margin: 0 auto;
+}
+#editModal #createEventForm{
+    width: 400px;
+}
+#editModal #createEventForm .dropdown{
+    border: 1px solid #000;
+    border-radius: 5px;
 }
 /* End CSS for My Events page */
 

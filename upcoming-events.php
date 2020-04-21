@@ -15,10 +15,10 @@ catch (PDOException $e)
 }
 $conn = null;
 
-//SELECT `event_id`,`event_time`,`location`,`event_name` FROM `events` 
+//SELECT `event_id`,`event_date`,`location`,`event_name` FROM `events` 
 function getEvents($conn){
     
-    $stmt = $conn->query('SELECT `event_id`,`event_time`,`location`,`event_name` FROM `events`');
+    $stmt = $conn->query('SELECT `event_id`,`event_date`,`location`,`event_name` FROM `events`');
     if($stmt->rowCount() > 0){
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -26,7 +26,7 @@ function getEvents($conn){
         $results = null;
     }
     foreach ($results as $row){
-        list($year, $month, $day) = explode("-", $row['event_time']);
+        list($year, $month, $day) = explode("-", $row['event_date']);
         printEvent($row['event_id'], monthConvert($month), $day, $row['location'], $row['event_name']);
     }
 }
@@ -119,6 +119,10 @@ function printCarouselIndicators(){
     </div>
 
     <main id="content">
+        <div class="title-container">
+            <h1>Upcoming events</h1>
+            <hr>
+        </div>
         <div class="f-container">
     ';
 }
