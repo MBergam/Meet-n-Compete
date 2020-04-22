@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 21, 2020 at 08:48 AM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.2
+-- Generation Time: Apr 22, 2020 at 03:25 AM
+-- Server version: 10.4.8-MariaDB
+-- PHP Version: 7.3.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -52,6 +52,26 @@ INSERT INTO `events` (`event_id`, `event_marker_id`, `event_date`, `event_type`,
 (4, 1, '2020-03-31', 'Soccer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 4', '14:00', 30),
 (5, 1, '2020-03-31', 'Soccer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 5', '14:00', 30),
 (6, 1, '2020-03-31', 'Soccer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 6', '14:00', 30);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `event_users`
+--
+
+CREATE TABLE `event_users` (
+  `event_id` int(11) NOT NULL,
+  `user_name` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `event_users`
+--
+
+INSERT INTO `event_users` (`event_id`, `user_name`) VALUES
+(101, 'yeah'),
+(102, 'yeah'),
+(101, 'yeah');
 
 -- --------------------------------------------------------
 
