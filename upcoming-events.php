@@ -17,6 +17,7 @@ $conn = null;
 
 //SELECT `event_id`,`event_time`,`location`,`event_name` FROM `events` 
 function getEvents($conn){
+
     $stmt = $conn->query('SELECT `event_id`,`event_date`,`location`,`event_name` FROM `events`');
     if($stmt->rowCount() > 0){
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -121,6 +122,10 @@ function printCarouselIndicators(){
     </div>
 
     <main id="content">
+        <div class="title-container">
+            <h1>Upcoming events</h1>
+            <hr>
+        </div>
         <div class="f-container">
     ';
 }

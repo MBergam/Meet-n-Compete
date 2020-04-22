@@ -1,6 +1,9 @@
 <?php
 session_start();
 include 'config.php';
+include 'User.php';
+include 'Post.php';
+include 'Message.php';
 
 ////THIS IS THE DATABASE CREDENTIALS FOR WHOEVER USING PDO CONNECTING METHOD
 $p_ini = parse_ini_file("config.ini",true);
@@ -34,31 +37,38 @@ else{
     <title>Meet-N-Compete</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
-
-
+    <!--    FONTS-->
     <link href="https://fonts.googleapis.com/css?family=Fjalla+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
+
+    <!--    CSS-->
+    <link rel="stylesheet" href="css/dropdown.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" >
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/hover-min.css" />
     <link rel="stylesheet" href="css/animate.min.css" />
     <link rel="stylesheet" href="css/vendor/fontawesome-free-5.12.0-web/css/all.min.css" />
-    <link rel="stylesheet" href="css/dropdown.css" />
     <link rel="stylesheet" href="style.css" />
-    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+    <link href ="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
     <link rel="stylesheet" href="css/jquery.timepicker.css" />
-    
+<!--<link rel="stylesheet" href="css/vendor/jquery.Jcrop.css"/>-->
+
+
+<!--    JAVASCRIPT-->
     <script src="js/vendor/modernizr-3.6.0.min.js"></script>
-    <script src="js/vendor/bootstrap.bundle.min.js"></script>
-    <script src="js/vendor/parallax.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4&libraries=places"></script>
+    <script src="js/vendor/jquery-3.3.1.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
-    <script src = "js/jquery.timepicker.min.js"> </script>
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"> </script>
+    <script src="js/vendor/bootstrap.bundle.js"></script>
+    <script src="js/vendor/parallax.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4&libraries=places" async defer></script>
     <script src = "meetncompete.js" async defer> </script>
+    <script src = "js/jquery.timepicker.min.js"> </script>
+    <script src="js/vendor/bootbox.min.js"></script>
+<!--<script src="js/vendor/jcrop_bits.js"></script>-->
+<!--<script src="js/vendor/jquery.Jcrop.js"></script>-->
+    <script src="js/mnc.js"></script>
 
 </head>
 <body>
@@ -74,6 +84,8 @@ else{
                          <?php
                             if($logged_in_bool){
                                 echo "<li><a href='$userLogin'>$userLogin</a></li>";
+                                echo "<li><a href='friendRequests.php'>Friend Requests</a></li>";
+                                echo "<li><a href='messages.php'>Chit Chat</a></li>";
                                 echo "<li><a href='Logout.php'>Logout</a></li>";
                             }
                             else{

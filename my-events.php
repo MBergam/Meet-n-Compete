@@ -51,6 +51,7 @@ function printCarouselIndicators(){
         <span class="sr-only">Next</span>
         </a>
     </div>
+
     <main id="content">
         <div class="container">
             <div class="title-container">
@@ -120,6 +121,7 @@ function printCurrentEvent($event_id, $event_date, $month, $day, $location, $eve
                     <p><span class="month">'.$event_start_time.'</span>-
                         <span class="month">'.$event_duration.'&prime;</span></p>
                 </div>
+
                 <div class="detail">
                     <h3>'.$event_type.'</h3>
                     <h4>'.$location.'</h4>
@@ -133,6 +135,7 @@ function printCurrentEvent($event_id, $event_date, $month, $day, $location, $eve
                         <button class="button button-small" data-toggle="modal" data-target="#editModal">Edit</button>
                         <button class="button button-small" data-toggle="modal" data-target="#deleteModal">Delete</button>
                     </div>
+
                     <!-- Edit Modal -->
                     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -221,6 +224,7 @@ function printCurrentEvent($event_id, $event_date, $month, $day, $location, $eve
                             </div>
                         </div>
                     </div>
+
                     <!-- Delete Modal -->
                     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -264,6 +268,7 @@ function printPastEvent($event_id, $month, $day, $location, $event_name, $event_
                     <p><span class="month">'.$event_start_time.'</span>-
                         <span class="month">'.$event_duration.'&prime;</span></p>
                 </div>
+
                 <div class="detail">
                     <h3>'.$event_type.'</h3>
                     <h4>'.$location.'</h4>
@@ -326,8 +331,6 @@ function monthConvert($month){
         default:
     }
 }
-
-
 //for when a user clicks join event from upcoming events page
 if (isset($_POST['btnJoin'])) {
 
