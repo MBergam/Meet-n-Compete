@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 22, 2020 at 03:25 AM
+-- Generation Time: Apr 22, 2020 at 03:37 AM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.10
 
@@ -30,14 +30,14 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `events` (
   `event_id` int(11) NOT NULL,
-  `event_marker_id` int(11) NOT NULL,
+  `event_marker_id` varchar(30) NOT NULL,
   `event_date` date NOT NULL,
-  `event_type` varchar(10) NOT NULL,
-  `event_description` text NOT NULL,
+  `event_type` varchar(20) NOT NULL,
+  `event_description` text NOT NULL DEFAULT 'No Description',
   `user_name` varchar(30) NOT NULL,
   `location` varchar(255) NOT NULL,
   `event_name` varchar(255) NOT NULL,
-  `event_start_time` varchar(9) NOT NULL,
+  `event_start_time` varchar(9) NOT NULL DEFAULT current_timestamp(),
   `event_duration` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -46,12 +46,12 @@ CREATE TABLE `events` (
 --
 
 INSERT INTO `events` (`event_id`, `event_marker_id`, `event_date`, `event_type`, `event_description`, `user_name`, `location`, `event_name`, `event_start_time`, `event_duration`) VALUES
-(1, 1, '2020-04-30', 'Basketball', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 1', '14:00', 30),
-(2, 1, '2020-03-31', 'soccer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 2', '14:00', 30),
-(3, 1, '2020-03-31', 'tennis', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 3', '14:00', 30),
-(4, 1, '2020-03-31', 'Soccer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 4', '14:00', 30),
-(5, 1, '2020-03-31', 'Soccer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 5', '14:00', 30),
-(6, 1, '2020-03-31', 'Soccer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 6', '14:00', 30);
+(1, '1', '2020-04-30', 'Basketball', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 1', '14:00', 30),
+(2, '1', '2020-03-31', 'soccer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 2', '14:00', 30),
+(3, '1', '2020-03-31', 'tennis', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 3', '14:00', 30),
+(4, '1', '2020-03-31', 'Soccer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 4', '14:00', 30),
+(5, '1', '2020-03-31', 'Soccer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 5', '14:00', 30),
+(6, '1', '2020-03-31', 'Soccer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 6', '14:00', 30);
 
 -- --------------------------------------------------------
 
@@ -206,6 +206,12 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `user_name`, `email`, `pas
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `events`
+--
+ALTER TABLE `events`
+  ADD PRIMARY KEY (`event_id`);
 
 --
 -- Indexes for table `likes`
