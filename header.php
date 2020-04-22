@@ -63,12 +63,15 @@ else{
     <script src="js/vendor/bootstrap.bundle.js"></script>
     <script src="js/vendor/parallax.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4&libraries=places" async defer></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"> </script>
+    <script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
     <script src = "meetncompete.js" async defer> </script>
     <script src = "js/jquery.timepicker.min.js"> </script>
     <script src="js/vendor/bootbox.min.js"></script>
 <!--    <script src="js/vendor/jcrop_bits.js"></script>-->
 <!--    <script src="js/vendor/jquery.Jcrop.js"></script>-->
     <script src="js/mnc.js"></script>
+    
 
 </head>
 <body>

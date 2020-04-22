@@ -5,8 +5,6 @@ require 'Login_Handler.php';
 require 'submitEvent.php';
 
 ?>
-
-
 <html>
 <head>
     <title>
@@ -216,5 +214,5 @@ require 'submitEvent.php';
 
 <?php
 require 'footer.php';
-$con->close();
+//$con->close();
 ?>

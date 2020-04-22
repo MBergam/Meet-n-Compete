@@ -255,7 +255,7 @@ function initMap(lati, longi, radi) {
             }, 
         "json");
     }
-    if (document.getElementById("weight_lifting").checked) {
+    if (document.getElementById("weightlifting").checked) {
         weight_reqdata = {
             key: myKey,
             radius: radi,
