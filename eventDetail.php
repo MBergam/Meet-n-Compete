@@ -54,40 +54,40 @@ function printCarouselIndicators(){
         <div class="container">
     ';
 }
-//SELECT `event_id`,`event_time`,`location`,`event_name`,`event_type`,`event_description`,`user_id`,`ImgFullSize`,`Start`,`End` FROM `events` 
+//SELECT `event_id`,`event_date`,`location`,`event_name`,`event_type`,`event_description`,`user_name`,`event_start_time`,`event_duration` FROM `events` 
 function getItemDetail($conn, $itemID){
     
-    $stmt = $conn->prepare('SELECT `event_id`,`event_time`,`location`,`event_name`,`event_type`,`event_description`,`user_id`,`ImgFullSize`,`Start`,`End`
+    $stmt = $conn->prepare('SELECT `event_id`,`event_date`,`location`,`event_name`,`event_type`,`event_description`,`user_name`,`event_start_time`,`event_duration`
                           FROM  `events`
                           WHERE event_id =?');
     $stmt->bindValue(1,$itemID,PDO::PARAM_INT);
     $stmt->execute();
     if($stmt->rowCount() ==1 ){
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        list($year, $month, $day) = explode("-", $row['event_time']);
+        list($year, $month, $day) = explode("-", $row['event_date']);
         printEventDetails($row['event_id'], monthConvert($month), $day, $row['location'], $row['event_name'], 
-        $row['event_type'], $row['event_description'], $row['user_id'], $row['ImgFullSize'], $row['Start'], $row['End']);
+        $row['event_type'], $row['event_description'], $row['user_name'], $row['event_start_time'], $row['event_duration']);
     }
     else{
         echo "Data not found";
     }
 }
-function printEventDetails($event_id, $month, $day, $location, $event_name, $event_type, $event_description, $user_id, $ImgFullSize, $Start, $End)
+function printEventDetails($event_id, $month, $day, $location, $event_name, $event_type, $event_description, $user_name, $event_start_time, $event_duration)
 {
     echo'
     <h1>'.$event_name.'</h1>
     <hr>
     <div class="row">
         <div class="col-md-6">
-            <img src="img/'.$ImgFullSize.'" alt="">
+            <div class="detail-img"><img src="img/'.$event_type.'.jpg" alt=""></div>
         </div>
         <div class="col-md-6" id="eventDetail">
             <div class="event-container">
                 <div class="date-container">
                     <p><span class="month">'.$month.'</span>-
                         <span class="day">'.$day.'</span></p>
-                    <p><span class="month">'.$Start.'</span>-
-                        <span class="month">'.$End.'</span></p>
+                    <p><span class="month">'.$event_start_time.'</span>-
+                        <span class="month">'.$event_duration.'&prime;</span></p>
                 </div>
 
                 <div class="detail">

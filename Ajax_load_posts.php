@@ -7,4 +7,3 @@
 
     $post = new Post($con,$_REQUEST['userLogin']);
     $post->loadPostFriend($_REQUEST,$limit);
-?>

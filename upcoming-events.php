@@ -15,9 +15,8 @@ catch (PDOException $e)
 }
 $conn = null;
 
-//SELECT `event_id`,`event_time`,`location`,`event_name` FROM `events` 
+//SELECT `event_id`,`event_date`,`location`,`event_name` FROM `events` 
 function getEvents($conn){
-
     $stmt = $conn->query('SELECT `event_id`,`event_date`,`location`,`event_name` FROM `events`');
     if($stmt->rowCount() > 0){
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);

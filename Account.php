@@ -1,7 +1,6 @@
 <?php
 include 'header.php';
-include 'User.php';
-include 'Post.php';
+
 
 if(isset($_POST['post'])){
     $post = new Post($con,$userLogin);
@@ -10,40 +9,48 @@ if(isset($_POST['post'])){
 }
 
 ?>
-    <div class="account_wrapper">
-        <div class="user_details flex-column">
-            <a href="<?php echo $userLogin; ?>" class="user_profile_image"> <img src="<?php echo $user['profile_picture'] ?>"></a>
+        <div class="container account_wrapper">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="user_details column">
+                        <a href="<?php echo $userLogin; ?>" class="user_profile_image"> <img src="<?php echo $user['profile_picture'] ?>"></a>
 
-            <div class="user_details_left_right">
+                        <div class="user_details_left_right">
 
 
-                <a href=" <?php echo $userLogin; ?>">
-                    <?php
-                    echo "Hello, " . $user['first_name'] . " " . $user['last_name'] . "<br>";
+                            <a href=" <?php echo $userLogin; ?>">
+                                <?php
+                                echo "Hello, " . $user['first_name'] . " " . $user['last_name'] . "<br>";
 
-                    ?>
-                </a>
-                <br>
+                                ?>
+                            </a>
+                            <br>
 
-                <?php
-                echo "Number of Post(s): ". $user['num_posts'] . "<br>";
-                echo "Past Events: " . $user['past_events'] . "<br>";
-                echo "Current Events: " . $user['current_events'];
-                ?>
+                            <?php
+                            echo "Number of Post(s): ". $user['num_posts'] . "<br>";
+//                            echo "Past Events: " . $user['past_events'] . "<br>";
+//                            echo "Current Events: " . $user['current_events'];
+                            ?>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="main_column_new_feed column">
+                        <form class="post_form" action="Account.php" method="POST">
+                            <textarea name="post_text" id="post_text" placeholder="What are you thinking...? "></textarea>
+                            <input type="submit" name="post" id="post_button" value="Post">
+                            <hr>
+                        </form>
+
+                        <div class="posts_area"></div>
+                        <img id="loading" src="img/loading.gif">
+
+                    </div>
+                </div>
             </div>
-
-        </div>
-        <div class="main_column_new_feed flex-column">
-            <form class="post_form" action="Account.php" method="POST">
-                <textarea name="post_text" id="post_text" placeholder="What are you thinking...? "></textarea>
-                <input type="submit" name="post" id="post_button" value="Post">
-                <hr>
-            </form>
-
-            <div class="posts_area"></div>
-            <img id="loading" src="img/loading.gif">
-
-        </div>
+        
+        
 
         <script>
             $(function(){
@@ -91,7 +98,7 @@ if(isset($_POST['post'])){
                                 inProgress = false;
                             }
                         });
-                    },1000);
+                    },500);
 
                 }
 

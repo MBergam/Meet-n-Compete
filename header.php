@@ -35,9 +35,9 @@ else{
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>Meet-N-Compete</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
-    <!--    FONTS-->
+
+<!--    FONTS-->
     <link href="https://fonts.googleapis.com/css?family=Fjalla+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
@@ -66,8 +66,8 @@ else{
     <script src = "meetncompete.js" async defer> </script>
     <script src = "js/jquery.timepicker.min.js"> </script>
     <script src="js/vendor/bootbox.min.js"></script>
-<!--<script src="js/vendor/jcrop_bits.js"></script>-->
-<!--<script src="js/vendor/jquery.Jcrop.js"></script>-->
+<!--    <script src="js/vendor/jcrop_bits.js"></script>-->
+<!--    <script src="js/vendor/jquery.Jcrop.js"></script>-->
     <script src="js/mnc.js"></script>
 
 </head>
@@ -118,7 +118,7 @@ else{
                         <a class="nav-link" href="my-events.php">My Events</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="Account.php">Account</a>
+                        <a class="nav-link" href="Account.php">News Feed</a>
                     </li>
                 </ul>
             </div>
