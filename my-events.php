@@ -1,5 +1,4 @@
 <?php
-session_start();
 include 'header.php';
 // get the id of event selected
 if(isset($_GET['user_name']))
@@ -331,6 +330,17 @@ function monthConvert($month){
             break;
         default:
     }
+}
+//for when a user clicks join event from upcoming events page
+if (isset($_POST['btnJoin'])) {
+
+
+    //NOTE: need to check whether the user has joined that event already or not
+
+    $event_id = strip_tags($_POST['hd_event_id']);//remove html tags
+    $user_name = $_SESSION['username'];
+    $query = mysqli_query($con, "insert into event_users values('$event_id', '$user_name')");
+
 }
 include 'footer.php';
 ?>

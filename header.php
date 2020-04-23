@@ -43,17 +43,17 @@ else{
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 
 
-<!--    CSS-->
+    <!--    CSS-->
+    <link rel="stylesheet" href="css/dropdown.css" />
     <link rel="stylesheet" href="css/bootstrap.min.css" >
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/hover-min.css" />
     <link rel="stylesheet" href="css/animate.min.css" />
     <link rel="stylesheet" href="css/vendor/fontawesome-free-5.12.0-web/css/all.min.css" />
-<!--    <link rel="stylesheet" href="css/dropdown.css" />-->
     <link rel="stylesheet" href="style.css" />
     <link href ="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
     <link rel="stylesheet" href="css/jquery.timepicker.css" />
-<!--    <link rel="stylesheet" href="css/vendor/jquery.Jcrop.css"/>-->
+<!--<link rel="stylesheet" href="css/vendor/jquery.Jcrop.css"/>-->
 
 
 <!--    JAVASCRIPT-->
@@ -63,12 +63,15 @@ else{
     <script src="js/vendor/bootstrap.bundle.js"></script>
     <script src="js/vendor/parallax.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4&libraries=places" async defer></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"> </script>
+    <script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
     <script src = "meetncompete.js" async defer> </script>
     <script src = "js/jquery.timepicker.min.js"> </script>
     <script src="js/vendor/bootbox.min.js"></script>
 <!--    <script src="js/vendor/jcrop_bits.js"></script>-->
 <!--    <script src="js/vendor/jquery.Jcrop.js"></script>-->
     <script src="js/mnc.js"></script>
+    
 
 </head>
 <body>

@@ -249,11 +249,11 @@ echo '
         </div>
         <div id="promptAccountPopup">
             <!-- Popup Div Starts Here -->
-            <div id="popupContact">
-            <!-- Create New Event -->
+            <div id="popupAccount">
             <form action="#" id="createEventForm" method="post" name="createEventForm">
             <a class="boxclose" id="boxclose" onclick= "div_hide()"></a>
             <p id="promptForAccount"></p>
+            <a href="register.php" class="loginSignup button" id="redirectButton">Login/Signup</a>
             </form>
             </div>
         </div>

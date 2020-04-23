@@ -17,7 +17,6 @@ $conn = null;
 
 //SELECT `event_id`,`event_date`,`location`,`event_name` FROM `events` 
 function getEvents($conn){
-    
     $stmt = $conn->query('SELECT `event_id`,`event_date`,`location`,`event_name` FROM `events`');
     if($stmt->rowCount() > 0){
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -85,7 +84,10 @@ function printEvent($event_id, $month, $day, $location, $event_name)
             <h3>'.$event_name.'</h3>
             <h4>'.$location.'</h4>
             <a href="'.$url.'" class="button">Learn More</a>
-            <a href="#" class="button">Join Event</a>
+            <form method = "post" action="my-events.php">
+            <input type="submit" name="btnJoin" value="Join Event" class="button">
+            <input type="hidden" name="hd_event_id" value="'. $event_id .'" />
+            </form>
         </div>
     </div>';
 }

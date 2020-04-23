@@ -1,7 +1,9 @@
 <?php
 include 'header.php';
+include 'config.php';
+include 'submitEvent.php';
+?>
 
-echo '
 <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
         <li data-target="#carouselIndicators" data-slide-to="0" class="active"></li>
@@ -160,23 +162,26 @@ echo '
                             Radius: <input type = "text" class = "allText" id = "radius" value="2" required minlength="1" maxlength="2" size="4" <p> miles</p>
                             </li>
                         </ul>
-                       
+                    
                     </div>
                 </div>
             </div>
         </div>
-
+        
         <div id="createEvtPopup">
             <!-- Popup Div Starts Here -->
-            <div id="popupContact">
+            <div class="popupContact" id="popupCreateEvt">
             <!-- Create New Event -->
             <form action="#" id="createEventForm" method="post" name="createEventForm">
-            <a class="boxclose" id="boxclose" onclick= "div_hide()"></a>
+            <a class="boxclose" id="createEvt_boxclose" onclick= "div_hide()"></a>
             <h2 id="contact">Create Event</h2>
             <hr>
-            <p id="createEvtLocation">Event location</p>
+            <input type="hidden" name="createEvtLocationToDB" id="createEvtLocationToDB" value="Event Location"></input>
+            <p class="eventLocation" id="createEvtLocation">Event location</p>
+            <textarea id="evtName" name="eventName" placeholder="Event Name (Optional)"></textarea>
             <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" id="sportText" data-toggle="dropdown">Select Sport</button>
+                <input type="hidden" name="sportTextToDB" id="sportTextToDB" value=""></input>
+                <button class="btn btn-default dropdown-toggle" type="button" name="sportText" id="sportText" data-toggle="dropdown">Select Sport</button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                 <li role="presentation"><a role="menuitem" tabindex="-1">Baseball</a></li>
                 <li role="presentation" class="divider"></li>
@@ -215,18 +220,20 @@ echo '
                 <li role="presentation"><a role="menuitem" tabindex="-1">Weightlifting</a></li>
                 </ul>
             </div>
+            <input type="hidden" name="evtTimeToDB" id="evtTimeToDB" value=""></input>
             <p>Enter Time: <input type = "text" id ="evtTime" name="evtTime"></p>
             <script>
                 var j = jQuery.noConflict();
                 j( function() {
                     var dateToday = new Date();
                     j( "#evtTime" ).timepicker({
-                        \'step\': 5,
-                        \'scrollDefault\': \'now\'
+                        'step': 5,
+                        'scrollDefault': 'now'
                      });
-                } );
+                });
             </script>
-            <p>Enter Date: <input type = "text" id = "datepicker"></p>
+            <input type="hidden" name="datepickerToDB" id="datepickerToDB" value=""></input>
+            <p>Enter Date: <input type = "text" name = "datepicker" id = "datepicker"></p>
             <script>
                 var j = jQuery.noConflict();
                 j( function() {
@@ -238,16 +245,25 @@ echo '
             </script>
             <div class="slidecontainer">
                 <p id="createEvtLength">Length: </p>
+                <input type="hidden" name="myRangeToDB" id="myRangeToDB" value=""></input>
                 <input type="range" min="15" max="120" value="30" class="slider" id="myRange">
             </div>
             <p id="sliderVal"></p>
             <textarea id="desc" name="description" placeholder="Description (Optional)"></textarea>
-            <a href="javascript:%20check_empty()" id="submit">Send</a>
+            <button href="javascript:%20check_empty()" name="submitBtn" id="submitBtn">Send</button>
             </form>
             </div>
         </div>
+        <div id="seeEventsPopup">
+            <!-- Popup Div Starts Here -->
+            <div class="popupContact" id="popupSeeEvts">
+            <div id="seeEvents" class="f-container">
+            <a class="boxclose" id="seeEvts_boxclose" onclick= "hideEvents()"></a>
+            <h4 class="eventLocation" id="seeEventsLocation">Event location</h4>
+            </div>
+            </div>
+        </div>
         <!-- Popup Div Ends Here -->
-
         <section id="about-us">
             <div class="container box padding-inside">
                 <div class="title-container">
@@ -325,9 +341,8 @@ echo '
                 </div>
             </div>
         </section>
-    </main>';
+    </main>
 
-
-
+<?php
 include 'footer.php';
 ?>

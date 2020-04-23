@@ -2,11 +2,9 @@
 require 'config.php';
 require 'register_handler.php';
 require 'Login_Handler.php';
-//require 'header.php';
+require 'submitEvent.php';
 
 ?>
-
-
 <html>
 <head>
     <title>
@@ -216,5 +214,5 @@ require 'Login_Handler.php';
 
 <?php
 require 'footer.php';
-$con->close();
+//$con->close();
 ?>

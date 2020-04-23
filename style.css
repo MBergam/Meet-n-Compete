@@ -587,6 +587,20 @@ footer ul li a:hover{
     overflow:auto
 }
 
+div#popupAccount {
+    position:absolute;
+    left:50%;
+    top:37%;
+    margin-left:-202px;
+    font-family:'Raleway',sans-serif
+}
+
+#popupAccount p{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 17px;
+    text-align: center;
+}
+
 
 /*THIS IS THE DESIGN FOR THE CREATE EVENT WHEN YOU CLICK ON THE MARKER*/
 #createEvtPopup {
@@ -599,6 +613,34 @@ footer ul li a:hover{
     position:fixed;
     background-color:#313131;
     overflow:auto
+}
+
+/*THIS IS THE DESIGN FOR THE SEE EVENT POPUP WHEN YOU CLICK ON THE MARKER*/
+#seeEventsPopup {
+    width:100%;
+    height:100%;
+    opacity:.95;
+    top:0;
+    left:0;
+    display:none;
+    position:fixed;
+    background-color:#313131;
+    overflow:auto
+}
+
+.see-event-container{
+    width: 444px;
+    height: 137px;
+}
+
+#seeEvents {
+    max-width:600px;
+    min-width:250px;
+    padding:10px 50px;
+    border:2px solid gray;
+    border-radius:10px;
+    font-family: 'Open Sans', sans-serif;
+    background-color:#fff
 }
 
 a.boxclose{
@@ -623,25 +665,30 @@ a.boxclose{
 
 }
 
-div#popupContact {
+.popupContact {
     position:absolute;
     left:50%;
     top:17%;
     margin-left:-202px;
     font-family:'Raleway',sans-serif
 }
+
+#popupSeeEvts{
+    left: 45%;
+}
+
 #createEventForm {
     max-width:400px;
     min-width:250px;
     padding:10px 50px;
     border:2px solid gray;
     border-radius:10px;
-    font-family:raleway;
+    font-family: 'Open Sans',sans-serif;
     background-color:#fff
 }
 
-#createEvtLocation {
-    font-size: 18px;
+.eventLocation {
+    font-size: 24px;
 }
 
 #contact {
@@ -676,7 +723,7 @@ textarea {
     margin-bottom:30px
 }
 
-#submit {
+#submitBtn {
     text-decoration:none;
     width:100%;
     text-align:center;
@@ -744,12 +791,29 @@ textarea {
     font-family: 'Open Sans', sans-serif;
 }
 
+.loginSignup{
+    margin-left: 70px;
+    cursor: pointer;
+    background-color: #1FC8FF;
+    border: 1px solid #1FC8FF;
+}
+
 #desc{
     font-family: 'Open Sans', sans-serif;
     padding-left: 8px;
+    margin-top:10px;
 }
 
-#submit{
+#evtName{
+    width:100%;
+    height:40px;
+    font-family: 'Open Sans', sans-serif;
+    padding-left: 8px;
+    margin-top:0px;
+    margin-bottom:10px
+}
+
+#submitBtn{
     font-family: 'Open Sans', sans-serif;
 }
 
@@ -816,7 +880,22 @@ textarea {
     color: #fff;
 }
 
+/*Used for hyperlinks across site (such as Get Directions or See Reviews)*/
+.hyperLink{
+    font-weight: bold;
+    text-decoration: underline;
+    color: blue;
+    cursor:pointer;
+}
 
+/*allText (inside of info when clicking on a marker on the Home page map)*/
+.allText{
+    display: inline-block;
+}
+
+.placeInfo{
+    margin-bottom: 0;
+}
 
 
 

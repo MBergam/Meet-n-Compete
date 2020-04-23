@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 21, 2020 at 08:48 AM
+-- Generation Time: Apr 22, 2020 at 10:41 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
@@ -30,14 +30,14 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `events` (
   `event_id` int(11) NOT NULL,
-  `event_marker_id` int(11) NOT NULL,
+  `event_marker_id` varchar(30) NOT NULL,
   `event_date` date NOT NULL,
-  `event_type` varchar(10) NOT NULL,
-  `event_description` text NOT NULL,
+  `event_type` varchar(20) NOT NULL,
+  `event_description` text NOT NULL DEFAULT 'No Description',
   `user_name` varchar(30) NOT NULL,
   `location` varchar(255) NOT NULL,
   `event_name` varchar(255) NOT NULL,
-  `event_start_time` varchar(9) NOT NULL,
+  `event_start_time` varchar(9) NOT NULL DEFAULT current_timestamp(),
   `event_duration` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -46,12 +46,34 @@ CREATE TABLE `events` (
 --
 
 INSERT INTO `events` (`event_id`, `event_marker_id`, `event_date`, `event_type`, `event_description`, `user_name`, `location`, `event_name`, `event_start_time`, `event_duration`) VALUES
-(1, 1, '2020-04-30', 'Basketball', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 1', '14:00', 30),
-(2, 1, '2020-03-31', 'soccer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 2', '14:00', 30),
-(3, 1, '2020-03-31', 'tennis', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 3', '14:00', 30),
-(4, 1, '2020-03-31', 'Soccer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 4', '14:00', 30),
-(5, 1, '2020-03-31', 'Soccer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 5', '14:00', 30),
-(6, 1, '2020-03-31', 'Soccer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 6', '14:00', 30);
+(1, '1', '2020-04-30', 'Basketball', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 1', '14:00', 30),
+(2, '1', '2020-03-31', 'soccer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 2', '14:00', 30),
+(3, '1', '2020-03-31', 'tennis', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 3', '14:00', 30),
+(4, '1', '2020-03-31', 'Soccer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 4', '14:00', 30),
+(5, '1', '2020-03-31', 'Soccer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 5', '14:00', 30),
+(6, '1', '2020-03-31', 'Soccer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos pariatur qui sunt corrupti accusamus non illum quia, id saepe ipsum distinctio laboriosam unde? Dicta reprehenderit distinctio ipsa magnam ducimus laboriosam.', '1', 'Glass Park, Spokane, WA', 'Glass Park 6', '14:00', 30);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `event_users`
+--
+
+CREATE TABLE `event_users` (
+  `event_id` int(11) NOT NULL,
+  `user_name` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `event_users`
+--
+
+INSERT INTO `event_users` (`event_id`, `user_name`) VALUES
+(101, 'yeah'),
+(102, 'yeah'),
+(101, 'yeah'),
+(0, 'yeah'),
+(0, 'yeah');
 
 -- --------------------------------------------------------
 
@@ -181,11 +203,18 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `user_name`, `email`, `pas
 (3, 'Another', 'Test', 'anothertestuser', 'test1@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '2020-02-12', 'img/reee.gif', 2, 0, 0, 'no', ',newtestuser,'),
 (4, 'Khanh', 'Luu', 'kingofsky95', 'kingofsky95@gmail.com', 'eab9164e7f35f8128f98ab3b9d42b433', '2020-02-20', 'img/kingofsky95_original.e09bb7f6314ee493d3bd09ef1adece60.gif', 2, 0, 0, 'no', ',newtestuser,'),
 (5, 'Eren', 'Jaeger', 'erenjaeger', 'eren@aot.com', 'e10adc3949ba59abbe56e057f20f883e', '2020-04-05', 'img/eren.gif', 27, 0, 0, 'no', ',newtestuser,flipflop,'),
-(6, 'Flip', 'Flop', 'flipflop', 'flipflop@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '2020-04-10', 'img/flipflop.gif', 3, 0, 0, 'no', ',erenjaeger,newtestuser,');
+(6, 'Flip', 'Flop', 'flipflop', 'flipflop@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '2020-04-10', 'img/flipflop.gif', 3, 0, 0, 'no', ',erenjaeger,newtestuser,'),
+(7, 'Eric', 'Adams', 'yeah', 'BulletStripe2@yahoo.com', 'f30aa7a662c728b7407c54ae6bfd27d1', '2020-04-22', '', 0, 0, 0, 'no', ',');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `events`
+--
+ALTER TABLE `events`
+  ADD PRIMARY KEY (`event_id`);
 
 --
 -- Indexes for table `likes`
@@ -210,6 +239,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `events`
+--
+ALTER TABLE `events`
+  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
@@ -225,7 +260,7 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
