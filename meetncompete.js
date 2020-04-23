@@ -831,11 +831,17 @@ function getLatLong() {
     if(latNum != null && lngNum != null){
         initMap(latNum, lngNum, rad);
     }else{
-        let address = $("#address").val();
-        let latreq = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address 
-        + "&key=" + myKey;
-        $.get(latreq, gotInputAddress, "json");
+        //get location of input address
+        getLocationInput();
     }
+}
+
+//gets the location of input address
+function getLocationInput(){
+    let address = $("#location").val();
+    let latreq = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address 
+    + "&key=" + myKey;
+    $.get(latreq, gotInputAddress, "json");
 }
 
 //Helper function called in getLatLong to ensure the user types in a valid number for radius
