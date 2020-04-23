@@ -10,7 +10,7 @@ $p_ini = parse_ini_file("config.ini",true);
 $servername = $p_ini['Database']['servername'];
 $username = $p_ini['Database']['username'];
 $password = $p_ini['Database']['password'];
-$database = "meetncompete";
+$database = $p_ini['Database']['database'];
 
 $user = "";
 $userLogin = "";

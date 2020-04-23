@@ -1144,7 +1144,7 @@ THIS CODE BELOW IS FOR PROFILE.PHP
     background-color: #9fcdff;
     color: whitesmoke;
     border-radius: 5px;
-    width: 10%;
+    width: 8%;
     height: 60px;
     margin-top: 26px;
     position: absolute;
@@ -1182,3 +1182,28 @@ THIS CODE BELOW IS FOR PROFILE.PHP
     margin-bottom: 10px;
 }
 
+.loaded_conversations{
+    max-height: 600px;
+    overflow: scroll;
+}
+
+.user_found_messages{
+    border-bottom: 1px solid #D3D3D3;
+    padding: 8px 4px 10px 8px;
+}
+
+.user_found_messages:hover{
+    background-color: #d3d3d3;
+}
+
+.user_found_messages img{
+    height: 60px;
+}
+
+.message_main_column{
+    width: 600px;
+}
+
+#grey{
+    color: #8C8C8C;
+}

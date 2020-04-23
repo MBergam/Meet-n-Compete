@@ -56,7 +56,7 @@ if(isset($_POST['post_message'])){
     </div>
 
     <div class="col-lg-8">
-        <div class="main_column column" id="main_column">
+        <div class="message_main_column column" id="main_column">
             <?php
             if($user_to!= "new"){
                 echo "<h4> You and <a href='$user_to'>". $user_to_obj->getFullName()."</a></h4><hr><br>";
@@ -74,7 +74,7 @@ if(isset($_POST['post_message'])){
                     <?php
                     if($user_to == "new"){
                         echo "Select a friend you would like to message <br><br>";
-                        echo "To: <input type='text'>";
+                        ?> To: <input type='text' onkeyup='getUser(this.value, "<?php echo $userLogin;?>")' name='q' placeholder='search your friend' autocomplete='off' id='search_text_input'><?php
                         echo "<div class='results'></div>";
                     }
                     else{

@@ -84,7 +84,8 @@ class Message
             $return_string .= "<a href='messages.php?u=$username'> 
                                     <div class='user_found_messages'>  
                                         <img src='".$user_found_obj->getProfilePicture()."' style='border-radius: 5px; margin-right: 5px;'>
-                                        ".$user_found_obj->getFullName()."
+                                        ".$user_found_obj->getFullName()." 
+                                        <br>
                                         <span class='time_stamp_smaller' id='grey'>".$latest_message_details[2]."</span>
                                         <p id='grey' style='margin: 0;'>".$latest_message_details[0].$split."</p>
                                     </div>

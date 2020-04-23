@@ -17,3 +17,10 @@ $(document).ready(function () {
         });
     });
 });
+
+function getUser(value, user) {
+    $.post("ajax_friend_search.php", {query:value,userLogin:user}, function (data) {
+        $(".results").html(data);
+    });
+
+}
