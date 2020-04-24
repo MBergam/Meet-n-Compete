@@ -78,7 +78,7 @@ if(isset($_POST['post'])){
 
                     inProgress = true;
                     $('#loading').show();
-                    setTimeout(function () {
+
                         var page = $('.posts_area').find('.nextPage').val() || 1; //If .nextPage couldn't be found, it must not be on the page yet (it must be the first time loading posts), so use the value '1'
 
                         $.ajax({
@@ -98,7 +98,7 @@ if(isset($_POST['post'])){
                                 inProgress = false;
                             }
                         });
-                    },500);
+
 
                 }
 

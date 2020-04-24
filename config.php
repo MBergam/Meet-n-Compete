@@ -10,7 +10,8 @@ $DBpassword = $db['Database']['password'];
 
     $timezone = date_default_timezone_set("America/Chicago");
     $con = mysqli_connect($servername, $DBusername,$DBpassword,$database);
-
+//$con=mysqli_init();
+//mysqli_real_connect($con, "meetncompete.mysql.database.azure.com", "mncadmin@meetncompete", "Mncteam2020!", "meetncompete", 3306);
 if(mysqli_connect_errno()){
     echo "Failed to connect DB: ".mysqli_connect_errno();
 }

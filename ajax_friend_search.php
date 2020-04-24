@@ -24,7 +24,7 @@ if($query != ""){
         $user = new User($con, $userLogin);
 
         if($row['user_name'] != $userLogin){
-            $mutual_friends = $user->getMutualFriends($row['user_name'])."friends in common";
+            $mutual_friends = $user->getMutualFriends($row['user_name'])." friends in common";
         }
         else{
             $mutual_friends = "";
@@ -38,8 +38,8 @@ if($query != ""){
                         </div>
                         <div class='liveSearchText'>
                             ".$row['first_name']." ".$row['last_name']."
-                            <p>".$row['user_name']."</p>
-                            <p id='grey'>".$mutual_friends."</p>
+                            <p style='margin: 0'>".$row['user_name']."</p>
+                            <p id='grey' style='margin-bottom: 5px'>".$mutual_friends."</p>
                         </div>
                     </a>
                     </div>";
