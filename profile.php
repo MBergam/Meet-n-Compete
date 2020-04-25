@@ -21,19 +21,19 @@ if(isset($_POST['add_friend'])){
 if(isset($_POST['respond_request'])){
     header("Location: friendRequests.php");
 }
-//if(isset($_POST['post_message'])){
-//    if(isset($_POST['message_body'])){
-//        $body = mysqli_real_escape_string($con, $_POST['message_body']);
-//        $date = date("Y-m-d H:i:s");
-//        $message_obj->sendMessage($username,$body,$date);
-//    }
-//    $link = '#profileTabs a[href="#message_div"]';
-//    echo "<script>
-//            $(function() {
-//              $('".$link."').tab('show');
-//            });
-//        </script>";
-//}
+if(isset($_POST['post_message'])){
+    if(isset($_POST['message_body'])){
+        $body = mysqli_real_escape_string($con, $_POST['message_body']);
+        $date = date("Y-m-d H:i:s");
+        $message_obj->sendMessage($username,$body,$date);
+    }
+    $link = '#profileTabs a[href="#messages_div"]';
+    echo "<script>
+            $(function() {
+              $('".$link."').tab('show');
+            });
+        </script>";
+}
 
 
 ?>
@@ -217,7 +217,6 @@ if(isset($_POST['respond_request'])){
 
                 inProgress = true;
                 $('#loading').show();
-                setTimeout(function () {
                     var page = $('.posts_area').find('.nextPage').val() || 1; //If .nextPage couldn't be found, it must not be on the page yet (it must be the first time loading posts), so use the value '1'
 
                     $.ajax({
@@ -237,7 +236,7 @@ if(isset($_POST['respond_request'])){
                             inProgress = false;
                         }
                     });
-                },500);
+
 
             }
 

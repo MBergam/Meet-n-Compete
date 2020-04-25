@@ -1317,3 +1317,16 @@ THIS CODE BELOW IS FOR PROFILE.PHP
     margin-left: 10px;
     font-size: 12px;
 }
+
+.dropdown_data_window{
+    background-color: #fff;
+    border: 1px solid #DADADA;
+    border-radius: 0 0 8px 8px;
+    border-top: none;
+    width: 300px;
+    position: absolute;
+    right: 10px;
+    top: 90px;
+    overflow: scroll;
+    z-index: 5;
+}

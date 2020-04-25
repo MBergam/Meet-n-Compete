@@ -53,7 +53,6 @@ else{
     <link rel="stylesheet" href="style.css" />
     <link href ="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
     <link rel="stylesheet" href="css/jquery.timepicker.css" />
-<!--<link rel="stylesheet" href="css/vendor/jquery.Jcrop.css"/>-->
 
 
 <!--    JAVASCRIPT-->
@@ -68,8 +67,7 @@ else{
     <script src = "meetncompete.js" async defer> </script>
     <script src = "js/jquery.timepicker.min.js"> </script>
     <script src="js/vendor/bootbox.min.js"></script>
-<!--    <script src="js/vendor/jcrop_bits.js"></script>-->
-<!--    <script src="js/vendor/jquery.Jcrop.js"></script>-->
+
     <script src="js/mnc.js"></script>
     
 
@@ -88,7 +86,10 @@ else{
                             if($logged_in_bool){
                                 echo "<li><a href='$userLogin'>$userLogin</a></li>";
                                 echo "<li><a href='friendRequests.php'>Friend Requests</a></li>";
-                                echo "<li><a href='messages.php'>Chit Chat</a></li>";
+                                echo "<li><a href='messages.php'>Chit Chat</a></li>";?>
+                                <li><a href="javascript:void(0);" onclick="getDropdownData('<?php echo $userLogin; ?>', 'message')"
+                                            <i class='fa fa-envelope fa-lg'></i></a></li>
+                            <?php
                                 echo "<li><a href='Logout.php'>Logout</a></li>";
                             }
                             else{
@@ -100,6 +101,12 @@ else{
                 </div>
             </div>
         </div>
+
+        <div class="dropdown_data_window" style="height: 0px; border: none">
+
+
+        </div>
+        <input type="hidden" id="dropdown_data_type" value="">
     </header>
 
     <nav class="navbar navbar-expand-md navbar-light bg-light">

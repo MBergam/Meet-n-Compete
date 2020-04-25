@@ -57,7 +57,6 @@ if(isset($_POST['like_button'])){
 
     //insert notification
 
-
 }
 
 
@@ -71,7 +70,7 @@ if(isset($_POST['unlike_button'])){
 
 
 //check for previous likes
-$check_query = mysqli_query($con, "select * from likes where user_name = '$userLogin' and post_id = $post_id");
+$check_query = mysqli_query($con, "select * from likes where user_name = '$userLogin' and post_id = '$post_id'");
 $num_rows = mysqli_num_rows($check_query);
 
 if($num_rows > 0){

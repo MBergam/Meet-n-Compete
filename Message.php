@@ -101,7 +101,7 @@ class Message
         $query = mysqli_query($this->con,"select body,date,user_to from messages where (user_to='$userLogin' and user_from = '$user2') or (user_to='$user2' and user_from = '$userLogin') order by id desc limit 1 ");
         $row = mysqli_fetch_array($query);
 
-         //TODO: WILL UPDATE THE NAME THAT APPEARS FROM THE PARTNER LATER
+        //TODO: WILL UPDATE THE NAME THAT APPEARS FROM THE PARTNER LATER
 
         $sent_by = ($row['user_to']==$userLogin)? "$user2 said: " : "You said: ";
         //Timeframe
@@ -188,6 +188,83 @@ class Message
         return $details_array;
     }
 
+    public function getConvosDropdown($data, $limit){
+        $page = $data['page'];
+        $userLogin = $this->user_obj->getUsername();
+        $return_string = "";
+        $convos = array();
 
+        if($page==1){
+            $start = 0;
+        }
+
+        else{
+            $start = ($page -1) * $limit;
+        }
+
+        $set_view = mysqli_query($this->con, "update message set viewed = 'yes' where user_to = '$userLogin'");
+
+        $query = mysqli_query($this->con,"select user_to, user_from from messages where user_to = '$userLogin' or user_from = '$userLogin' order by id desc");
+
+        while($row = mysqli_fetch_array($query)){
+            $user_to_push = ($row['user_to'] != $userLogin)? $row['user_to']:$row['user_from'];
+
+            if(!in_array($user_to_push,$convos)){
+                array_push($convos,$user_to_push);
+            }
+        }
+
+        $num_iterations = 0; //number of messages checked
+        $count = 1; //number of messages posted
+
+        foreach ($convos as $username){
+            if($num_iterations++ < $start){
+                continue;
+            }
+
+            if($count > $limit){
+                break;
+            }
+
+            else $count++;
+
+//            echo $userLogin."\r\n";
+//            echo $username."\r\n";
+//            $is_unread_query = mysqli_query($this->con, "SELECT * FROM messages WHERE user_to='$userLogin' AND user_from='$username' ORDER BY id desc");
+//            $row = mysqli_fetch_array($is_unread_query);
+//            echo $row['user_to']."\r\n";
+//            echo $row['user_from']."\r\n";
+//            echo $row['opened']."\r\n";
+//
+//            $style = ($row['opened'] == 'no') ? "background-color: #DDEDFF;" : "";
+
+            $user_found_obj = new User($this->con, $username);
+            $latest_message_details = $this->getLatestMessage($userLogin,$username);
+            $dots = (strlen($latest_message_details[1])>= 12)? "...":"";
+            $split = str_split($latest_message_details[1], 12);
+            $split = $split[0].$dots;
+
+            $return_string .= "<a href='messages.php?u=$username'> 
+                                    <div class='user_found_messages' >  
+                                        <img src='".$user_found_obj->getProfilePicture()."' style='border-radius: 5px; margin-right: 5px;'>
+                                        ".$user_found_obj->getFullName()." 
+                                        <br>
+                                        <span class='time_stamp_smaller' id='grey'>".$latest_message_details[2]."</span>
+                                        <p id='grey' style='margin: 0;'>".$latest_message_details[0].$split."</p>
+                                    </div>
+                                    
+                               </a>";
+        }
+
+        //If posts were loaded
+        if($count>$limit){
+            $return_string .="<input type='hidden' class='nextPageDropDownData' value='".($page+1) ."'><input type='hidden' class='noMoreDropdownData' value='false'>";
+        }
+        else{
+            $return_string .="<input type='hidden' class='noMoreDropdownData' value='true'><p style='text-align: center'>No more messages to load</p>";
+        }
+
+        return $return_string;
+    }
 }
 ?>
