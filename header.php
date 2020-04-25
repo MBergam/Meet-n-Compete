@@ -86,7 +86,7 @@ else{
                             if($logged_in_bool){
                                 echo "<li><a href='$userLogin'>$userLogin</a></li>";
                                 echo "<li><a href='friendRequests.php'>Friend Requests</a></li>";
-                                echo "<li><a href='messages.php'>Chit Chat</a></li>";?>
+                                ?>
                                 <li><a href="javascript:void(0);" onclick="getDropdownData('<?php echo $userLogin; ?>', 'message')"
                                             <i class='fa fa-envelope fa-lg'></i></a></li>
                             <?php
