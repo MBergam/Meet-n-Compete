@@ -1330,3 +1330,18 @@ THIS CODE BELOW IS FOR PROFILE.PHP
     overflow: scroll;
     z-index: 5;
 }
+
+.notification_badge{
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    color: white;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    background-color: red;
+    border-radius: 10px;
+    position: absolute;
+    left: 251px;
+    top: -5px;
+}

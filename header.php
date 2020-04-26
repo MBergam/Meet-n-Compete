@@ -84,11 +84,19 @@ else{
                         <ul class = "nav-login">
                          <?php
                             if($logged_in_bool){
+                                //undread messages
+                                $messages = new Message($con,$userLogin);
+                                $num_messages = $messages->getUnreadNumber();
                                 echo "<li><a href='$userLogin'>$userLogin</a></li>";
                                 echo "<li><a href='friendRequests.php'>Friend Requests</a></li>";
                                 ?>
                                 <li><a href="javascript:void(0);" onclick="getDropdownData('<?php echo $userLogin; ?>', 'message')"
-                                            <i class='fa fa-envelope fa-lg'></i></a></li>
+                                            <i class='fa fa-envelope fa-lg'></i>
+                                    <?php
+                                    if($num_messages > 0)
+                                        echo '<span class="notification_badge" id="unread_message"> '.$num_messages.'</span>';
+                                    ?>
+                                    </a></li>
                             <?php
                                 echo "<li><a href='Logout.php'>Logout</a></li>";
                             }
@@ -108,6 +116,76 @@ else{
         </div>
         <input type="hidden" id="dropdown_data_type" value="">
     </header>
+
+    <script>
+
+        $(function(){
+
+            var userLogin = '<?php echo $userLogin; ?>';
+            var dropdownInProgress = false;
+
+            $(".dropdown_data_window").scroll(function() {
+                var bottomElement = $(".dropdown_data_window a").last();
+                var noMoreData = $('.dropdown_data_window').find('.noMoreDropdownData').val();
+
+                // isElementInViewport uses getBoundingClientRect(), which requires the HTML DOM object, not the jQuery object. The jQuery equivalent is using [0] as shown below.
+                if (isElementInView(bottomElement[0]) && noMoreData == 'false') {
+                    loadPosts();
+                }
+            });
+
+            function loadPosts() {
+                if(dropdownInProgress) { //If it is already in the process of loading some posts, just return
+                    return;
+                }
+
+                dropdownInProgress = true;
+
+                var page = $('.dropdown_data_window').find('.nextPageDropdownData').val() || 1; //If .nextPage couldn't be found, it must not be on the page yet (it must be the first time loading posts), so use the value '1'
+
+                var pageName; //Holds name of page to send ajax request to
+                var type = $('#dropdown_data_type').val();
+
+                if(type == 'notification')
+                    pageName = "ajax_load_notifications.php";
+                else if(type == 'message')
+                    pageName = "ajax_load_messages.php";
+
+                $.ajax({
+                    url: "" + pageName,
+                    type: "POST",
+                    data: "page=" + page + "&userLogin=" + userLogin,
+                    cache: false,
+
+                    success: function(response) {
+
+                        $('.dropdown_data_window').find('.nextPageDropdownData').remove(); //Removes current .nextpage
+                        $('.dropdown_data_window').find('.noMoreDropdownData').remove();
+
+                        $(".dropdown_data_window").append(response);
+                        dropdownInProgress = false;
+                    }
+                });
+            }
+
+            //Check if the element is in view
+            function isElementInView (el) {
+
+                if(el == null) {
+                    return;
+                }
+                var rect = el.getBoundingClientRect();
+
+                return (
+                    rect.top >= 0 &&
+                    rect.left >= 0 &&
+                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && //* or $(window).height()
+                    rect.right <= (window.innerWidth || document.documentElement.clientWidth) //* or $(window).width()
+                );
+            }
+        });
+
+    </script>
 
     <nav class="navbar navbar-expand-md navbar-light bg-light">
         <div class="container">

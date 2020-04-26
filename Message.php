@@ -202,7 +202,7 @@ class Message
             $start = ($page -1) * $limit;
         }
 
-        $set_view = mysqli_query($this->con, "update message set viewed = 'yes' where user_to = '$userLogin'");
+        $set_viewed_query = mysqli_query($this->con, "update messages set viewed = 'yes' where user_to = '$userLogin'");
 
         $query = mysqli_query($this->con,"select user_to, user_from from messages where user_to = '$userLogin' or user_from = '$userLogin' order by id desc");
 
@@ -258,13 +258,19 @@ class Message
 
         //If posts were loaded
         if($count>$limit){
-            $return_string .="<input type='hidden' class='nextPageDropDownData' value='".($page+1) ."'><input type='hidden' class='noMoreDropdownData' value='false'>";
+            $return_string .="<input type='hidden' class='nextPageDropdownData' value='".($page+1) ."'><input type='hidden' class='noMoreDropdownData' value='false'>";
         }
         else{
             $return_string .="<input type='hidden' class='noMoreDropdownData' value='true'><p style='text-align: center'>No more messages to load</p>";
         }
 
         return $return_string;
+    }
+
+    public function getUnreadNumber(){
+        $userLogin = $this->user_obj->getUsername();
+        $query = mysqli_query($this->con, "select * from messages where viewed = 'no' and user_to = '$userLogin'");
+        return mysqli_num_rows($query);
     }
 }
 ?>
