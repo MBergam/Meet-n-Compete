@@ -752,10 +752,32 @@ function check_empty() {
         alert("Fill All Fields!");  
     } else {
         document.getElementById('myRangeToDB').value = document.getElementById("myRange").value; //for sending event duration to DB
-        //document.getElementById('evtTimeToDB').value = (document.getElementById("evtTime").value).replace(/[a-z]/gi, '') //for sending event start time to db as a Time object
-        document.getElementById('evtTimeToDB').value = document.getElementById("evtTime").value//for sending event start time to db as a varchar
-        document.getElementById('datepickerToDB').value = moment(document.getElementById("datepicker").value).format("YYYY-MM-DD"); //for sending event date to db
+        //document.getElementById('evtTimeToDB').value = (document.getElementById("evtTime").value).replace(/[a-z]/gi, '') //for sending event start time to db as a Time object hh:mm:ss
+        //document.getElementById('evtTimeToDB').value = document.getElementById("evtTime").value //for sending event start time as a 12hr time with am/pm to db as a varchar 
 
+        //For sending event start time to db as 24hr time hh:mm
+        var time = document.getElementById("evtTime").value;
+        if (time.includes("pm")) {
+            if (time.length > 6) {//10pm or later
+                var hour = (parseInt(time.substring(0,2))) + 12;
+                var hourstring = hour.toString();
+                var mins = time.substring(2,5);
+                time = hourstring + mins
+            } else {//earlier than 10pm
+                var hour = (parseInt(time.substring(0,1))) + 12;
+                var hourstring = hour.toString();
+                var mins = time.substring(1,4);
+                time = hourstring + mins
+                
+            }
+        } else { //any AM time
+            var length = time.length;
+            time = time.substring(0, (length-2));
+        }
+
+        document.getElementById('evtTimeToDB').value = time //for sending event start time to db as a varchar
+        document.getElementById('datepickerToDB').value = moment(document.getElementById("datepicker").value).format("YYYY-MM-DD"); //for sending event date to db
+        
         //var place_id = document.getElementById('place_id').value;
         //console.log(place_id);
 
