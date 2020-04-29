@@ -334,12 +334,18 @@ function monthConvert($month){
 //for when a user clicks join event from upcoming events page
 if (isset($_POST['btnJoin'])) {
 
-
-    //NOTE: need to check whether the user has joined that event already or not
-
-    $event_id = strip_tags($_POST['hd_event_id']);//remove html tags
     $user_name = $_SESSION['username'];
-    $query = mysqli_query($con, "insert into event_users values('$event_id', '$user_name')");
+    $event_id = strip_tags($_POST['hd_event_id']);//remove html tags
+    $event_join_date = strip_tags($_POST['hd_event_join_date']);//remove html tags
+
+    $join_already_check = mysqli_query($con, "select * from event_users where user_name = '$user_name' and event_id = '$event_id'");
+    $check_num_rows = mysqli_num_rows($join_already_check);
+    if($check_num_rows > 0){
+
+       //NOTE: may need to add code here to notify the user that they have already joined this event
+    } else {
+        $query = mysqli_query($con, "insert into event_users values('$event_id', '$user_name', '$event_join_date')");
+    }
 
 }
 include 'footer.php';

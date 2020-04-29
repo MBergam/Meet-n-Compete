@@ -42,6 +42,11 @@ if(isset($_POST['submitBtn'])){
 
 
     $query = mysqli_query($con, "insert into events values ('', '$event_marker_id', '$event_date', '$event_type', '$event_description', '$user_name', '$location', '$event_name', '$event_start_time', '$event_duration')");
+    header("Location: Logged.php");
+
+    $event_id = mysqli_query($con, "select event_id from events order by event_id desc limit 1"); //this gets the event_id of the newly created event so that the creator can be added as a user of their own event
+
+    //$join_query = mysqli_query($con, "insert into event_users values ('$event_id', '$user_name')"); //add the creator of the event as a user of the event in the event_users table
 }
 
 $con->close();
