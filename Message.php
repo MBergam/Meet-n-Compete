@@ -273,4 +273,3 @@ class Message
         return mysqli_num_rows($query);
     }
 }
-?>

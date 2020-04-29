@@ -4,6 +4,7 @@ include 'config.php';
 include 'User.php';
 include 'Post.php';
 include 'Message.php';
+include 'Notification.php';
 
 ////THIS IS THE DATABASE CREDENTIALS FOR WHOEVER USING PDO CONNECTING METHOD
 $p_ini = parse_ini_file("config.ini",true);
@@ -87,14 +88,27 @@ else{
                                 //undread messages
                                 $messages = new Message($con,$userLogin);
                                 $num_messages = $messages->getUnreadNumber();
+                                //undread notifications
+                                $notifications = new Notification($con,$userLogin);
+                                $num_notifications = $notifications->getUnreadNumber();
                                 echo "<li><a href='$userLogin'>$userLogin</a></li>";
                                 echo "<li><a href='friendRequests.php'>Friend Requests</a></li>";
                                 ?>
+<!--                                this is for the message-->
                                 <li><a href="javascript:void(0);" onclick="getDropdownData('<?php echo $userLogin; ?>', 'message')"
                                             <i class='fa fa-envelope fa-lg'></i>
                                     <?php
                                     if($num_messages > 0)
                                         echo '<span class="notification_badge" id="unread_message"> '.$num_messages.'</span>';
+                                    ?>
+                                    </a></li>
+
+<!--                                This is for the notification-->
+                                <li><a href="javascript:void(0);" onclick="getDropdownData('<?php echo $userLogin; ?>', 'notification')"
+                                    <i class='fa fa-bell fa-lg'></i>
+                                    <?php
+                                    if($num_notifications > 0)
+                                        echo '<span class="notification_badge" id="unread_notification"> '.$num_notifications.'</span>';
                                     ?>
                                     </a></li>
                             <?php
