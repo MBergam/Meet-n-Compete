@@ -228,7 +228,7 @@ include 'submitEvent.php';
                     var dateToday = new Date();
                     j( "#evtTime" ).timepicker({
                         'step': 5,
-                        'scrollDefault': 'now'
+                        'scrollDefault': moment(new Date()).add(40, 'm').toDate()
                      });
                 });
             </script>
