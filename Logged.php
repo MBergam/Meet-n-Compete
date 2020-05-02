@@ -179,7 +179,7 @@ include 'submitEvent.php';
             <input type="hidden" name="createEvtLocationToDB" id="createEvtLocationToDB" value="Event Location"></input>
             <p class="eventLocation" id="createEvtLocation">Event location</p>
             <textarea id="evtName" name="eventName" placeholder="Event Name (Optional)"></textarea>
-            <div class="dropdown">
+            <div class="dropdown" id="dropdownSports">
                 <input type="hidden" name="sportTextToDB" id="sportTextToDB" value=""></input>
                 <button class="btn btn-default dropdown-toggle" type="button" name="sportText" id="sportText" data-toggle="dropdown">Select Sport</button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
@@ -221,19 +221,19 @@ include 'submitEvent.php';
                 </ul>
             </div>
             <input type="hidden" name="evtTimeToDB" id="evtTimeToDB" value=""></input>
-            <p>Enter Time: <input type = "text" id ="evtTime" name="evtTime"></p>
+            <p id="eventTime">Enter Time: <input type = "text" id ="evtTime" name="evtTime"></p>
             <script>
                 var j = jQuery.noConflict();
                 j( function() {
                     var dateToday = new Date();
                     j( "#evtTime" ).timepicker({
                         'step': 5,
-                        'scrollDefault': 'now'
+                        'scrollDefault': moment(new Date()).add(40, 'm').toDate()
                      });
                 });
             </script>
             <input type="hidden" name="datepickerToDB" id="datepickerToDB" value=""></input>
-            <p>Enter Date: <input type = "text" name = "datepicker" id = "datepicker"></p>
+            <p id="eventDate">Enter Date: <input type = "text" name = "datepicker" id = "datepicker"></p>
             <script>
                 var j = jQuery.noConflict();
                 j( function() {
@@ -250,7 +250,7 @@ include 'submitEvent.php';
             </div>
             <p id="sliderVal"></p>
             <textarea id="desc" name="description" placeholder="Description (Optional)"></textarea>
-            <button href="javascript:%20check_empty()" name="submitBtn" id="submitBtn">Send</button>
+            <input name="submitBtn" id="submitBtn" value="Send">
             </form>
             </div>
         </div>

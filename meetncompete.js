@@ -22,6 +22,12 @@ function start() {
     $("#search").click(getLatLong);
     $("a[role='menuitem']").click(dropdownTxtChange);
     //$('.checkbox').attr('checked', true);
+
+    //create default google map on Spokane Valley's location
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: new google.maps.LatLng(47.6732, -117.2394),
+        zoom: 12
+    });
     getLocation();
 }
 
@@ -700,20 +706,6 @@ function printEvent(response, results, x){
     a1.innerText = "Learn More";
     a1.href = "eventDetail.php?item=" + encodeURIComponent(response.event_id);
 
-    /*var a2 = document.createElement('a');
-    a2.className = "button";
-    a2.innerText = "Join Event";
-
-    // MAX -- THIS IS THE LINK THE BUTTON WILL TAKE YOU TO. REPLACE THE "#" WITH YOUR URL. (You could set an onclick too)
-    a2.href = "#";
-    
-
-    date_container.appendChild(p);
-    detail.appendChild(h3);
-    detail.appendChild(h4);
-    detail.appendChild(a1);
-    detail.appendChild(a2);*/
-
     var joinEventContainer = document.createElement('form');
     joinEventContainer.method = "post";
     joinEventContainer.action = "my-events.php";
@@ -729,8 +721,14 @@ function printEvent(response, results, x){
     joinEventHiddenIdToDB.name = "hd_event_id";
     joinEventHiddenIdToDB.value = response.event_id;
 
+    var joinEventHiddenDateToDB = document.createElement("input");
+    joinEventHiddenDateToDB.type = "hidden";
+    joinEventHiddenDateToDB.name = "hd_event_join_date";
+    joinEventHiddenDateToDB.value = response.event_date;
+
     joinEventContainer.appendChild(joinEventBtn);
     joinEventContainer.appendChild(joinEventHiddenIdToDB);
+    joinEventContainer.appendChild(joinEventHiddenDateToDB);
 
     date_container.appendChild(p);
     detail.appendChild(h3);
@@ -747,10 +745,9 @@ function printEvent(response, results, x){
 
 // Validating Empty Field
 function check_empty() {
-    if (document.getElementById('datepicker').value == "" || document.getElementById('evtTime').value == "" || $("#sportText").text() == "Select Sport") {
-        //Handle showing what to fill in (we'll do this later)
-        alert("Fill All Fields!");  
-    } else {
+    
+    //validateEvent shows what the user input needs to look like
+    if(validateEvent()){
         document.getElementById('myRangeToDB').value = document.getElementById("myRange").value; //for sending event duration to DB
         //document.getElementById('evtTimeToDB').value = (document.getElementById("evtTime").value).replace(/[a-z]/gi, '') //for sending event start time to db as a Time object hh:mm:ss
         //document.getElementById('evtTimeToDB').value = document.getElementById("evtTime").value //for sending event start time as a 12hr time with am/pm to db as a varchar 
@@ -760,6 +757,10 @@ function check_empty() {
         if (time.includes("pm")) {
             if (time.length > 6) {//10pm or later
                 var hour = (parseInt(time.substring(0,2))) + 12;
+                //if hour is 24, then change it back to the original value (happens when time is 12 pm)
+                if(hour >= 24){
+                    hour -= 12;
+                }
                 var hourstring = hour.toString();
                 var mins = time.substring(2,5);
                 time = hourstring + mins
@@ -768,35 +769,121 @@ function check_empty() {
                 var hourstring = hour.toString();
                 var mins = time.substring(1,4);
                 time = hourstring + mins
-                
             }
         } else { //any AM time
-            var length = time.length;
-            time = time.substring(0, (length-2));
+            var hour = (parseInt(time.substring(0,2)));
+            if(hour == 12){
+                hour -= 12;
+            }
+            var hourstring = hour.toString();
+            var mins = time.substring(2,5);
+            time = hourstring + mins
         }
 
         document.getElementById('evtTimeToDB').value = time //for sending event start time to db as a varchar
         document.getElementById('datepickerToDB').value = moment(document.getElementById("datepicker").value).format("YYYY-MM-DD"); //for sending event date to db
-        
-        //var place_id = document.getElementById('place_id').value;
-        //console.log(place_id);
 
-        //let sendBtn = document.getElementById("submitBtn");
-        //sendBtn.value = "set";
-        /*var submitButton = document.createElement('button');
-        submitButton.style = 'style="display: none"';
-        submitButton.name = "submitBtn";
-        submitButton.id = "submitDB";
+        //submit the event data to the database. To do so, the submit button must be type of submit now.
+        let sendBtn = document.getElementById("submitBtn");
+        sendBtn.type = "submit";
 
-        let sendBtn = document.getElementById("submit");
-        sendBtn.appendChild(submitButton);*/
-
-        //Clicks the hidden submit button to send info off to database
-        //$('#submitDB').click();
-
-        //document.getElementById('createEventForm').submit();
-        //call search button handler here again to show map with newly created event
+        //click the button to send data off to database
+        sendBtn.click();
     }
+}
+
+//validateEvent displays errors of form on create event
+function validateEvent(){
+    //remove all other errors if they have occured before (errors will show after this, this just makes it so that the errors aren't displayed multiple times)
+    $(".createEventError").remove();
+    var returnValue = true;
+
+    //this checks to see if the date input is a correct date. If not, an error is displayed to the user in html.
+    var date = moment(document.getElementById("datepicker").value).format("YYYY-MM-DD");
+    console.log(moment(document.getElementById("datepicker").value).isSame(Date.now(), 'day'));
+    if(date == "Invalid date" || !moment(date).isSameOrAfter(Date.now(), 'day')){
+        var dateError = document.createElement('p');
+        dateError.innerHTML = "Date incorrect. Enter a valid date";
+        dateError.style = "color:red";
+        dateError.id = "dateError";
+        dateError.className = "createEventError";
+
+        var eventDate = document.getElementById("eventDate");
+        eventDate.appendChild(dateError);
+        returnValue = false;
+    }
+
+    //this checks to see if the time input is a correct time. If not, an error is displayed to the user in html.
+    if(!validTime(document.getElementById("evtTime").value)){
+        var timeError = document.createElement('p');
+        timeError.innerHTML = "Enter a valid time that is 30 min or later";
+        timeError.style = "color:red";
+        timeError.id = "timeError";
+        timeError.className = "createEventError";
+
+        var eventTime = document.getElementById("eventTime");
+        eventTime.appendChild(timeError);
+        returnValue = false;
+    }
+
+    //this checks to see if the sport is a correct sport. If not, an error is displayed to the user in html.
+    if($("#sportText").text() == "Select Sport" || !validSport($("#sportText").text())){
+        var sportError = document.createElement('p');
+        sportError.innerHTML = "Please select a sport";
+        sportError.style = "color:red";
+        sportError.id = "sportError";
+        sportError.className = "createEventError";
+
+        var sportDropdown = document.getElementById("dropdownSports");
+        sportDropdown.appendChild(sportError);
+        returnValue = false;
+    }
+
+    return returnValue;
+}
+
+//Checks if the sport selected is a valid sport (basically sees if user inspected element and changed the value), then displays error in validateEvent
+function validSport(text){
+    var sports = new Array("Baseball", "Basketball","Billiards (Pool)", "Bowling","Climbing","Cricket","Curling","Football","Golf/Discgolf","Rugby", "Skateboarding", "Skiing", "Snowboarding", 
+    "Soccer", "Swimming", "Tennis/Table Tennis", "Volleyball", "Weightlifting");
+
+    for(var x = 0; x < sports.length; x++){
+        if(text === sports[x]){
+            return true;
+        }
+    }
+    return false;
+}
+
+//Checks if the time is a valid time for creating an event -- is it 30 mins or later than the current time)
+function validTime(text){
+    if(text.length == 6){
+        if(text.substring(1,2) == ":" && (text.substring(4,6) == "pm" || text.substring(4,6) == "am")){
+            if(isNumber(text.substring(0,1)) && isNumber(text.substring(2,4))){
+                var userInputTime = moment(text, 'h:mma');
+                var newDateObj = moment(new Date()).add(30, 'm').toDate();
+                var timeToCompare = moment(newDateObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }), 'h:mma');
+
+                if(userInputTime.isAfter(timeToCompare)){
+                    return true;
+                }
+            }
+        }
+    }
+    if(text.length == 7){
+        if(text.substring(2,3) == ":" && (text.substring(5,7) == "pm" || text.substring(5,7) == "am")){
+            if(isNumber(text.substring(0,2)) && isNumber(text.substring(3,5))){
+                var userInputTime = moment(text, 'h:mma');
+                var newDateObj = moment(new Date()).add(30, 'm').toDate();
+                var timeToCompare = moment(newDateObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }), 'h:mma');
+
+                if(userInputTime.isAfter(timeToCompare)){
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }
 
 function dropdownTxtChange(evt){
@@ -850,12 +937,9 @@ function getLatLong() {
     }else{
         $("#radius").val(2);
     }
-    if(latNum != null && lngNum != null){
-        initMap(latNum, lngNum, rad);
-    }else{
-        //get location of input address
-        getLocationInput();
-    }
+
+    //get location of input address
+    getLocationInput();
 }
 
 //gets the location of input address
@@ -871,13 +955,16 @@ function isNumber(n) {
     return !isNaN(parseInt(n)) && isFinite(n) && !n.includes(".") && !n.includes("-");
 }
 
-//If a user types in an address/place to search for on the map, this function is called to find where that place is and initialize the map based off of it's location
+//If a user types in an address/place to search for on the map, this function is called to find where that place is and create the map based off of it's location
 function gotInputAddress(data) {
     if(data.results.length == 0){
-        $("#manualLoc").html('<br></br>Enter a location (try again): <input type = "text" class = "allText" id = "address" /><br></br><br></br>'); 
+        $("#location").attr("placeholder", 'Enter a location'); 
+        $("#location").val("");
+        if(latNum != null && lngNum != null){
+            initMap(latNum, lngNum, rad);
+        }
         return;
     }
-    $("#manualLoc").remove();
     latNum = parseFloat(data["results"][0]["geometry"]["location"].lat);
     lngNum = parseFloat(data["results"][0]["geometry"]["location"].lng);
     //create map
