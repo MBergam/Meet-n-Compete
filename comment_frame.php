@@ -16,6 +16,7 @@ session_start();
 include 'config.php';
 include 'User.php';
 include 'Post.php';
+include 'Notification.php';
 
 $user = "";
 $userLogin = "";
@@ -55,13 +56,38 @@ $user_query = mysqli_query($con, "SELECT added_by, user_to FROM posts WHERE id='
 $row = mysqli_fetch_array($user_query);
 
 $posted_to = $row['added_by'];
+$user_to = $row['user_to'];
 
 if(isset($_POST['postComment' . $post_id])) {
     $post_body = $_POST['post_body'];
     $post_body = mysqli_escape_string($con, $post_body);
     $date_time_now = date("Y-m-d H:i:s");
     $insert_post = mysqli_query($con, "INSERT INTO comments VALUES ('', '$post_body', '$userLogin', '$posted_to', '$date_time_now', 'no', '$post_id')");
+    if($posted_to != $userLogin){
+        $notification = new Notification($con, $userLogin);
+        $notification->insertNotification($post_id, $posted_to, "comment");
+    }
+    if ($user_to != 'none' && $user_to != $userLogin){
+        $notification = new Notification($con, $userLogin);
+        $notification->insertNotification($post_id, $user_to, "profile_comment");
+    }
+
+    //Getting everyone that involved to the post and send them into the array. Then send notification to each person
+    $get_commenters = mysqli_query($con, "select * from comments where post_id = '$post_id'");
+    $notified_user = array();
+    while ($row = mysqli_fetch_array($get_commenters)){
+        if($row['posted_by'] != $posted_to && $row['posted_by']  != $user_to && $row['posted_by'] != $userLogin && !in_array($row['posted_by'], $notified_user)){
+            $notification = new Notification($con, $userLogin);
+            $notification->insertNotification($post_id, $row['posted_by'], "comment_non_owner");
+
+            array_push($notified_user,$row['posted_by']);
+
+        }
+    }
+
+
     echo "<p>Comment Posted! </p>";
+
 }
 
 ?>
@@ -79,8 +105,8 @@ if(isset($_POST['postComment' . $post_id])) {
     if($count != 0){
         while ($comment = mysqli_fetch_array($get_comment)){
             $comment_body = $comment['post_body'];
-            $posted_to = $comment['post_to'];
-            $posted_by = $comment['post_by'];
+            $posted_to = $comment['posted_to'];
+            $posted_by = $comment['posted_by'];
             $date_added = $comment['date_added'];
             $remove = $comment['removed'];
 

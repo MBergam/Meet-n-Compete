@@ -32,9 +32,9 @@ if(isset($_POST['post'])){
 //                            echo "Current Events: " . $user['current_events'];
                             ?>
                         </div>
-
                     </div>
                 </div>
+
                 <div class="col-lg-8">
                     <div class="main_column_new_feed column">
                         <form class="post_form" action="Account.php" method="POST">

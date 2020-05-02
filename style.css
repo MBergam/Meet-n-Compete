@@ -1342,6 +1342,23 @@ THIS CODE BELOW IS FOR PROFILE.PHP
     background-color: red;
     border-radius: 10px;
     position: absolute;
-    left: 251px;
+    /*left: 251px;*/
     top: -5px;
+}
+
+.resultDisplayNotification{
+    height: auto;
+    color: #1485BD;
+    padding-bottom: 8px;
+}
+
+.notificationProfilePic img{
+    height: 40px;
+    border-radius: 5px;
+    margin: 1px 12px 0 2px;
+    float: left;
+}
+.timestamp_smaller{
+    font-size: 85%;
+    margin: 0;
 }

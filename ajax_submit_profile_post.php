@@ -2,6 +2,7 @@
 include "config.php";
 include "User.php";
 include "Post.php";
+include "Notification.php";
 
 if(isset($_POST['post_body'])){
 

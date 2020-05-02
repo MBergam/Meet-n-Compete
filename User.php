@@ -28,6 +28,11 @@ class User{
         $row = mysqli_fetch_array($query);
         return $row['num_posts'];
     }
+    public function getNumberOfFriendRequests(){
+        $username = $this->user['user_name'];
+        $query = mysqli_query($this->con, "select * from friend_requests where user_to = '$username'");
+        return mysqli_num_rows($query);
+    }
 
     public function isClosed(){
         $username = $this->user['user_name'];
@@ -128,4 +133,6 @@ class User{
         return $mutualFriends;
 
     }
+
+
 }
