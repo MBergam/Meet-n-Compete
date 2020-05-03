@@ -102,7 +102,7 @@ if(isset($_POST['post_message'])){
         <div class="profile_main_column column">
             <ul class="nav nav-tabs" role="tablist" id="profileTabs">
                 <li class="nav-item">
-                    <a class="nav-link " href="#newsfeed_div" aria-controls="newsfeed_div" role="tab" data-toggle="tab">Newsfeed</a>
+                    <a class="nav-link " href="#newsfeed_div" aria-controls="newsfeed_div" role="tab" data-toggle="tab">Personal Wall</a>
                 </li>
 
                 <li class="nav-item">
