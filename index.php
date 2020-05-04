@@ -23,7 +23,6 @@ echo '
     <link rel="stylesheet" href="css/hover-min.css" />
     <link rel="stylesheet" href="css/animate.min.css" />
     <link rel="stylesheet" href="css/vendor/fontawesome-free-5.12.0-web/css/all.min.css" />
-    
     <link rel="stylesheet" href="style.css" />
     <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
     <link rel="stylesheet" href="css/jquery.timepicker.css" />
@@ -36,9 +35,9 @@ echo '
     <script src="js/vendor/jquery-3.3.1.min.js"></script>
     <script src="js/vendor/bootstrap.bundle.min.js"></script>
     <script src="js/vendor/parallax.min.js"></script>
-    <script src = "meetncompete.js" async defer> </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4&libraries=places&callback=start"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4&libraries=places" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src = "meetncompete.js" async defer> </script>
     <script src = "js/jquery.timepicker.min.js"> </script>
 
 </head>
