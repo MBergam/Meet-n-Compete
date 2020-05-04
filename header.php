@@ -97,12 +97,12 @@ else{
 
                             echo "<li><a href='$userLogin'>$userLogin</a></li>";
                             ?>
-                            <li><a href='friendRequests.php'>
-                                    <i class="fa fa-users fa-lg"></i>
-                                    <?php
-                                    if($num_friend_requests > 0)
-                                        echo '<span class="notification_badge" id="undecided_request">'.$num_friend_requests.'</span>';
-                                    ?>
+                            <li><a href='friendRequests.php'
+                                <i class="fa fa-users fa-lg"></i>
+                                <?php
+                                if($num_friend_requests > 0)
+                                    echo '<span class="notification_badge" id="undecided_request">'.$num_friend_requests.'</span>';
+                                ?>
                                 </a></li>
                             <!--                                this is for the message-->
                             <li><a href="javascript:void(0);" onclick="getDropdownData('<?php echo $userLogin; ?>', 'message')"
@@ -121,8 +121,8 @@ else{
                                     echo '<span class="notification_badge" id="unread_notification"> '.$num_notifications.'</span>';
                                 ?>
                                 </a></li>
+                            <li><a href='Logout.php'><i class="fas fa-sign-out-alt"></i></a></li>
                             <?php
-                            echo "<li><a href='Logout.php'>Logout</a></li>";
                         }
                         else{
                             echo "<li><a href='register.php'>Login</a></li>";
