@@ -797,6 +797,7 @@ function validateEvent(){
     //remove all other errors if they have occured before (errors will show after this, this just makes it so that the errors aren't displayed multiple times)
     $(".createEventError").remove();
     var returnValue = true;
+    var correctDate = false;
 
     //this checks to see if the date input is a correct date. If not, an error is displayed to the user in html.
     var date = moment(document.getElementById("datepicker").value).format("YYYY-MM-DD");
@@ -811,10 +812,12 @@ function validateEvent(){
         var eventDate = document.getElementById("eventDate");
         eventDate.appendChild(dateError);
         returnValue = false;
+    }else{
+        correctDate = true;
     }
 
     //this checks to see if the time input is a correct time. If not, an error is displayed to the user in html.
-    if(!validTime(document.getElementById("evtTime").value)){
+    if(!validTime(document.getElementById("evtTime").value, correctDate)){
         var timeError = document.createElement('p');
         timeError.innerHTML = "Enter a valid time that is 30 min or later";
         timeError.style = "color:red";
@@ -855,11 +858,14 @@ function validSport(text){
     return false;
 }
 
-//Checks if the time is a valid time for creating an event -- is it 30 mins or later than the current time)
-function validTime(text){
+//Checks if the time is a valid time for creating an event -- is it 30 mins or later than the current time
+function validTime(text, date){
     if(text.length == 6){
         if(text.substring(1,2) == ":" && (text.substring(4,6) == "pm" || text.substring(4,6) == "am")){
             if(isNumber(text.substring(0,1)) && isNumber(text.substring(2,4))){
+                if(date){
+                    return true;
+                }
                 var userInputTime = moment(text, 'h:mma');
                 var newDateObj = moment(new Date()).add(30, 'm').toDate();
                 var timeToCompare = moment(newDateObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }), 'h:mma');
@@ -873,6 +879,9 @@ function validTime(text){
     if(text.length == 7){
         if(text.substring(2,3) == ":" && (text.substring(5,7) == "pm" || text.substring(5,7) == "am")){
             if(isNumber(text.substring(0,2)) && isNumber(text.substring(3,5))){
+                if(date){
+                    return true;
+                }
                 var userInputTime = moment(text, 'h:mma');
                 var newDateObj = moment(new Date()).add(30, 'm').toDate();
                 var timeToCompare = moment(newDateObj.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }), 'h:mma');
