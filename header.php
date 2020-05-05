@@ -16,6 +16,7 @@ $database = $p_ini['Database']['database'];
 $user = "";
 $userLogin = "";
 //THIS IS FOR LOGIN CHECK-KHANH's CODE
+echo $_SESSION['username'];
 if(isset($_SESSION['username'])){
     $userLogin = $_SESSION['username'];
     $user_detail_query = mysqli_query($con, "select * from users where user_name = '$userLogin'");

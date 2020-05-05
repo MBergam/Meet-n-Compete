@@ -70,3 +70,23 @@ function getDropdownData(user, type) {
     }
 
 }
+
+function getLiveSearchUsers(value,user){
+    $.post("ajax_search.php", {query:value, userLogin: user}, function (data) {
+        if($(".search_result_footer_empty")[0]){
+            $(".search_result_footer_empty")[0].toggleClass("search_result_footer");
+            $(".search_result_footer_empty")[0].toggleClass("search_result_footer_empty");
+        }
+
+        $('.search_result').html(data);
+        $('.search_result_footer').html("<a href='search.php?q="+value+"'> See all results</a>");
+
+        if(data = ""){
+            $('.search_result_footer').html("");
+            $('.search_result_footer').toggleClass("search_result_footer_empty");
+            $('.search_result_footer').toggleClass("search_result_footer");
+
+
+        }
+    });
+}
