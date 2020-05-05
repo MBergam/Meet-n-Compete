@@ -1,12 +1,10 @@
 <?php
 include 'header.php';
-// get the id of event selected
-if(isset($_GET['user_name']))
+include 'common-functions.php';
+
+if(isset($_SESSION['username']))
 {
-    $userID = $_GET['user_name'];
-} else {
-    // For testing only
-    $userID = 1;
+    $userID = $_SESSION['username'];
 }
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$database",$username,$password);
@@ -16,6 +14,7 @@ try {
     //echo "Connected successfully<br>";
     //echo "Event Selected: ". $itemSelected;
     //echo '<button onclick="history.go(-1);">Back</button>';
+    getJointEvent($conn,$userID);
     getEvents($conn,$userID);
 }
 catch (PDOException $e)
@@ -90,6 +89,7 @@ function getEvents($conn, $userID){
         }
         else{
             if($count_current == 0){ //print if there is no current events
+                $count_current++;    //increase current event number to make sure this message only show one times.
                 echo'<p>There is no current event to show</p>';
             }
             if($count_past == 0){ //to print the title only one time
@@ -104,6 +104,96 @@ function getEvents($conn, $userID){
         //printCurrentEvent($row['event_id'], monthConvert($month), $day, $row['location'], $row['event_name'], 
         //$row['event_type'], $row['event_description'], $row['user_name'], $row['event_start_time'], $row['event_duration']);
     }
+}
+function getJointEvent($conn, $userID){
+    
+    $stmt = $conn->prepare('SELECT `event_id`,`user_name`,`join_date`
+                          FROM  `event_users`
+                          WHERE user_name =?');
+    $stmt->bindValue(1,$userID,PDO::PARAM_STR_CHAR);
+    $stmt->execute();
+    if($stmt->rowCount() > 0){
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    else {
+        $results = null;
+    }
+    foreach ($results as $row){
+        getEvent($conn, $row['event_id']);
+    }
+
+}
+function getEvent($conn, $event_id){
+    
+    $stmt = $conn->prepare('SELECT `event_id`,`event_date`,`location`,`event_name`,`event_type`,`event_description`,`user_name`,`event_start_time`,`event_duration`
+                          FROM  `events`
+                          WHERE event_id =?');
+    $stmt->bindValue(1,$event_id,PDO::PARAM_STR_CHAR);
+    $stmt->execute();
+    if($stmt->rowCount() ==1 ){
+        $row = $stmt->fetch(PDO::FETCH_ASSOC); 
+        list($year, $month, $day) = explode("-", $row['event_date']);
+        printJoinEvents($row['event_id'], $row['event_date'], monthConvert($month), $day, $row['location'], $row['event_name'], 
+                              $row['event_type'], $row['event_description'], $row['user_name'], $row['event_start_time'], $row['event_duration']);    
+    }
+
+}
+function printJoinEvents($event_id, $event_date, $month, $day, $location, $event_name, $event_type, $event_description, $user_name, $event_start_time, $event_duration)
+{
+    $url = "eventDetail.php?item=" . urlencode($event_id);
+    echo'
+    <div class="row">
+        <div class="col-md-6">
+            <div class="detail-img"><img src="img/'.$event_type.'.jpg" alt=""></div>
+        </div>
+        <div class="col-md-6" id="eventDetail">
+            <div class="event-container">
+                <div class="date-container">
+                    <p><span class="month">'.$month.'</span>-
+                        <span class="day">'.$day.'</span></p>
+                    <p><span class="month">'.$event_start_time.'</span>-
+                        <span class="month">'.$event_duration.'&prime;</span></p>
+                </div>
+
+                <div class="detail">
+                    <h3>'.$event_type.'</h3>
+                    <h4>'.$location.'</h4>
+                    <p>'.$event_description.'</p>
+                    <h4>Member:</h4>
+                    <a href="">User 1</a>
+                    <a href="">User 2</a>
+                    <a href="">User 3</a>
+                    <div class="button-container">
+                        <a href="'.$url.'" class="button button-small">View</a>
+                        <button class="button button-small" data-toggle="modal" data-target="#cancelModal">Cancel</button>
+                    </div>
+
+                    <!-- Cancel Modal -->
+                    <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="cancelModal" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="cancelModal">Cancel Event</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Do you want to cancel the event '.$event_name.'</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Cancel event</button>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    ';
 }
 function printCurrentEvent($event_id, $event_date, $month, $day, $location, $event_name, $event_type, $event_description, $user_name, $event_start_time, $event_duration)
 {
@@ -218,7 +308,11 @@ function printCurrentEvent($event_id, $event_date, $month, $day, $location, $eve
                                 </div>
                                 <p id="sliderVal"></p>
                                 <textarea id="desc" name="description" placeholder="Description (Optional)">'.$event_description.'</textarea>
-                                <a href="javascript:%20check_empty()" id="submit">Edit</a>
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <a href="javascript:%20check_empty()" id="submit" class="btn btn-primary">Edit</a>
                                 </form>
                             </div>
                             </div>
@@ -290,53 +384,13 @@ function printPastEvent($event_id, $month, $day, $location, $event_name, $event_
 echo '
         </div>
     </main>';
-function monthConvert($month){
-    switch ($month){
-        case 1:
-            return "Jan";
-            break;
-        case 2:
-            return "Feb";
-            break;
-        case 3:
-            return "Mar";
-            break;
-        case 4:
-            return "Apr";
-            break;
-        case 5:
-            return "May";
-            break;
-        case 6:
-            return "Jun";
-            break;
-        case 7:
-            return "Jul";
-            break;
-        case 8:
-            return "Aug";
-            break;
-        case 9:
-            return "Sep";
-            break;
-        case 10:
-            return "Oct";
-            break;
-        case 11:
-            return "Nov";
-            break;
-        case 12:
-            return "Dec";
-            break;
-        default:
-    }
-}
+
 //for when a user clicks join event from upcoming events page
 if (isset($_POST['btnJoin'])) {
 
     $user_name = $_SESSION['username'];
     $event_id = strip_tags($_POST['hd_event_id']);//remove html tags
-    $event_join_date = strip_tags($_POST['hd_event_join_date']);//remove html tags
+    $event_join_date = date("Y-m-d"); //get current date
 
     $join_already_check = mysqli_query($con, "select * from event_users where user_name = '$user_name' and event_id = '$event_id'");
     $check_num_rows = mysqli_num_rows($join_already_check);

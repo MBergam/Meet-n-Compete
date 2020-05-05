@@ -1,5 +1,6 @@
 <?php
 include 'header.php';
+include 'common-functions.php';
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$database",$username,$password);
@@ -24,52 +25,20 @@ function getEvents($conn){
     else {
         $results = null;
     }
+    $current_date = date("Y-m-d");
+    $count_current = 0;
     foreach ($results as $row){
-        list($year, $month, $day) = explode("-", $row['event_date']);
-        printEvent($row['event_id'], monthConvert($month), $day, $row['location'], $row['event_name']);
+        if($current_date < $row['event_date']){
+            $count_current++;
+            list($year, $month, $day) = explode("-", $row['event_date']);
+            printEvent($row['event_id'], monthConvert($month), $day, $row['location'], $row['event_name']);
+        }
+    }
+    if($count_current == 0){
+        echo'<p>There is no event to show</p>';
     }
 }
-function monthConvert($month){
-    switch ($month){
-        case 1:
-            return "Jan";
-            break;
-        case 2:
-            return "Feb";
-            break;
-        case 3:
-            return "Mar";
-            break;
-        case 4:
-            return "Apr";
-            break;
-        case 5:
-            return "May";
-            break;
-        case 6:
-            return "Jun";
-            break;
-        case 7:
-            return "Jul";
-            break;
-        case 8:
-            return "Aug";
-            break;
-        case 9:
-            return "Sep";
-            break;
-        case 10:
-            return "Oct";
-            break;
-        case 11:
-            return "Nov";
-            break;
-        case 12:
-            return "Dec";
-            break;
-        default:
-    }
-}
+
 function printEvent($event_id, $month, $day, $location, $event_name)
 {
     $url = "eventDetail.php?item=" . urlencode($event_id);
@@ -83,8 +52,8 @@ function printEvent($event_id, $month, $day, $location, $event_name)
         <div class="detail">
             <h3>'.$event_name.'</h3>
             <h4>'.$location.'</h4>
-            <a href="'.$url.'" class="button">Learn More</a>
             <form method = "post" action="my-events.php">
+            <a href="'.$url.'" class="button">Learn More</a>
             <input type="submit" name="btnJoin" value="Join Event" class="button">
             <input type="hidden" name="hd_event_id" value="'. $event_id .'" />
             </form>
