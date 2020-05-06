@@ -717,18 +717,17 @@ function printEvent(response, results, x){
                 "event_id": response.event_id
             },
             success: function(response) {
-                //User can join event because they have not joined it yet
-                if(response.includes("[]")){
-                    joinEventBtn.type = "submit";
-                    joinEventBtn.click();
-                }
+                console.log(response);
+                
                 //username found in database on event_id
-                else{
-
+                if(!response.includes("[]")){
                     joinEventBtn.remove();
                     $("#header3_" + x).html($("#header3_" + x).html() + "<span style='color: #B899DF;'> (Joined)</span>");
-                    //h3.innerText = ;
-                    joinEventBtn.value = "You have already joined this event";
+                }
+                //User can join event because they have not joined it yet
+                else{
+                    joinEventBtn.type = "submit";
+                    joinEventBtn.click();
                 }
             },
             error: function(xhr) {
