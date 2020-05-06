@@ -403,8 +403,6 @@ function addMarker(LatLng, name, mdata, i) {
     var marker;
     var hasEvent = false;
 
-    console.log("hello" + name + mdata);
-
     //Database call to find events with the same place_id as the location data
     //If so, a blue marker will indicate that the location has an event
     $.ajax({
@@ -716,18 +714,16 @@ function printEvent(response, results, x){
         $.ajax({
             url: "event-users.php",
             data: {
-                //passing in 'seeEvents' parameter makes the database query specifically for showing a list of events later on
                 "event_id": response.event_id
             },
             success: function(response) {
+                //User can join event because they have not joined it yet
                 if(response.includes("[]")){
                     joinEventBtn.type = "submit";
                     joinEventBtn.click();
                 }
                 //username found in database on event_id
                 else{
-                    var json = JSON.parse(response);
-                    console.log(json);
 
                     joinEventBtn.remove();
                     $("#header3_" + x).html($("#header3_" + x).html() + "<span style='color: #B899DF;'> (Joined)</span>");
@@ -826,7 +822,6 @@ function validateEvent(){
 
     //this checks to see if the date input is a correct date. If not, an error is displayed to the user in html.
     var date = moment(document.getElementById("datepicker").value).format("YYYY-MM-DD");
-    console.log(moment(document.getElementById("datepicker").value).isSame(Date.now(), 'day'));
     if(date == "Invalid date" || !moment(date).isSameOrAfter(Date.now(), 'day')){
         var dateError = document.createElement('p');
         dateError.innerHTML = "Date incorrect. Enter a valid date";
@@ -952,7 +947,6 @@ function hideEvents(){
 //Callback function that extracts information from Google Nearby Search GET request API calls
 function gotPlaceData(data, status, keyword) {
 
-    console.log(data);
     data = validateLocations(data, keyword);
     
     if (status == google.maps.places.PlacesServiceStatus.OK) {
