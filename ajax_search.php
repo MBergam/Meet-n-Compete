@@ -22,3 +22,28 @@ else{
     $userReturnedQuery = mysqli_query($con, "select * from users where (first_name like '$names[0]%' or last_name like '$names[0]%') and user_closed = 'no' limit 8");
 
 }
+
+if($query != ""){
+    while ($row = mysqli_fetch_array($userReturnedQuery)){
+        $user = new User($con, $userLogin);
+        if($row['user_name'] != $userLogin){
+            $mutual_friends = $user->getMutualFriends($row['user_name']) ." Friends in common";
+        }
+        else{
+            $mutual_friends = "";
+        }
+
+        echo "<div class='resultDisplay'> 
+                <a href='". $row['user_name']."' style='color: #1485BD'>
+                    <div class='liveSearchProfilePic'>
+                        <img src='".$row['profile_picture']."'>
+                    </div>
+                    <div class='liveSearchText'>
+                        ".$row['first_name']. " ". $row['last_name']."
+                        <p>".$row['user_name']."</p>
+                        <p id='grey'>".$mutual_friends."</p>
+                    </div>
+                </a>
+            </div> ";
+    }
+}

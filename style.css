@@ -1211,7 +1211,6 @@ THIS CODE BELOW IS FOR PROFILE.PHP
     border-radius: 5px;
     border: 1px solid #D3D3D3;
     font-size: 18px;
-    height: 50%;
     margin-top: 25px;
 }
 
@@ -1286,7 +1285,7 @@ THIS CODE BELOW IS FOR PROFILE.PHP
 
 .resultDisplay{
     padding: 5px 5px 0 5px;
-    height: 60px;
+    height: 70px;
     border-bottom: 1px solid #d3d3d3;
 }
 .resultDisplay a{
@@ -1390,4 +1389,50 @@ THIS CODE BELOW IS FOR PROFILE.PHP
     margin-top: -4px;
     width: 25px;
     height: 25px;
+}
+
+.search_result{
+    background-color: white;
+    border: 1px solid #DADADA;
+    border-bottom: none;
+    border-top: none;
+    margin-top: 20px;
+
+}
+
+.search_result_footer{
+    padding: 7px 4px 0 4px;
+    height: 30px;
+    border: 1px solid #DADADA;
+    border-top: none;
+    background-color: #3498db;
+    text-align: center;
+}
+
+.search_result_footer a{
+    color: white;
+}
+
+/*.search_result_php{*/
+/*    padding: 10px;*/
+/*    height: 100px;*/
+/*}*/
+
+.searchPageFriendButtons{
+    float: right;
+}
+
+.searchPageFriendButtons input[type='submit']{
+    border: none;
+    padding: 7px 12px;
+    border-radius: 5px;
+    color: white;
+}
+
+.result_profile_pic{
+    margin-right: 10px;
+}
+
+#search_hr{
+    margin-bottom: 0;
 }
