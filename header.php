@@ -138,6 +138,9 @@ else{
                                     echo '<span class="notification_badge" id="unread_notification"> '.$num_notifications.'</span>';
                                 ?>
                                 </a></li>
+                            <li><a href='settings.php'
+                                <i class='fa fa-cog fa-lg'></i>
+                                </a></li>
                             <li><a href='Logout.php'><i class="fas fa-sign-out-alt"></i></a></li>
                             <?php
                         }

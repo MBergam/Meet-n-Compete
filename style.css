@@ -94,7 +94,7 @@ nav ul li a::after{
 nav ul li:last-child a::after{
     display: none;
 }
-   
+
 header{
     border-top: 10px solid #524c4c;
 }
@@ -237,7 +237,7 @@ main .content{
 }
 .w3-ul li {
     padding: 8px 16px;
-    border-bottom: 1px solid 
+    border-bottom: 1px solid
     #ddd;
 }
 
@@ -333,12 +333,12 @@ main .content{
 
 h1.lined:after,
 h2.lined:after {
-  content: '';
-  display: block;
-  margin: 35px auto 0;
-  width: 68px;
-  height: 2px;
-  background-color: #007f00;
+    content: '';
+    display: block;
+    margin: 35px auto 0;
+    width: 68px;
+    height: 2px;
+    background-color: #007f00;
 }
 
 .center{
@@ -552,7 +552,7 @@ footer ul li a:hover{
     right: 0;
 }
 .button-small{
-    padding: 10px 10px !important; 
+    padding: 10px 10px !important;
     line-height: 18px;
 }
 .md-height{
@@ -654,7 +654,7 @@ a.boxclose{
     font-size: 31px;
     font-weight: bold;
     line-height: 0px;
-    padding: 11px 3px;       
+    padding: 11px 3px;
 }
 
 .boxclose:before {
@@ -695,7 +695,7 @@ a.boxclose{
     text-align:center;
     border-radius:10px 10px 0 0
 }
-#createEvtPopup hr { 
+#createEvtPopup hr {
     margin:10px -50px;
     border:0;
     border-top:1px solid #ccc
@@ -824,7 +824,7 @@ textarea {
     -webkit-appearance: none;
     width: 100%;
     height: 10px;
-    border-radius: 10px;  
+    border-radius: 10px;
     background: #d3d3d3;
     outline: none;
     opacity: 0.7;
@@ -837,7 +837,7 @@ textarea {
     appearance: none;
     width: 20px;
     height: 20px;
-    border-radius: 50%; 
+    border-radius: 50%;
     background: #273353;
     cursor: pointer;
 }
@@ -935,6 +935,7 @@ textarea {
     z-index: -1;
     border-radius: 10px;
     box-shadow: 2px 2px 1px #D3D3D3;
+    color: #555;
 }
 
 .user_profile_image img{
@@ -1435,4 +1436,26 @@ THIS CODE BELOW IS FOR PROFILE.PHP
 
 #search_hr{
     margin-bottom: 0;
+}
+
+#small_profile_pic{
+    margin: 1px 12px 0 2px;
+    float: left;
+    height: 55px;
+}
+
+#settings_input{
+    border: 1px solid #ccc;
+    height: 20px;
+    padding:4px 6px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    line-height: 20px;
+}
+.settings_submit{
+    border: none;
+    padding: 7px 12px;
+    border-radius: 5px;
+    color: white;
 }
