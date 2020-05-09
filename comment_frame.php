@@ -1,15 +1,3 @@
-<html>
-<head>
-    <title></title>
-    <link rel="stylesheet" href="style.css" />
-</head>
-
-<body>
-
-<style type="text/css">*{
-        font-size: 12px;
-        font-family: Arial, Helvetica ,SansSerif;
-    }</style>
 
 <?php
 session_start();
@@ -26,12 +14,28 @@ if(isset($_SESSION['username'])){
     $user_detail_query = mysqli_query($con, "select * from users where user_name = '$userLogin'");
     $user = mysqli_fetch_array($user_detail_query);
     $logged_in_bool  = true;
+
+//    echo $userLogin." this is the username";
 }
 else{
     header("Location: register.php");
 }
 //END OF LOGIN CHECK
 ?>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<style type="text/css">*{
+        font-size: 12px;
+        font-family: Arial, Helvetica ,SansSerif;
+    }</style>
+
+
 
 <script>
     function toggle() {
@@ -51,14 +55,13 @@ if(isset($_GET['post_id'])) {
     $post_id = $_GET['post_id'];
 }
 
-
 $user_query = mysqli_query($con, "SELECT added_by, user_to FROM posts WHERE id='$post_id'");
 $row = mysqli_fetch_array($user_query);
 
 $posted_to = $row['added_by'];
 $user_to = $row['user_to'];
 
-if(isset($_POST['postComment' . $post_id])) {
+if(isset($_POST['postComment'.$post_id])) {
     $post_body = $_POST['post_body'];
     $post_body = mysqli_escape_string($con, $post_body);
     $date_time_now = date("Y-m-d H:i:s");
@@ -205,8 +208,6 @@ if(isset($_POST['postComment' . $post_id])) {
         echo "<center> <br>No comments to show... </center>";
     }
 ?>
-
-
 
 </body>
 </html>
