@@ -73,55 +73,49 @@ function getEvents($conn, $userID){
     $stmt->execute();
     if($stmt->rowCount() > 0){
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-    else {
-        $results = null;
-    }
-    $current_date = date("Y-m-d");
-    $count_current = 0;
-    $count_past = 0;
-    foreach ($results as $row){
-        list($year, $month, $day) = explode("-", $row['event_date']);
-        if($current_date < $row['event_date']){
-            $count_current++;
-            printCurrentEvent($row['event_id'], $row['event_date'], monthConvert($month), $day, $row['location'], $row['event_name'], 
-                              $row['event_type'], $row['event_description'], $row['user_name'], $row['event_start_time'], $row['event_duration']);
-        }
-        else{
-            if($count_current == 0){ //print if there is no current events
-                $count_current++;    //increase current event number to make sure this message only show one times.
-                echo'<p>There is no current event to show</p>';
+        $current_date = date("Y-m-d");
+        $count_current = 0;
+        $count_past = 0;
+        foreach ($results as $row){
+            list($year, $month, $day) = explode("-", $row['event_date']);
+            if($current_date < $row['event_date']){
+                $count_current++;
+                printCurrentEvent($row['event_id'], $row['event_date'], monthConvert($month), $day, $row['location'], $row['event_name'], 
+                                $row['event_type'], $row['event_description'], $row['user_name'], $row['event_start_time'], $row['event_duration']);
             }
-            if($count_past == 0){ //to print the title only one time
-                echo'
-                <h2>Past events:</h2>
-                <hr>';
+            else{
+                if($count_current == 0){ //print if there is no current events
+                    $count_current++;    //increase current event number to make sure this message only show one times.
+                    echo'<p>There is no current event to show</p>';
+                }
+                if($count_past == 0){ //to print the title only one time
+                    echo'
+                    <h2>Past events:</h2>
+                    <hr>';
+                }
+                $count_past++;
+                printPastEvent($row['event_id'], monthConvert($month), $day, $row['location'], $row['event_name'], 
+                                $row['event_type'], $row['event_description'], $row['user_name'], $row['event_start_time'], $row['event_duration']);
             }
-            $count_past++;
-            printPastEvent($row['event_id'], monthConvert($month), $day, $row['location'], $row['event_name'], 
-                              $row['event_type'], $row['event_description'], $row['user_name'], $row['event_start_time'], $row['event_duration']);
+            //printCurrentEvent($row['event_id'], monthConvert($month), $day, $row['location'], $row['event_name'], 
+            //$row['event_type'], $row['event_description'], $row['user_name'], $row['event_start_time'], $row['event_duration']);
         }
-        //printCurrentEvent($row['event_id'], monthConvert($month), $day, $row['location'], $row['event_name'], 
-        //$row['event_type'], $row['event_description'], $row['user_name'], $row['event_start_time'], $row['event_duration']);
     }
+    
 }
 function getJointEvent($conn, $userID){
     
-    $stmt = $conn->prepare('SELECT `event_id`,`user_name`,`join_date`
+    $stmt = $conn->prepare('SELECT `event_id`,`user_name`,`event_join_date`
                           FROM  `event_users`
                           WHERE user_name =?');
     $stmt->bindValue(1,$userID,PDO::PARAM_STR_CHAR);
     $stmt->execute();
     if($stmt->rowCount() > 0){
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($results as $row){
+            getEvent($conn, $row['event_id']);
+        }
     }
-    else {
-        $results = null;
-    }
-    foreach ($results as $row){
-        getEvent($conn, $row['event_id']);
-    }
-
 }
 function getEvent($conn, $event_id){
     

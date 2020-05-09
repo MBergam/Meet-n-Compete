@@ -758,11 +758,6 @@ function printEvent(response, results, x){
     popup.appendChild(event_container);
 }
 
-function validateIfJoined(event_id, x){
-    
-    
-}
-
 // Validating Empty Field
 function check_empty() {
     
