@@ -1286,7 +1286,7 @@ THIS CODE BELOW IS FOR PROFILE.PHP
 
 .resultDisplay{
     padding: 5px 5px 0 5px;
-    height: 70px;
+    height: 80px;
     border-bottom: 1px solid #d3d3d3;
 }
 .resultDisplay a{
@@ -1397,8 +1397,7 @@ THIS CODE BELOW IS FOR PROFILE.PHP
     border: 1px solid #DADADA;
     border-bottom: none;
     border-top: none;
-    margin-top: 20px;
-
+    margin-top: 40px;
 }
 
 .search_result_footer{

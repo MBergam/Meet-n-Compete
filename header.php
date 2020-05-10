@@ -89,13 +89,10 @@ else{
                             
                         </div>
                     </form>
-                    <div class="search_result">
 
-                    </div>
-                    <div class="search_result_footer_empty">
-
-                    </div>
                 </div>
+                <div class="search_result"></div>
+                <div class="search_result_footer_empty"></div>
             </div>
             <div class="col-sm-6">
                 <div id="header-right" class="vertical-center">
