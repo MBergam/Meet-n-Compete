@@ -2,9 +2,13 @@
 include 'header.php';
 include 'common-functions.php';
 
+$printNoEventMessage = true;// to print a message when there is no event to show
 if(isset($_SESSION['username']))
 {
     $userID = $_SESSION['username'];
+}
+else{
+    header("Location: register.php");
 }
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$database",$username,$password);
@@ -73,55 +77,65 @@ function getEvents($conn, $userID){
     $stmt->execute();
     if($stmt->rowCount() > 0){
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $current_date = date("Y-m-d");
+        $count_current = 0;
+        $count_past = 0;
+        foreach ($results as $row){
+            list($year, $month, $day) = explode("-", $row['event_date']);
+            if($current_date <= $row['event_date']){
+                $count_current++;
+                printCurrentEvent($conn, $row['event_id'], $row['event_date'], monthConvert($month), $day, $row['location'], $row['event_name'], 
+                                $row['event_type'], $row['event_description'], $row['user_name'], $row['event_start_time'], $row['event_duration']);
+            }
+        }
+        foreach ($results as $row){
+            list($year, $month, $day) = explode("-", $row['event_date']);
+            if($current_date > $row['event_date']){
+                if($count_current == 0){ //print if there is no current events
+                    $count_current++;    //increase current event number to make sure this message only show one times.
+                    global $printNoEventMessage;
+                    if($printNoEventMessage){
+                        printNoEventMessage();
+                        $printNoEventMessage = false;
+                    }
+                }
+                if($count_past == 0){ //to print the title only one time
+                    echo'
+                    <h2>Past events:</h2>
+                    <hr>';
+                }
+                $count_past++;
+                printPastEvent($row['event_id'], monthConvert($month), $day, $row['location'], $row['event_name'], 
+                                $row['event_type'], $row['event_description'], $row['user_name'], $row['event_start_time'], $row['event_duration']);
+            }
+        }
     }
     else {
-        $results = null;
-    }
-    $current_date = date("Y-m-d");
-    $count_current = 0;
-    $count_past = 0;
-    foreach ($results as $row){
-        list($year, $month, $day) = explode("-", $row['event_date']);
-        if($current_date < $row['event_date']){
-            $count_current++;
-            printCurrentEvent($row['event_id'], $row['event_date'], monthConvert($month), $day, $row['location'], $row['event_name'], 
-                              $row['event_type'], $row['event_description'], $row['user_name'], $row['event_start_time'], $row['event_duration']);
+        global $printNoEventMessage;
+        if($printNoEventMessage){
+            printNoEventMessage();
+            $printNoEventMessage = false;
         }
-        else{
-            if($count_current == 0){ //print if there is no current events
-                $count_current++;    //increase current event number to make sure this message only show one times.
-                echo'<p>There is no current event to show</p>';
-            }
-            if($count_past == 0){ //to print the title only one time
-                echo'
-                <h2>Past events:</h2>
-                <hr>';
-            }
-            $count_past++;
-            printPastEvent($row['event_id'], monthConvert($month), $day, $row['location'], $row['event_name'], 
-                              $row['event_type'], $row['event_description'], $row['user_name'], $row['event_start_time'], $row['event_duration']);
-        }
-        //printCurrentEvent($row['event_id'], monthConvert($month), $day, $row['location'], $row['event_name'], 
-        //$row['event_type'], $row['event_description'], $row['user_name'], $row['event_start_time'], $row['event_duration']);
     }
+    
 }
 function getJointEvent($conn, $userID){
     
-    $stmt = $conn->prepare('SELECT `event_id`,`user_name`,`join_date`
+    $stmt = $conn->prepare('SELECT `event_id`,`user_name`,`event_join_date`
                           FROM  `event_users`
                           WHERE user_name =?');
     $stmt->bindValue(1,$userID,PDO::PARAM_STR_CHAR);
     $stmt->execute();
     if($stmt->rowCount() > 0){
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($results as $row){
+            getEvent($conn, $row['event_id']);
+        }
     }
     else {
-        $results = null;
+        global $printNoEventMessage;
+        $printNoEventMessage = true;
     }
-    foreach ($results as $row){
-        getEvent($conn, $row['event_id']);
-    }
-
 }
 function getEvent($conn, $event_id){
     
@@ -132,12 +146,95 @@ function getEvent($conn, $event_id){
     $stmt->execute();
     if($stmt->rowCount() ==1 ){
         $row = $stmt->fetch(PDO::FETCH_ASSOC); 
+        $current_date = date("Y-m-d");
         list($year, $month, $day) = explode("-", $row['event_date']);
-        printJoinEvents($row['event_id'], $row['event_date'], monthConvert($month), $day, $row['location'], $row['event_name'], 
-                              $row['event_type'], $row['event_description'], $row['user_name'], $row['event_start_time'], $row['event_duration']);    
+        if($current_date <= $row['event_date'] && $row['user_name'] != $_SESSION['username']){
+            global $printNoEventMessage;
+            $printNoEventMessage = false; // set flag to true to do not show the no event message
+            printJoinEvents($row['event_id'], $row['event_date'], monthConvert($month), $day, $row['location'], $row['event_name'], 
+                            $row['event_type'], $row['event_description'], $row['user_name'], $row['event_start_time'], $row['event_duration']);    
+        }
     }
-
 }
+
+
+// Cancel Event handling
+if(isset($_POST['btnCancelEvent'])){
+    try {
+        $conn = new PDO("mysql:host=$servername;dbname=$database",$username,$password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+        
+        $stmt = $conn->prepare('DELETE FROM `event_users` 
+                                WHERE `event_id` = ?
+                                AND `user_name` = ?');
+        $stmt->bindValue(1,$_POST['hd_event_id'],PDO::PARAM_INT);
+        $stmt->bindValue(2,$_SESSION['username'],PDO::PARAM_STR_CHAR);
+        $stmt->execute();
+    }
+    catch (PDOException $e)
+    {
+        echo "Connection failed: " . $e->getMessage();
+    }
+    $conn = null;
+    $location = 'Location: my-events.php';
+    header($location);
+    die();
+}
+// Delete Event handling
+if(isset($_POST['btnDeleteEvent'])){
+    try {
+        $conn = new PDO("mysql:host=$servername;dbname=$database",$username,$password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+        
+        $stmt = $conn->prepare('DELETE FROM `events` 
+                                WHERE `event_id` = ?');
+        $stmt->bindValue(1,$_POST['hd_event_id'],PDO::PARAM_INT);
+        $stmt->execute();
+        $notification = new Notification($con, $userID);
+        $notification->insertEventNotification($row['user_name'], "comment");
+    }
+    catch (PDOException $e)
+    {
+        echo "Connection failed: " . $e->getMessage();
+    }
+    $conn = null;
+    $location = 'Location: my-events.php';
+    header($location);
+    die();
+}
+// Edit Event handling
+if(isset($_POST['submitBtn'])){
+    try {
+        $conn = new PDO("mysql:host=$servername;dbname=$database",$username,$password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+        
+        $stmt = $conn->prepare('UPDATE `events` SET `event_date` = ?,`event_type` = ?, `event_description`= ?, 
+                                        `event_start_time` = ?, `event_duration` = ?
+                                WHERE `event_id` = ?');
+        $stmt->bindValue(1,$_POST['datepicker'],PDO::PARAM_STR);
+        $stmt->bindValue(2,$_POST['preferences'],PDO::PARAM_STR);
+        $stmt->bindValue(3,$_POST['description'],PDO::PARAM_STR);
+        $stmt->bindValue(4,$_POST['evtTime'],PDO::PARAM_STR);
+        $stmt->bindValue(5,$_POST['duration'],PDO::PARAM_INT);
+        $stmt->bindValue(6,$_POST['hd_event_id'],PDO::PARAM_INT);
+        $stmt->execute();
+        $notification = new Notification($con, $userID);
+        $rows = getJoinedMembers($conn, $_POST['hd_event_id']);
+        foreach($rows as $row){
+            $message = "The event " .$row['event_name']. " that you joined was edited";
+            $notification->insertEventNotification($row['user_name'], $message);
+        }
+    }
+    catch (PDOException $e)
+    {
+        echo "Connection failed: " . $e->getMessage();
+    }
+    $conn = null;
+    $location = 'Location: my-events.php';
+    header($location);
+    die();
+}
+// Layout Joined Events
 function printJoinEvents($event_id, $event_date, $month, $day, $location, $event_name, $event_type, $event_description, $user_name, $event_start_time, $event_duration)
 {
     $url = "eventDetail.php?item=" . urlencode($event_id);
@@ -156,10 +253,10 @@ function printJoinEvents($event_id, $event_date, $month, $day, $location, $event
                 </div>
 
                 <div class="detail">
-                    <h3>'.$event_type.'</h3>
+                    <h3>'.$event_name.'</h3>
                     <h4>'.$location.'</h4>
                     <p>'.$event_description.'</p>
-                    <h4>Member:</h4>
+                    <h4>Members:</h4>
                     <a href="">User 1</a>
                     <a href="">User 2</a>
                     <a href="">User 3</a>
@@ -183,7 +280,11 @@ function printJoinEvents($event_id, $event_date, $month, $day, $location, $event
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Cancel event</button>
+                                
+                                <form action="my-events.php" method="post">
+                                    <input type="hidden" name="hd_event_id" value="'. $event_id .'" />
+                                    <input type="submit" name="btnCancelEvent" value="Cancel Event" class="btn btn-primary">
+                                </form>
                             </div>
                             </div>
                         </div>
@@ -195,8 +296,24 @@ function printJoinEvents($event_id, $event_date, $month, $day, $location, $event
     <br>
     ';
 }
-function printCurrentEvent($event_id, $event_date, $month, $day, $location, $event_name, $event_type, $event_description, $user_name, $event_start_time, $event_duration)
-{
+// get All Preferences from database
+function getPreferences($conn){
+    $stmt = $conn->query('SELECT `preference` FROM `preferences`');
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $results;
+}
+// get joined members from event_id
+function getJoinedMembers($conn, $event_id){
+    $stmt = $conn->prepare('SELECT event_users.user_name, events.event_name FROM event_users INNER JOIN events
+                            ON event_users.event_id = events.event_id
+                            WHERE event_users.event_id = ?');
+    $stmt->bindValue(1,$event_id,PDO::PARAM_INT);
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $results;
+}
+function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $location, $event_name, $event_type, $event_description, $user_name, $event_start_time, $event_duration)
+{            
     $url = "eventDetail.php?item=" . urlencode($event_id);
     echo'
     <div class="row">
@@ -213,13 +330,17 @@ function printCurrentEvent($event_id, $event_date, $month, $day, $location, $eve
                 </div>
 
                 <div class="detail">
-                    <h3>'.$event_type.'</h3>
-                    <h4>'.$location.'</h4>
-                    <p>'.$event_description.'</p>
-                    <h4>Member:</h4>
-                    <a href="">User 1</a>
-                    <a href="">User 2</a>
-                    <a href="">User 3</a>
+                    <h3>'.$event_name.'</h3>
+                    <h4>Location: '.$location.'</h4>
+                    <p>Create by <a href="">'.$user_name.'</a></p>
+                    
+                    <p>'.substr($event_description,0,100).'... <a href="'.$url.'">Read more</a></p>
+                    <h4>Members:</h4>';
+                    $rows = getJoinedMembers($conn, $event_id);
+                    foreach($rows as $row){
+                        echo '<a href="">'.$row['user_name'].'</a>';
+                    }
+                    echo '
                     <div class="button-container">
                         <a href="'.$url.'" class="button button-small">View</a>
                         <button class="button button-small" data-toggle="modal" data-target="#editModal">Edit</button>
@@ -237,82 +358,67 @@ function printCurrentEvent($event_id, $event_date, $month, $day, $location, $eve
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="#" id="createEventForm" method="post" name="createEventForm">
+                                <form action="my-events.php" id="createEventForm" method="post">
                                 <h2 id="contact">'.$event_name.'</h2>
                                 <hr>
                                 <p id="createEvtLocation">'.$location.'</p>
-                                <div class="dropdown">
-                                    <button class="btn btn-default dropdown-toggle" type="button" id="sportText" data-toggle="dropdown">'.$event_type.'</button>
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                                    <li role="presentation"><a role="menuitem" tabindex="-1">Baseball</a></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1">Basketball</a></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1">Billiards (Pool)</a></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1">Bowling</a></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1">Climbing</a></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1">Cricket</a></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1">Curling</a></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1">Football</a></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1">Golf/Discgolf</a></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1">Rugby</a></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1">Skateboarding</a></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1">Skiing </a></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1">Snowboarding</a></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1">Soccer</a></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1">Swimming</a></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1">Tennis/Table Tennis</a></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1">Volleyball</a></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1">Weightlifting</a></li>
-                                    </ul>
-                                </div>
-                                <p>Enter Time: <input type = "text" id ="evtTime" name="evtTime" placeholder="'.$event_start_time.'"></p>
+                                <select name="preferences" id="preferences">';
+                                    $results = getPreferences($conn);
+                                    foreach($results as $row){
+                                        if($row['preference'] == $event_type){
+                                            echo '<option value="'.$row['preference'].'" selected>'.$row['preference'].'</option>';
+                                        }else{
+                                            echo '<option value="'.$row['preference'].'">'.$row['preference'].'</option>';
+                                        }
+                                    }
+                                    echo '
+                                </select>
+                                <p>Enter Time: <input type = "text" id ="evtTime" name="evtTime" value="'.$event_start_time.'"></p>
                                 <script>
                                     var j = jQuery.noConflict();
                                     j( function() {
                                         var dateToday = new Date();
                                         j( "#evtTime" ).timepicker({
-                                            \'step\': 5,
-                                            \'scrollDefault\': \'now\'
+                                            step: 15,
+                                            \'scrollDefault\': \'now\',
+                                            \'timeFormat\': \'H:i\',
                                         });
                                     } );
+                                    
                                 </script>
-                                <p>Enter Date: <input type = "text" id = "datepicker" placeholder="'.$event_date.'"></p>
+                                <p>Enter Date: <input type = "text" id = "datepicker" name="datepicker" value="'.$event_date.'"></p>
                                 <script>
                                     var j = jQuery.noConflict();
                                     j( function() {
                                         j( "#datepicker" ).datepicker({
                                             minDate: 0,
-                                            maxDate: "+1m"
+                                            maxDate: "+1m",
+                                            dateFormat: "yy-mm-dd"
                                         });
                                     } );
                                 </script>
                                 <div class="slidecontainer">
                                     <p id="createEvtLength">Length: </p>
-                                    <input type="range" min="15" max="120" value="30" class="slider" id="myRange">
+                                    <input type="range" name="duration" min="15" max="120" value="'.$event_duration.'" class="slider" id="myRange">
                                 </div>
                                 <p id="sliderVal"></p>
+                                <script>
+                                    var slider = document.getElementById("myRange");
+                                    var output = document.getElementById("sliderVal");
+                                    output.innerHTML = slider.value + " minutes"; // Display the default slider value
+                                    // Update the current slider value (each time you drag the slider handle)
+                                    slider.oninput = function() {
+                                        output.innerHTML = this.value + " minutes";
+                                    }
+                                </script>
+                                <p style="margin:0">Description:</p>
                                 <textarea id="desc" name="description" placeholder="Description (Optional)">'.$event_description.'</textarea>
                                 
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <a href="javascript:%20check_empty()" id="submit" class="btn btn-primary">Edit</a>
+                                <input type="hidden" name="hd_event_id" value="'. $event_id .'" />
+                                <input type="submit" name="submitBtn" value="Edit" class="btn btn-primary">
                                 </form>
                             </div>
                             </div>
@@ -334,7 +440,11 @@ function printCurrentEvent($event_id, $event_date, $month, $day, $location, $eve
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Delete event</button>
+
+                                <form action="my-events.php" method="post">
+                                    <input type="hidden" name="hd_event_id" value="'. $event_id .'" />
+                                    <input type="submit" name="btnDeleteEvent" value="Delete Event" class="btn btn-primary">
+                                </form>
                             </div>
                             </div>
                         </div>
@@ -364,7 +474,7 @@ function printPastEvent($event_id, $month, $day, $location, $event_name, $event_
                 </div>
 
                 <div class="detail">
-                    <h3>'.$event_type.'</h3>
+                    <h3>'.$event_name.'</h3>
                     <h4>'.$location.'</h4>
                     <p>'.$event_description.'</p>
                     <h4>Member:</h4>

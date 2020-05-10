@@ -1,4 +1,11 @@
 <?php
+// If there is no event, then print this message
+function printNoEventMessage(){
+    echo'
+    <br>
+    <p>There is no event to show</p>
+    <br>';
+}
 // Convert int month to string
 function monthConvert($month){
     switch ($month){

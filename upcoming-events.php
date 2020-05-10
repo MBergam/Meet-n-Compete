@@ -21,21 +21,18 @@ function getEvents($conn){
     $stmt = $conn->query('SELECT `event_id`,`event_date`,`location`,`event_name` FROM `events`');
     if($stmt->rowCount() > 0){
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-    else {
-        $results = null;
-    }
-    $current_date = date("Y-m-d");
-    $count_current = 0;
-    foreach ($results as $row){
-        if($current_date < $row['event_date']){
-            $count_current++;
-            list($year, $month, $day) = explode("-", $row['event_date']);
-            printEvent($row['event_id'], monthConvert($month), $day, $row['location'], $row['event_name']);
+        $current_date = date("Y-m-d");
+        $count_current = 0;
+        foreach ($results as $row){
+            if($current_date <= $row['event_date']){
+                $count_current++;
+                list($year, $month, $day) = explode("-", $row['event_date']);
+                printEvent($row['event_id'], monthConvert($month), $day, $row['location'], $row['event_name']);
+            }
         }
     }
-    if($count_current == 0){
-        echo'<p>There is no event to show</p>';
+    else {
+        printNoEventMessage();
     }
 }
 
