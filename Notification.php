@@ -49,7 +49,16 @@ class Notification
         $insert_query = mysqli_query($this->con, "insert into notifications values('','$user_to','$userLogin', '$message', '$link' , '$date_time', 'no', 'no')");
 
     }
+    // insert notifications for edit, delete, cancel event features
+    public function insertEventNotification($user_to, $message){
+        $userLogin = $this->user_obj->getUsername();
+        $userLoginName = $this->user_obj->getFullName();
 
+        $date_time = date("y-m-d H:i:s");
+
+        $insert_query = mysqli_query($this->con, "insert into notifications values('','$user_to','$userLogin', '$message', '' , '$date_time', 'no', 'no')");
+
+    }
     public function getNotifications($data, $limit){
         $page = $data['page'];
         $userLogin = $this->user_obj->getUsername();
