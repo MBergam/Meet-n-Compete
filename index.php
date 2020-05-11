@@ -258,21 +258,6 @@ echo '
         </div>
         <!-- Popup Div Ends Here -->
 
-        <section id="about-us">
-            <div class="container box padding-inside">
-                <div class="title-container">
-                    <h1>About Us</h1>
-                    <hr>
-                </div>
-                <p>As many people have experienced, finding people to organize pick up games with can be difficult. 
-                    Often a person will head over to a local park just to find out that the park is already being used, 
-                    there aren’t enough people, or the people that are there are all different ages.</p>
-                <p>This project will help bring a solution to these problems, allowing users to view events and locations via a map, 
-                    while also being able to create events of their own for others to see and join.</p>
-                <p>Meet-N-Compete will provide an online means to help people organize pick-up games and reduce the difficulties and confusion that usually accompany.</p>
-            </div>
-        </section>
-
         <section>
             <div id="upcoming-events" class="container box">
                 <div class="title-container">

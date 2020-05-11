@@ -1,6 +1,5 @@
 <?php
 include 'header.php';
-include 'common-functions.php';
 
 $printNoEventMessage = true;// to print a message when there is no event to show
 if(isset($_SESSION['username']))
@@ -296,12 +295,7 @@ function printJoinEvents($event_id, $event_date, $month, $day, $location, $event
     <br>
     ';
 }
-// get All Preferences from database
-function getPreferences($conn){
-    $stmt = $conn->query('SELECT `preference` FROM `preferences`');
-    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    return $results;
-}
+
 // get joined members from event_id
 function getJoinedMembers($conn, $event_id){
     $stmt = $conn->prepare('SELECT event_users.user_name, events.event_name FROM event_users INNER JOIN events

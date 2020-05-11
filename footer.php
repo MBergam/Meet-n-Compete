@@ -30,8 +30,8 @@
             <div class="line"></div>
             <div id="copyright">
                 <ul class = "nav-copyright">
-                    <li><a href="">© 2020 Meet-N-Compete</a></li>
-                    <li><a class="white" href="">Rules and Policies</a></li>
+                    <li><a href="">Â© 2020 Meet-N-Compete</a></li>
+                    <li><a class="white" href="about-us.php">About Us</a></li>
                 </ul>
             </div>
         </div>

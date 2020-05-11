@@ -527,6 +527,7 @@ footer ul li a:hover{
 }
 .event-container .detail{
     padding-left: 20px;
+    min-width: 300px;
 }
 .event-container .detail .button{
     padding: 5px 20px;
@@ -554,6 +555,9 @@ footer ul li a:hover{
 .button-small{
     padding: 10px 10px !important;
     line-height: 18px;
+}
+.font-small{
+    font-size: 1rem !important;
 }
 .md-height{
     height: 360px;
@@ -603,15 +607,20 @@ div#popupAccount {
 #createEvtPopup {
     width:100%;
     height:100%;
-    opacity:.95;
     top:0;
     left:0;
     display:none;
     position:fixed;
-    background-color:#313131;
-    overflow:auto
+    background-color:rgba(49,49,49,.9);
+    overflow:auto;
+    z-index:1000
 }
-
+#markerInfo img{
+    width: 100%;
+    min-width: 280px;
+    height: 200px;
+    margin-bottom: 1rem;
+}
 /*THIS IS THE DESIGN FOR THE SEE EVENT POPUP WHEN YOU CLICK ON THE MARKER*/
 #seeEventsPopup {
     width:100%;
@@ -883,6 +892,7 @@ textarea {
     text-decoration: underline;
     color: blue;
     cursor:pointer;
+    margin: 0;
 }
 
 /*allText (inside of info when clicking on a marker on the Home page map)*/
@@ -891,7 +901,7 @@ textarea {
 }
 
 .placeInfo{
-    margin-bottom: 0;
+    font-weight: 600;
 }
 
 
@@ -1392,12 +1402,16 @@ THIS CODE BELOW IS FOR PROFILE.PHP
     height: 25px;
 }
 
+.search-form{
+    position: relative;
+}
 .search_result{
-    background-color: white;
-    border: 1px solid #DADADA;
-    border-bottom: none;
-    border-top: none;
-    margin-top: 40px;
+    background-color: #fff;
+    width: 300px;
+    position: absolute;
+    left: 0;
+    top: 45px;
+    z-index: 5;
 }
 
 .search_result_footer{

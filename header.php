@@ -5,6 +5,7 @@ include 'User.php';
 include 'Post.php';
 include 'Message.php';
 include 'Notification.php';
+include 'common-functions.php';
 
 ////THIS IS THE DATABASE CREDENTIALS FOR WHOEVER USING PDO CONNECTING METHOD
 $p_ini = parse_ini_file("config.ini",true);
@@ -80,7 +81,7 @@ else{
             <div class="col-sm-6">
                 <a href=""><img id="logo" src="img/logo.png" alt=""></a>
             </div>
-            <div class="col-sm-6">
+            <!-- <div class="col-sm-6">
                 <div class="search">
                     <form action="search.php" method="get" name="search_form">
                         <input type="text" onkeyup="getLiveSearchUsers(this.value, '<?php echo $userLogin;?>')" name="q" placeholder="Search for friends..." autocomplete="off" id="search_text_input">
@@ -93,7 +94,7 @@ else{
                 </div>
                 <div class="search_result"></div>
                 <div class="search_result_footer_empty"></div>
-            </div>
+            </div> -->
             <div class="col-sm-6">
                 <div id="header-right" class="vertical-center">
                     <ul class = "nav-login">
@@ -250,6 +251,12 @@ else{
                     <a class="nav-link" href="Account.php">News Feed</a>
                 </li>
             </ul>
+            <!-- Search session -->
+                <form action="search.php" method="get" name="search_form" class="form-inline my-2 my-lg-0 search-form">
+                    <input type="text" onkeyup="getLiveSearchUsers(this.value, '<?php echo $userLogin;?>')" name="q" placeholder="Search people..." autocomplete="off" id="search_text_input" class="form-control mr-sm-2">
+                    <div class="search_result"></div>
+                </form>
+            <!-- End Search session -->
         </div>
     </div>
 </nav>

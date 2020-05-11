@@ -1,4 +1,10 @@
 <?php
+// get All Preferences from database
+function getPreferences($conn){
+    $stmt = $conn->query('SELECT `preference` FROM `preferences`');
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $results;
+}
 // If there is no event, then print this message
 function printNoEventMessage(){
     echo'

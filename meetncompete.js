@@ -494,9 +494,9 @@ function addMarkerHandler(marker, info, mdata, name, i, hasEvent) {
 
             //Show reviews preview
             if(results.rating == null){
-                p2.innerText += "\nNo user ratings available. ";
+                p2.innerText += "No user ratings available. ";
             }else{
-                p2.innerText += "\nRating: " + results.rating + "/5 (" + results.user_ratings_total + " total) ";
+                p2.innerText += "Rating: " + results.rating + "/5 (" + results.user_ratings_total + " total) ";
             }
             
             p2.appendChild(reviewsLink);
@@ -507,7 +507,7 @@ function addMarkerHandler(marker, info, mdata, name, i, hasEvent) {
             if(hasEvent){
                 //Create 'See Events' button
                 let seeEventsButton = document.createElement("button");
-                seeEventsButton.className = "seeEvents button markInfo";
+                seeEventsButton.className = "seeEvents button button-small markInfo";
                 seeEventsButton.innerHTML = "See Events";
                 seeEventsButton.onclick = function(){ 
                     //Guest User clicks on See Events
@@ -563,7 +563,7 @@ function addMarkerHandler(marker, info, mdata, name, i, hasEvent) {
 
             //Create 'Create Event' button
             let createEventButton = document.createElement("button");
-            createEventButton.className = "createEvent button markInfo";
+            createEventButton.className = "createEvent button button-small font-small float-right markInfo";
             createEventButton.innerHTML = "Create Event";
             createEventButton.onclick = function(){ 
                 //Guest User clicks on the Create Event
@@ -706,9 +706,10 @@ function printEvent(response, results, x){
     joinEventContainer.action = "my-events.php";
 
     var joinEventBtn = document.createElement("input");
+    joinEventBtn.type = "button";
     joinEventBtn.name = "btnJoin";
     joinEventBtn.value = "Join Event";
-    joinEventBtn.className = "button joinEvtButton";
+    joinEventBtn.className = "button joinEvtButton float-right";
     joinEventBtn.onclick = function(){
         //take away join event button if user is on there
         $.ajax({
@@ -742,13 +743,13 @@ function printEvent(response, results, x){
     joinEventHiddenIdToDB.name = "hd_event_id";
     joinEventHiddenIdToDB.value = response.event_id;
 
+    joinEventContainer.appendChild(a1);
     joinEventContainer.appendChild(joinEventBtn);
     joinEventContainer.appendChild(joinEventHiddenIdToDB);
 
     date_container.appendChild(p);
     detail.appendChild(h3);
     detail.appendChild(h4);
-    detail.appendChild(a1);
     detail.appendChild(joinEventContainer);
     event_container.appendChild(date_container);
     event_container.appendChild(detail);

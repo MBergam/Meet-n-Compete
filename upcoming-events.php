@@ -1,6 +1,5 @@
 <?php
 include 'header.php';
-include 'common-functions.php';
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$database",$username,$password);
