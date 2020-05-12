@@ -3,9 +3,52 @@ include 'header.php';
 
 
 if(isset($_POST['post'])){
-    $post = new Post($con,$userLogin);
-    $post->submitPost($_POST['post_text'], 'none');
-    header("Location: Account.php");
+
+    $uploadOK = 1;
+    $imageName = $_FILES['fileToUpload']['name'];
+    $errorMessage = "";
+    if($imageName!=""){
+        $targetDir = "img/posts";
+        $imageName = $targetDir.uniqid().basename($imageName);
+        $imageFileType = pathinfo($imageName,PATHINFO_EXTENSION);
+
+        if($_FILES['fileToUpload']['size'] > 10000000){
+            $errorMessage = "File is too large!";
+            $uploadOK = 0;
+        }
+
+        if(strtolower($imageFileType) != "jpeg" && strtolower($imageFileType) != "jpg" && strtolower($imageFileType) !="png" && strtolower($imageFileType) != "gif"){
+            $errorMessage = "File type is not supported!";
+            $uploadOK = 0;
+        }
+
+        if($uploadOK){
+            if(move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $imageName)){
+                //image uploaded
+            }
+
+            else{
+                //image did not upload
+                $uploadOK=0;
+            }
+        }
+    }
+
+    if($uploadOK){
+        $post = new Post($con,$userLogin);
+        $post->submitPost($_POST['post_text'], 'none', $imageName);
+        header("Location: Account.php");
+    }
+
+    else{
+        echo "<div style='text-align: center' class='alert alert-danger'>
+                $errorMessage
+            </div>";
+    }
+
+
+
+
 }
 
 ?>
@@ -28,8 +71,6 @@ if(isset($_POST['post'])){
 
                             <?php
                             echo "Number of Post(s): ". $user['num_posts'] . "<br>";
-//                            echo "Past Events: " . $user['past_events'] . "<br>";
-//                            echo "Current Events: " . $user['current_events'];
                             ?>
                         </div>
                     </div>
@@ -37,7 +78,8 @@ if(isset($_POST['post'])){
 
                 <div class="col-lg-8">
                     <div class="main_column_new_feed column">
-                        <form class="post_form" action="Account.php" method="POST">
+                        <form class="post_form" action="Account.php" method="POST" enctype="multipart/form-data">
+                            <input type="file" name="fileToUpload" id="fileToUpload">
                             <textarea name="post_text" id="post_text" placeholder="What are you thinking...? "></textarea>
                             <input type="submit" name="post" id="post_button" value="Post">
                             <hr>
