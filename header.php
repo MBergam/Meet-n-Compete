@@ -110,7 +110,7 @@ else{
                             $friend_requests = new User($con,$userLogin);
                             $num_friend_requests = $friend_requests->getNumberOfFriendRequests();
 
-                            echo "<li><a href='$userLogin'>$userLogin</a></li>";
+                            echo "<li><a id='site_user' href='$userLogin'>$userLogin</a></li>";
                             ?>
                             <li><a href='friendRequests.php'
                                 <i class="fa fa-users fa-lg"></i>

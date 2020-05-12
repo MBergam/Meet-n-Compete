@@ -179,7 +179,9 @@ include 'submitEvent.php';
             <hr>
             <input type="hidden" name="createEvtLocationToDB" id="createEvtLocationToDB" value="Event Location"></input>
             <p class="eventLocation" id="createEvtLocation">Event location</p>
-            <textarea id="evtName" name="eventName" placeholder="Event Name (Optional)"></textarea>
+            <div id="eventNameDiv">
+            <textarea id="evtName" name="eventName" placeholder="Event Name (Required)"></textarea>
+            </div>
             <div class="dropdown" id="dropdownSports">
                 <input type="hidden" name="sportTextToDB" id="sportTextToDB" value=""></input>
                 <button class="btn btn-default dropdown-toggle" type="button" name="sportText" id="sportText" data-toggle="dropdown">Select Sport</button>

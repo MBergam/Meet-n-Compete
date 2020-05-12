@@ -531,7 +531,7 @@ function addMarkerHandler(marker, info, mdata, name, i, hasEvent) {
                             },
                             success: function(response) {
                                 var json = JSON.parse(response);
-
+                                
                                 //sort json data from earliest to latest date, put it into the orderedResponse variable
                                 orderedResponse = json.sort(function(a,b){
                                                                 return Date.parse(a.event_date) > Date.parse(b.event_date);
@@ -857,6 +857,20 @@ function validateEvent(){
         sportDropdown.appendChild(sportError);
         returnValue = false;
     }
+
+    //this checks whether the event name is empty or not. If not, an error is displayed to the user in html.
+    if(document.getElementById("evtName").value === ""){
+        var nameError = document.createElement('p');
+        nameError.innerHTML = "Enter an event name";
+        nameError.style = "color:red";
+        nameError.id = "nameError";
+        nameError.className = "createEventError";
+
+        var sportDropdown = document.getElementById("eventNameDiv");
+        sportDropdown.appendChild(nameError);
+        returnValue = false;
+    }
+
 
     return returnValue;
 }

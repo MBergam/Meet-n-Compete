@@ -210,10 +210,10 @@ if(isset($_POST['submitBtn'])){
         $stmt = $conn->prepare('UPDATE `events` SET `event_date` = ?,`event_type` = ?, `event_description`= ?, 
                                         `event_start_time` = ?, `event_duration` = ?
                                 WHERE `event_id` = ?');
-        $stmt->bindValue(1,$_POST['datepicker'],PDO::PARAM_STR);
+        $stmt->bindValue(1,$_POST['datepickerToDB'],PDO::PARAM_STR);
         $stmt->bindValue(2,$_POST['preferences'],PDO::PARAM_STR);
         $stmt->bindValue(3,$_POST['description'],PDO::PARAM_STR);
-        $stmt->bindValue(4,$_POST['evtTime'],PDO::PARAM_STR);
+        $stmt->bindValue(4,$_POST['evtTimeToDB'],PDO::PARAM_STR);
         $stmt->bindValue(5,$_POST['duration'],PDO::PARAM_INT);
         $stmt->bindValue(6,$_POST['hd_event_id'],PDO::PARAM_INT);
         $stmt->execute();
@@ -237,6 +237,7 @@ if(isset($_POST['submitBtn'])){
 function printJoinEvents($event_id, $event_date, $month, $day, $location, $event_name, $event_type, $event_description, $user_name, $event_start_time, $event_duration)
 {
     $url = "eventDetail.php?item=" . urlencode($event_id);
+    $event_start_time = date("g:ia", strtotime($event_start_time));
     echo'
     <div class="row">
         <div class="col-md-6">
@@ -248,7 +249,7 @@ function printJoinEvents($event_id, $event_date, $month, $day, $location, $event
                     <p><span class="month">'.$month.'</span>-
                         <span class="day">'.$day.'</span></p>
                     <p><span class="month">'.$event_start_time.'</span>-
-                        <span class="month">'.$event_duration.'&prime;</span></p>
+                        <span class="month">'.$event_duration.' min</span></p>
                 </div>
 
                 <div class="detail">
@@ -309,6 +310,7 @@ function getJoinedMembers($conn, $event_id){
 function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $location, $event_name, $event_type, $event_description, $user_name, $event_start_time, $event_duration)
 {            
     $url = "eventDetail.php?item=" . urlencode($event_id);
+    $event_start_time = date("g:ia", strtotime($event_start_time));
     echo'
     <div class="row">
         <div class="col-md-6">
@@ -319,20 +321,21 @@ function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $locatio
                 <div class="date-container">
                     <p><span class="month">'.$month.'</span>-
                         <span class="day">'.$day.'</span></p>
+                    
                     <p><span class="month">'.$event_start_time.'</span>-
-                        <span class="month">'.$event_duration.'&prime;</span></p>
+                        <span class="month">'.$event_duration.' min</span></p>
                 </div>
 
                 <div class="detail">
                     <h3>'.$event_name.'</h3>
                     <h4>Location: '.$location.'</h4>
-                    <p>Create by <a href="">'.$user_name.'</a></p>
+                    <p>Created by <a href="">'.$user_name.'</a></p>
                     
                     <p>'.substr($event_description,0,100).'... <a href="'.$url.'">Read more</a></p>
                     <h4>Members:</h4>';
                     $rows = getJoinedMembers($conn, $event_id);
                     foreach($rows as $row){
-                        echo '<a href="">'.$row['user_name'].'</a>';
+                        echo '<a href="">'.$row['user_name'].'</a> ';
                     }
                     echo '
                     <div class="button-container">
@@ -367,27 +370,27 @@ function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $locatio
                                     }
                                     echo '
                                 </select>
-                                <p>Enter Time: <input type = "text" id ="evtTime" name="evtTime" value="'.$event_start_time.'"></p>
+                                <input type="hidden" name="evtTimeToDB" id="evtTimeToDB" value=""></input>
+                                <p id="eventTime">Enter Time: <input type = "text" id ="evtTime" name="evtTime" value="'.$event_start_time.'"></p>
                                 <script>
                                     var j = jQuery.noConflict();
                                     j( function() {
                                         var dateToday = new Date();
                                         j( "#evtTime" ).timepicker({
-                                            step: 15,
-                                            \'scrollDefault\': \'now\',
-                                            \'timeFormat\': \'H:i\',
+                                            step: 5,
+                                            \'scrollDefault\': \'now\'
                                         });
                                     } );
-                                    
+                                   
                                 </script>
-                                <p>Enter Date: <input type = "text" id = "datepicker" name="datepicker" value="'.$event_date.'"></p>
+                                <input type="hidden" name="datepickerToDB" id="datepickerToDB" value=""></input>
+                                <p id="eventDate">Enter Date: <input type = "text" id = "datepicker" name="datepicker" value="'.$event_date.'"></p>
                                 <script>
                                     var j = jQuery.noConflict();
                                     j( function() {
                                         j( "#datepicker" ).datepicker({
                                             minDate: 0,
-                                            maxDate: "+1m",
-                                            dateFormat: "yy-mm-dd"
+                                            maxDate: "+1m"
                                         });
                                     } );
                                 </script>
@@ -412,7 +415,127 @@ function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $locatio
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <input type="hidden" name="hd_event_id" value="'. $event_id .'" />
-                                <input type="submit" name="submitBtn" value="Edit" class="btn btn-primary">
+                                <script>
+                                function validateEdit(){
+                                    //remove all other errors if they have occured before (errors will show after this, this just makes it so that the errors arent displayed multiple times)
+                                    $(".editEventError").remove();
+                                    var returnValue = true;
+                                    var correctDate = false;
+
+                                    //this checks to see if the date input is a correct date. If not, an error is displayed to the user in html.
+                                    var date = moment(document.getElementById("datepicker").value).format("YYYY-MM-DD");
+                                    if(date == "Invalid date" || !moment(date).isSameOrAfter(Date.now(), \'day\')){
+                                        var dateError = document.createElement(\'p\');
+                                        dateError.innerHTML = "Date incorrect. Enter a valid date";
+                                        dateError.style = "color:red";
+                                        dateError.id = "dateError";
+                                        dateError.className = "editEventError";
+
+                                        var eventDate = document.getElementById("eventDate");
+                                        eventDate.appendChild(dateError);
+                                        returnValue = false;
+                                    }
+                                    if(moment(date).isAfter(Date.now(), \'day\')){
+                                        correctDate = true;
+                                    }
+
+                                    //this checks to see if the time input is a correct time. If not, an error is displayed to the user in html.
+                                    if(!validEditTime(document.getElementById("evtTime").value, correctDate)){
+                                        var timeError = document.createElement(\'p\');
+                                        timeError.innerHTML = "Time must be 15 min or later";
+                                        timeError.style = "color:red";
+                                        timeError.id = "timeError";
+                                        timeError.className = "editEventError";
+
+                                        var eventTime = document.getElementById("eventTime");
+                                        eventTime.appendChild(timeError);
+                                        returnValue = false;
+                                    }
+
+                                    return returnValue;
+                                }
+
+                                //Checks if the time is a valid time for creating an event -- is it 30 mins or later than the current time
+                                function validEditTime(text, date){
+                                    if(text.length == 6){
+                                        if(text.substring(1,2) == ":" && (text.substring(4,6) == "pm" || text.substring(4,6) == "am")){
+                                            if(isNumber(text.substring(0,1)) && isNumber(text.substring(2,4))){
+                                                if(date){
+                                                    return true;
+                                                }
+                                                var userInputTime = moment(text, \'h:mma\');
+                                                var newDateObj = moment(new Date()).add(15, \'m\').toDate();
+                                                var timeToCompare = moment(newDateObj.toLocaleString(\'en-US\', { hour: \'numeric\', minute: \'numeric\', hour12: true }), \'h:mma\');
+
+                                                if(userInputTime.isAfter(timeToCompare)){
+                                                    return true;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if(text.length == 7){
+                                        if(text.substring(2,3) == ":" && (text.substring(5,7) == "pm" || text.substring(5,7) == "am")){
+                                            if(isNumber(text.substring(0,2)) && isNumber(text.substring(3,5))){
+                                                if(date){
+                                                    return true;
+                                                }
+                                                var userInputTime = moment(text, \'h:mma\');
+                                                var newDateObj = moment(new Date()).add(15, \'m\').toDate();
+                                                var timeToCompare = moment(newDateObj.toLocaleString(\'en-US\', { hour: \'numeric\', minute: \'numeric\', hour12: true }), \'h:mma\');
+
+                                                if(userInputTime.isAfter(timeToCompare)){
+                                                    return true;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    return false;
+                                }
+                                function checkValues(){
+                                    //validateEdit shows what the user input needs to look like
+                                    if(validateEdit()){
+                                        //For sending event start time to db as 24hr time hh:mm
+                                        var time = document.getElementById("evtTime").value;
+                                        if (time.includes("pm")) {
+                                            if (time.length > 6) {//10pm or later
+                                                var hour = (parseInt(time.substring(0,2))) + 12;
+                                                //if hour is 24, then change it back to the original value (happens when time is 12 pm)
+                                                if(hour >= 24){
+                                                    hour -= 12;
+                                                }
+                                                var hourstring = hour.toString();
+                                                var mins = time.substring(2,5);
+                                                time = hourstring + mins
+                                            } else {//earlier than 10pm
+                                                var hour = (parseInt(time.substring(0,1))) + 12;
+                                                var hourstring = hour.toString();
+                                                var mins = time.substring(1,4);
+                                                time = hourstring + mins
+                                            }
+                                        } else { //any AM time
+                                            var hour = (parseInt(time.substring(0,2)));
+                                            if(hour == 12){
+                                                hour -= 12;
+                                            }
+                                            var hourstring = hour.toString();
+                                            var mins = time.substring(2,5);
+                                            time = hourstring + mins
+                                        }
+
+                                        document.getElementById(\'evtTimeToDB\').value = time 
+                                        document.getElementById(\'datepickerToDB\').value = moment(document.getElementById("datepicker").value).format("YYYY-MM-DD"); //for sending event date to db
+
+                                        //submit the event data to the database. To do so, the submit button must be type of submit now.
+                                        let sendBtn = document.getElementById("editBtn");
+                                        sendBtn.type = "submit";
+
+                                        //click the button to send data off to database
+                                        sendBtn.click();
+                                    }
+                                }
+                               
+                                </script>
+                                <input onclick="checkValues()" name="submitBtn" id="editBtn" value="Edit" class="btn btn-primary">
                                 </form>
                             </div>
                             </div>
@@ -453,6 +576,7 @@ function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $locatio
 function printPastEvent($event_id, $month, $day, $location, $event_name, $event_type, $event_description, $user_name, $event_start_time, $event_duration)
 {
     $url = "eventDetail.php?item=" . urlencode($event_id);
+    $event_start_time = date("g:ia", strtotime($event_start_time));
     echo'
     <div class="row">
         <div class="col-md-6">
@@ -464,7 +588,7 @@ function printPastEvent($event_id, $month, $day, $location, $event_name, $event_
                     <p><span class="month">'.$month.'</span>-
                         <span class="day">'.$day.'</span></p>
                     <p><span class="month">'.$event_start_time.'</span>-
-                        <span class="month">'.$event_duration.'&prime;</span></p>
+                        <span class="month">'.$event_duration.' min</span></p>
                 </div>
 
                 <div class="detail">
