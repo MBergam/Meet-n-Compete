@@ -1,4 +1,15 @@
 <?php
+// get joined members from event_id
+function getJoinedMembers($conn, $event_id){
+    $stmt = $conn->prepare('SELECT event_users.user_name, events.event_name, events.user_name AS creator
+                            FROM event_users INNER JOIN events
+                            ON event_users.event_id = events.event_id
+                            WHERE event_users.event_id = ?');
+    $stmt->bindValue(1,$event_id,PDO::PARAM_INT);
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $results;
+}
 // get All Preferences from database
 function getPreferences($conn){
     $stmt = $conn->query('SELECT `preference` FROM `preferences`');

@@ -67,21 +67,21 @@ function getItemDetail($conn, $itemID){
     if($stmt->rowCount() ==1 ){
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         list($year, $month, $day) = explode("-", $row['event_date']);
-        printEventDetails($row['event_id'], $row['event_marker_id'], monthConvert($month), $day, $row['location'], $row['event_name'], 
+        printEventDetails($conn, $row['event_id'], $row['event_marker_id'], monthConvert($month), $day, $row['location'], $row['event_name'], 
         $row['event_type'], $row['event_description'], $row['user_name'], $row['event_start_time'], $row['event_duration']);
     }
     else{
         echo "Data not found";
     }
 }
-function printEventDetails($event_id, $event_marker_id, $month, $day, $location, $event_name, $event_type, $event_description, $user_name, $event_start_time, $event_duration)
+function printEventDetails($conn, $event_id, $event_marker_id, $month, $day, $location, $event_name, $event_type, $event_description, $user_name, $event_start_time, $event_duration)
 {
     echo'
     <h1>'.$event_name.'</h1>
     <hr>
     <div class="row">
         <div class="col-md-6">
-            <div class="detail-img"><img src="img/'.$event_type.'.jpg" alt=""></div>
+            <div class="detail-img"><img src="img/'.strtolower($event_type).'.jpg" alt=""></div>
         </div>
         <div class="col-md-6" id="eventDetail">
             <div class="event-container">
@@ -89,19 +89,28 @@ function printEventDetails($event_id, $event_marker_id, $month, $day, $location,
                     <p><span class="month">'.$month.'</span>-
                         <span class="day">'.$day.'</span></p>
                     <p><span class="month">'.$event_start_time.'</span>-
-                        <span class="month">'.$event_duration.'&prime;</span></p>
+                        <span class="month">'.$event_duration.' min</span></p>
                 </div>
 
                 <div class="detail">
-                    <h3>'.$event_type.'</h3>
-                    <h4>'.$location.'</h4>
-                    <p>'.$event_description.'</p>
-                    <h4>Member:</h4>
-                    <a href="">User 1</a>
-                    <a href="">User 2</a>
-                    <a href="">User 3</a>
+                    <h5>Type: '.$event_type.'</h5>
+                    <h4>Location: '.$location.'</h4>
+                    <p>Create by <a href="'.$user_name.'">'.$user_name.'</a></p>
+                    <p>Description: '.$event_description.'</p>
+                    '; 
+                    
+                    $rows = getJoinedMembers($conn, $event_id);
+                    echo'
+                    <h4>Members('.sizeof($rows).'):</h4>';
+                    if(sizeof($rows)==0){
+                        echo 'None';
+                    }else{
+                        foreach($rows as $row){
+                            echo '<a href="'.$row['user_name'].'" class="margin-right">'.$row['user_name'].'</a>';
+                        }
+                    }
+                    echo '
                     <div class="button-container">
-                        
                         <button class="button" onclick="history.go(-1);">Back</button>
                         <button class="button">Join Event</button>
                     </div>

@@ -81,20 +81,6 @@ else{
             <div class="col-sm-6">
                 <a href=""><img id="logo" src="img/logo.png" alt=""></a>
             </div>
-            <!-- <div class="col-sm-6">
-                <div class="search">
-                    <form action="search.php" method="get" name="search_form">
-                        <input type="text" onkeyup="getLiveSearchUsers(this.value, '<?php echo $userLogin;?>')" name="q" placeholder="Search for friends..." autocomplete="off" id="search_text_input">
-                        <div class="button_holder">
-                            <img src="img/search--v2.png">
-                            
-                        </div>
-                    </form>
-
-                </div>
-                <div class="search_result"></div>
-                <div class="search_result_footer_empty"></div>
-            </div> -->
             <div class="col-sm-6">
                 <div id="header-right" class="vertical-center">
                     <ul class = "nav-login">
