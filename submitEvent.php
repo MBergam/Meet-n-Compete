@@ -16,7 +16,6 @@ require 'config.php';
         $userID = $_SESSION['username'];
     }
 
-
 if(isset($_POST['submitBtn'])){
 
     $event_marker_id = strip_tags($_POST['place_id']);//remove html tags

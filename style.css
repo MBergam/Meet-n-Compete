@@ -205,15 +205,6 @@ main .content{
 .padding-inside{
     padding: 2rem 4rem !important;
 }
-.margin-right{
-    margin-right: .5rem !important;
-}
-.center-align{
-    margin: 0 auto !important;
-}
-.capitalize{
-    text-transform: capitalize !important;
-}
 /* Style for Preferences list */
 .sidebar-container{
     margin-top: 20px;
@@ -515,7 +506,7 @@ footer ul li a:hover{
     padding: 0 10px;
 }
 .event-container .date-container p{
-    width: 100px;
+    width: 70px;
     height: 80px;
     background-color: #B899DF;
     border: 2px solid #ffffff;

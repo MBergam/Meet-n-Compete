@@ -104,7 +104,7 @@ function getEvents($conn, $userID){
                     <hr>';
                 }
                 $count_past++;
-                printPastEvent($conn, $row['event_id'], monthConvert($month), $day, $row['location'], $row['event_name'], 
+                printPastEvent($row['event_id'], monthConvert($month), $day, $row['location'], $row['event_name'], 
                                 $row['event_type'], $row['event_description'], $row['user_name'], $row['event_start_time'], $row['event_duration']);
             }
         }
@@ -150,15 +150,15 @@ function getEvent($conn, $event_id){
         if($current_date <= $row['event_date'] && $row['user_name'] != $_SESSION['username']){
             global $printNoEventMessage;
             $printNoEventMessage = false; // set flag to true to do not show the no event message
-            printJoinEvents($conn, $row['event_id'], $row['event_date'], monthConvert($month), $day, $row['location'], $row['event_name'], 
+            printJoinEvents($row['event_id'], $row['event_date'], monthConvert($month), $day, $row['location'], $row['event_name'], 
                             $row['event_type'], $row['event_description'], $row['user_name'], $row['event_start_time'], $row['event_duration']);    
         }
     }
 }
 
 
-// Leave Event handling
-if(isset($_POST['btnLeaveEvent'])){
+// Cancel Event handling
+if(isset($_POST['btnCancelEvent'])){
     try {
         $conn = new PDO("mysql:host=$servername;dbname=$database",$username,$password);
         $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
@@ -169,22 +169,6 @@ if(isset($_POST['btnLeaveEvent'])){
         $stmt->bindValue(1,$_POST['hd_event_id'],PDO::PARAM_INT);
         $stmt->bindValue(2,$_SESSION['username'],PDO::PARAM_STR_CHAR);
         $stmt->execute();
-        // Notification handle
-        $notification = new Notification($con, $userID);
-        $rows = getJoinedMembers($conn, $_POST['hd_event_id']);
-        
-        //send notification to all member
-        foreach($rows as $row){
-            $message = "Member ".$userID." had left the event " .$row['event_name']. ".";
-            $notification->insertEventNotification($row['user_name'], $message);
-        }
-        // send notification to creator of that event
-        $message = "Member ".$userID." had left the event " .$row['event_name']. ".";
-        $notification->insertEventNotification($row['creator'], $message);
-        // send notification to user that had left event
-        $message = "You had left the event " .$_POST['hd_event_name']. ".";
-        $notification->insertEventNotification($userID, $message);
-        
     }
     catch (PDOException $e)
     {
@@ -201,28 +185,12 @@ if(isset($_POST['btnDeleteEvent'])){
         $conn = new PDO("mysql:host=$servername;dbname=$database",$username,$password);
         $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
         
-        // Notification handle
-        $notification = new Notification($con, $userID);
-        $rows = getJoinedMembers($conn, $_POST['hd_event_id']);
-        //send notification to all member
-        foreach($rows as $row){
-            $message = "The event " .$row['event_name']. " that you joined was deleted.";
-            $notification->insertEventNotification($row['user_name'], $message);
-        }
-        // send notification to creator
-        $message = "You had deleted the event " .$_POST['hd_event_name']. ".";
-        $notification->insertEventNotification($userID, $message);
-
         $stmt = $conn->prepare('DELETE FROM `events` 
                                 WHERE `event_id` = ?');
         $stmt->bindValue(1,$_POST['hd_event_id'],PDO::PARAM_INT);
         $stmt->execute();
-
-        $stmt2 = $conn->prepare('DELETE FROM `event_users` 
-                                WHERE `event_id` = ?');
-        $stmt2->bindValue(1,$_POST['hd_event_id'],PDO::PARAM_INT);
-        $stmt2->execute();
-        
+        $notification = new Notification($con, $userID);
+        $notification->insertEventNotification($row['user_name'], "comment");
     }
     catch (PDOException $e)
     {
@@ -249,17 +217,12 @@ if(isset($_POST['submitBtn'])){
         $stmt->bindValue(5,$_POST['duration'],PDO::PARAM_INT);
         $stmt->bindValue(6,$_POST['hd_event_id'],PDO::PARAM_INT);
         $stmt->execute();
-        // Notification handle
         $notification = new Notification($con, $userID);
         $rows = getJoinedMembers($conn, $_POST['hd_event_id']);
-        //send notification to all member
         foreach($rows as $row){
-            $message = "The event " .$row['event_name']. " that you joined was edited.";
+            $message = "The event " .$row['event_name']. " that you joined was edited";
             $notification->insertEventNotification($row['user_name'], $message);
         }
-        // send notification to creator
-        $message = "You had edited the event " .$_POST['hd_event_name']. ".";
-        $notification->insertEventNotification($userID, $message);
     }
     catch (PDOException $e)
     {
@@ -271,14 +234,14 @@ if(isset($_POST['submitBtn'])){
     die();
 }
 // Layout Joined Events
-function printJoinEvents($conn, $event_id, $event_date, $month, $day, $location, $event_name, $event_type, $event_description, $user_name, $event_start_time, $event_duration)
+function printJoinEvents($event_id, $event_date, $month, $day, $location, $event_name, $event_type, $event_description, $user_name, $event_start_time, $event_duration)
 {
     $url = "eventDetail.php?item=" . urlencode($event_id);
     $event_start_time = date("g:ia", strtotime($event_start_time));
     echo'
     <div class="row">
         <div class="col-md-6">
-            <div class="detail-img"><img src="img/'.strtolower($event_type).'.jpg" alt=""></div>
+            <div class="detail-img"><img src="img/'.$event_type.'.jpg" alt=""></div>
         </div>
         <div class="col-md-6" id="eventDetail">
             <div class="event-container">
@@ -291,58 +254,41 @@ function printJoinEvents($conn, $event_id, $event_date, $month, $day, $location,
 
                 <div class="detail">
                     <h3>'.$event_name.'</h3>
-                    <h5>Type: '.$event_type.'</h5>
-                    <h4>Location: '.$location.'</h4>
-                    <p>Create by <a href="'.$user_name.'">'.$user_name.'</a></p>
-                    '; 
-                    if(strlen($event_description) > 100){
-                        echo '<p>Description: '.substr($event_description,0,50).'... <a href="'.$url.'">Read more</a></p>';
-                    }else{
-                        echo '<p>Description: '.$event_description.'</p>';
-                    }
-                    
-                    $rows = getJoinedMembers($conn, $event_id);
-                    echo'
-                    <h4>Members('.sizeof($rows).'):</h4>';
-                    if(sizeof($rows)==0){
-                        echo 'None';
-                    }else{
-                        foreach($rows as $row){
-                            echo '<a href="'.$row['user_name'].'" class="margin-right">'.$row['user_name'].'</a>';
-                        }
-                    }
-                    echo '
+                    <h4>'.$location.'</h4>
+                    <p>'.$event_description.'</p>
+                    <h4>Members:</h4>
+                    <a href="">User 1</a>
+                    <a href="">User 2</a>
+                    <a href="">User 3</a>
                     <div class="button-container">
                         <a href="'.$url.'" class="button button-small">View</a>
-                        <button class="button button-small" data-toggle="modal" data-target="#leaveModal'.$event_id.'">Leave</button>
+                        <button class="button button-small" data-toggle="modal" data-target="#cancelModal">Cancel</button>
                     </div>
 
-                    <!-- Leave Modal -->
-                    <div class="modal fade" id="leaveModal'.$event_id.'" tabindex="-1" role="dialog" aria-labelledby="leaveModal" aria-hidden="true">
+                    <!-- Cancel Modal -->
+                    <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="cancelModal" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="leaveModal">Leave Event</h5>
+                                <h5 class="modal-title" id="cancelModal">Cancel Event</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <p>Do you want to leave the event <span class="capitalize">'.$event_name.'</span></p>
+                                <p>Do you want to cancel the event '.$event_name.'</p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 
                                 <form action="my-events.php" method="post">
                                     <input type="hidden" name="hd_event_id" value="'. $event_id .'" />
-                                    <input type="hidden" name="hd_event_name" value="'. $event_name .'" />
-                                    <input type="submit" name="btnLeaveEvent" value="Leave Event" class="btn btn-primary">
+                                    <input type="submit" name="btnCancelEvent" value="Cancel Event" class="btn btn-primary">
                                 </form>
                             </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -351,6 +297,16 @@ function printJoinEvents($conn, $event_id, $event_date, $month, $day, $location,
     ';
 }
 
+// get joined members from event_id
+function getJoinedMembers($conn, $event_id){
+    $stmt = $conn->prepare('SELECT event_users.user_name, events.event_name FROM event_users INNER JOIN events
+                            ON event_users.event_id = events.event_id
+                            WHERE event_users.event_id = ?');
+    $stmt->bindValue(1,$event_id,PDO::PARAM_INT);
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $results;
+}
 function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $location, $event_name, $event_type, $event_description, $user_name, $event_start_time, $event_duration)
 {            
     $url = "eventDetail.php?item=" . urlencode($event_id);
@@ -358,7 +314,7 @@ function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $locatio
     echo'
     <div class="row">
         <div class="col-md-6">
-            <div class="detail-img"><img src="img/'.strtolower($event_type).'.jpg" alt=""></div>
+            <div class="detail-img"><img src="img/'.$event_type.'.jpg" alt=""></div>
         </div>
         <div class="col-md-6" id="eventDetail">
             <div class="event-container">
@@ -372,35 +328,24 @@ function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $locatio
 
                 <div class="detail">
                     <h3>'.$event_name.'</h3>
-                    <h5>Type: '.$event_type.'</h5>
                     <h4>Location: '.$location.'</h4>
-                    <p>Create by <a href="'.$user_name.'">'.$user_name.'</a></p>
-                    '; 
-                    if(strlen($event_description) > 100){
-                        echo '<p>Description: '.substr($event_description,0,50).'... <a href="'.$url.'">Read more</a></p>';
-                    }else{
-                        echo '<p>Description: '.$event_description.'</p>';
-                    }
+                    <p>Created by <a href="">'.$user_name.'</a></p>
                     
+                    <p>'.substr($event_description,0,100).'... <a href="'.$url.'">Read more</a></p>
+                    <h4>Members:</h4>';
                     $rows = getJoinedMembers($conn, $event_id);
-                    echo'
-                    <h4>Members('.sizeof($rows).'):</h4>';
-                    if(sizeof($rows)==0){
-                        echo 'None';
-                    }else{
-                        foreach($rows as $row){
-                            echo '<a href="'.$row['user_name'].'" class="margin-right">'.$row['user_name'].'</a>';
-                        }
+                    foreach($rows as $row){
+                        echo '<a href="">'.$row['user_name'].'</a> ';
                     }
                     echo '
                     <div class="button-container">
                         <a href="'.$url.'" class="button button-small">View</a>
-                        <button class="button button-small" data-toggle="modal" data-target="#editModal'.$event_id.'">Edit</button>
-                        <button class="button button-small" data-toggle="modal" data-target="#deleteModal'.$event_id.'">Delete</button>
+                        <button class="button button-small" data-toggle="modal" data-target="#editModal">Edit</button>
+                        <button class="button button-small" data-toggle="modal" data-target="#deleteModal">Delete</button>
                     </div>
 
                     <!-- Edit Modal -->
-                    <div class="modal fade" id="editModal'.$event_id.'" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
+                    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                             <div class="modal-header">
@@ -409,9 +354,9 @@ function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $locatio
                                 <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body center-align">
+                            <div class="modal-body">
                                 <form action="my-events.php" id="createEventForm" method="post">
-                                <h2 id="contact" class="capitalize">'.$event_name.'</h2>
+                                <h2 id="contact">'.$event_name.'</h2>
                                 <hr>
                                 <p id="createEvtLocation">'.$location.'</p>
                                 <select name="preferences" id="preferences">';
@@ -425,25 +370,25 @@ function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $locatio
                                     }
                                     echo '
                                 </select>
-                                <input type="hidden" name="evtTimeToDB" id="evtTimeToDB'.$event_id.'" value=""></input>
-                                <p id="eventTime">Enter Time: <input type = "text" id ="evtTime'.$event_id.'" name="evtTime" value="'.$event_start_time.'"></p>
+                                <input type="hidden" name="evtTimeToDB" id="evtTimeToDB" value=""></input>
+                                <p id="eventTime">Enter Time: <input type = "text" id ="evtTime" name="evtTime" value="'.$event_start_time.'"></p>
                                 <script>
                                     var j = jQuery.noConflict();
                                     j( function() {
                                         var dateToday = new Date();
-                                        j( "#evtTime'.$event_id.'" ).timepicker({
+                                        j( "#evtTime" ).timepicker({
                                             step: 5,
                                             \'scrollDefault\': \'now\'
                                         });
                                     } );
                                    
                                 </script>
-                                <input type="hidden" name="datepickerToDB" id="datepickerToDB'.$event_id.'" value=""></input>
-                                <p id="eventDate">Enter Date: <input type = "text" id = "datepicker'.$event_id.'" name="datepicker" value="'.$event_date.'"></p>
+                                <input type="hidden" name="datepickerToDB" id="datepickerToDB" value=""></input>
+                                <p id="eventDate">Enter Date: <input type = "text" id = "datepicker" name="datepicker" value="'.$event_date.'"></p>
                                 <script>
                                     var j = jQuery.noConflict();
                                     j( function() {
-                                        j( "#datepicker'.$event_id.'" ).datepicker({
+                                        j( "#datepicker" ).datepicker({
                                             minDate: 0,
                                             maxDate: "+1m"
                                         });
@@ -451,12 +396,12 @@ function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $locatio
                                 </script>
                                 <div class="slidecontainer">
                                     <p id="createEvtLength">Length: </p>
-                                    <input type="range" name="duration" min="15" max="120" value="'.$event_duration.'" class="slider" id="myRange'.$event_id.'">
+                                    <input type="range" name="duration" min="15" max="120" value="'.$event_duration.'" class="slider" id="myRange">
                                 </div>
-                                <p id="sliderVal'.$event_id.'"></p>
+                                <p id="sliderVal"></p>
                                 <script>
-                                    var slider = document.getElementById("myRange'.$event_id.'");
-                                    var output = document.getElementById("sliderVal'.$event_id.'");
+                                    var slider = document.getElementById("myRange");
+                                    var output = document.getElementById("sliderVal");
                                     output.innerHTML = slider.value + " minutes"; // Display the default slider value
                                     // Update the current slider value (each time you drag the slider handle)
                                     slider.oninput = function() {
@@ -471,14 +416,14 @@ function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $locatio
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <input type="hidden" name="hd_event_id" value="'. $event_id .'" />
                                 <script>
-                                function validateEdit(event_id){
+                                function validateEdit(){
                                     //remove all other errors if they have occured before (errors will show after this, this just makes it so that the errors arent displayed multiple times)
                                     $(".editEventError").remove();
                                     var returnValue = true;
                                     var correctDate = false;
 
                                     //this checks to see if the date input is a correct date. If not, an error is displayed to the user in html.
-                                    var date = moment(document.getElementById("datepicker"+event_id).value).format("YYYY-MM-DD");
+                                    var date = moment(document.getElementById("datepicker").value).format("YYYY-MM-DD");
                                     if(date == "Invalid date" || !moment(date).isSameOrAfter(Date.now(), \'day\')){
                                         var dateError = document.createElement(\'p\');
                                         dateError.innerHTML = "Date incorrect. Enter a valid date";
@@ -495,7 +440,7 @@ function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $locatio
                                     }
 
                                     //this checks to see if the time input is a correct time. If not, an error is displayed to the user in html.
-                                    if(!validEditTime(document.getElementById("evtTime"+event_id).value, correctDate)){
+                                    if(!validEditTime(document.getElementById("evtTime").value, correctDate)){
                                         var timeError = document.createElement(\'p\');
                                         timeError.innerHTML = "Time must be 15 min or later";
                                         timeError.style = "color:red";
@@ -546,12 +491,11 @@ function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $locatio
                                     }
                                     return false;
                                 }
-                                function checkValues(event_id){
+                                function checkValues(){
                                     //validateEdit shows what the user input needs to look like
-                                    if(validateEdit(event_id)){
+                                    if(validateEdit()){
                                         //For sending event start time to db as 24hr time hh:mm
-                                        
-                                        var time = document.getElementById("evtTime"+event_id).value;
+                                        var time = document.getElementById("evtTime").value;
                                         if (time.includes("pm")) {
                                             if (time.length > 6) {//10pm or later
                                                 var hour = (parseInt(time.substring(0,2))) + 12;
@@ -578,8 +522,8 @@ function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $locatio
                                             time = hourstring + mins
                                         }
 
-                                        document.getElementById("evtTimeToDB"+event_id).value = time 
-                                        document.getElementById("datepickerToDB"+event_id).value = moment(document.getElementById("datepicker"+event_id).value).format("YYYY-MM-DD"); //for sending event date to db
+                                        document.getElementById(\'evtTimeToDB\').value = time 
+                                        document.getElementById(\'datepickerToDB\').value = moment(document.getElementById("datepicker").value).format("YYYY-MM-DD"); //for sending event date to db
 
                                         //submit the event data to the database. To do so, the submit button must be type of submit now.
                                         let sendBtn = document.getElementById("editBtn");
@@ -591,7 +535,7 @@ function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $locatio
                                 }
                                
                                 </script>
-                                <input type="submit" onclick="checkValues('.$event_id.')" name="submitBtn" id="editBtn" value="Edit" class="btn btn-primary">
+                                <input onclick="checkValues()" name="submitBtn" id="editBtn" value="Edit" class="btn btn-primary">
                                 </form>
                             </div>
                             </div>
@@ -599,7 +543,7 @@ function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $locatio
                     </div>
 
                     <!-- Delete Modal -->
-                    <div class="modal fade" id="deleteModal'.$event_id.'" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                             <div class="modal-header">
@@ -609,14 +553,13 @@ function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $locatio
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <p>Do you want to delete the event <span class="capitalize">'.$event_name.'</span></p>
+                                <p>Do you want to delete the event '.$event_name.'</p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
                                 <form action="my-events.php" method="post">
                                     <input type="hidden" name="hd_event_id" value="'. $event_id .'" />
-                                    <input type="hidden" name="hd_event_name" value="'. $event_name .'" />
                                     <input type="submit" name="btnDeleteEvent" value="Delete Event" class="btn btn-primary">
                                 </form>
                             </div>
@@ -630,14 +573,14 @@ function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $locatio
     <br>
     ';
 }
-function printPastEvent($conn, $event_id, $month, $day, $location, $event_name, $event_type, $event_description, $user_name, $event_start_time, $event_duration)
+function printPastEvent($event_id, $month, $day, $location, $event_name, $event_type, $event_description, $user_name, $event_start_time, $event_duration)
 {
     $url = "eventDetail.php?item=" . urlencode($event_id);
     $event_start_time = date("g:ia", strtotime($event_start_time));
     echo'
     <div class="row">
         <div class="col-md-6">
-            <div class="detail-img"><img src="img/'.strtolower($event_type).'.jpg" alt=""></div>
+            <div class="detail-img"><img src="img/'.$event_type.'.jpg" alt=""></div>
         </div>
         <div class="col-md-6" id="eventDetail">
             <div class="event-container">
@@ -650,27 +593,12 @@ function printPastEvent($conn, $event_id, $month, $day, $location, $event_name, 
 
                 <div class="detail">
                     <h3>'.$event_name.'</h3>
-                    <h5>Type: '.$event_type.'</h5>
-                    <h4>Location: '.$location.'</h4>
-                    <p>Create by <a href="'.$user_name.'">'.$user_name.'</a></p>
-                    '; 
-                    if(strlen($event_description) > 100){
-                        echo '<p>Description: '.substr($event_description,0,50).'... <a href="'.$url.'">Read more</a></p>';
-                    }else{
-                        echo '<p>Description: '.$event_description.'</p>';
-                    }
-
-                    $rows = getJoinedMembers($conn, $event_id);
-                    echo'
-                    <h4>Members('.sizeof($rows).'):</h4>';
-                    if(sizeof($rows)==0){
-                        echo 'None';
-                    }else{
-                        foreach($rows as $row){
-                            echo '<a href="'.$row['user_name'].'" class="margin-right">'.$row['user_name'].'</a>';
-                        }
-                    }
-                    echo '
+                    <h4>'.$location.'</h4>
+                    <p>'.$event_description.'</p>
+                    <h4>Member:</h4>
+                    <a href="">User 1</a>
+                    <a href="">User 2</a>
+                    <a href="">User 3</a>
                     <div class="button-container">
                         <a href="'.$url.'" class="button">View</a>
                     </div>
