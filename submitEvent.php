@@ -16,7 +16,9 @@ require 'config.php';
         $userID = $_SESSION['username'];
     }
 
+
 if(isset($_POST['submitBtn'])){
+
 
     $event_marker_id = strip_tags($_POST['place_id']);//remove html tags
     $_SESSION['place_id'] = $event_marker_id;
@@ -43,18 +45,31 @@ if(isset($_POST['submitBtn'])){
     $_SESSION['myRangeToDB'] = $event_duration;
 
 
-    $query = mysqli_query($con, "insert into events values ('', '$event_marker_id', '$event_date', '$event_type', '$event_description', '$user_name', '$location', '$event_name', '$event_start_time', '$event_duration')");
 
-    $event_id = mysqli_query($con, "SELECT LAST_INSERT_ID()");
+    //MYSQLI PREPARED STATEMENT WAY to pass event info to db
+    $sql = $con->prepare('insert into events (event_marker_id, event_date, event_type, event_description, 
+    user_name, location, event_name, event_start_time, event_duration)  
+    VALUES (?,?,?,?,?,?,?,?,?)');
 
-    $event_id = mysqli_fetch_array($event_id);
-    $event_id = $event_id[0];
+    $sql->bind_param("ssssssssi", $event_marker_id, $event_date, $event_type, $event_description, $userID, $location, $event_name, $event_start_time, $event_duration);
 
-    $date = date('Y-m-d');
+    $sql->execute();
 
-    //this adds to the db, but it only adds username correctly, im nto grabbing eventID or date correctly yet
-    $join_query = mysqli_query($con, "insert into event_users values ('$event_id', '$user_name', '$date')"); //add the creator of the event as a user of the event in the event_users table
+
+    //old less secure way to pass info to db
+    //$query = mysqli_query($con, "insert into events values ('', '$event_marker_id', '$event_date', '$event_type', '$event_description', '$user_name', '$location', '$event_name', '$event_start_time', '$event_duration')");
+
+
+    //NOTE: code below adds the creator of an event as a user, but I dont think I need to do that becuase it causes glitches. leaving the lines commented out for now
+    //$event_id = mysqli_query($con, "SELECT LAST_INSERT_ID()");
+    //$event_id = mysqli_fetch_array($event_id);
+    //$event_id = $event_id[0];
+    //$date = date('Y-m-d');
+    //$join_query = mysqli_query($con, "insert into event_users values ('$event_id', '$user_name', '$date')"); //add the creator of the event as a user of the event in the event_users table
+    
+    
     header("Location: Logged.php");
+
 }
 
 $con->close();

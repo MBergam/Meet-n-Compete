@@ -17,7 +17,7 @@ $conn = null;
 
 //SELECT `event_id`,`event_date`,`location`,`event_name` FROM `events` 
 function getEvents($conn){
-    $stmt = $conn->query('SELECT `event_id`,`event_date`,`location`,`event_name` FROM `events`');
+    $stmt = $conn->query('SELECT `event_id`,`event_date`,`location`,`event_name` FROM `events` ORDER BY `event_date`, `event_start_time`');
     if($stmt->rowCount() > 0){
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $current_date = date("Y-m-d");
