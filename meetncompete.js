@@ -3,9 +3,6 @@
 //AIzaSyDS3p3iX3eIPWNLMuFQNrPRKWyE5un7dtY
 //AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8 -- MAX'S KEY
 
-//https://cors-anywhere.herokuapp.com/
-
-
 //Ajax call to ready the document
 $(document).ready(start);
 
@@ -19,16 +16,10 @@ var myKey = "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4";
 
 //Function called when the document is first loaded - gets the user's location either manually or by requesting permission
 function start() {
-    $("#search").click(getLatLong);
     $("a[role='menuitem']").click(dropdownTxtChange);
-    //$('.checkbox').attr('checked', true);
-
-    //create default google map on Spokane Valley's location
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: new google.maps.LatLng(47.6732, -117.2394),
-        zoom: 12
-    });
+    
     getLocation();
+    $("#search").click(getLatLong);
 }
 
 //Asks user for permission to get their location
@@ -53,18 +44,14 @@ function success(pos) {
     initMap(latNum, lngNum, rad);
 }
 
-//If user blocks location or there was an error trying to access their location - then prompts for manual location
+//If user blocks location or there was an error trying to access their location - then user uses manual location above map
 function error(err) {
     console.log(`${err.message}`);
 
-    //commented out code below to fit with Tam's new code. This shouldn't be used, but it's here just in case we need to revert
-
-    /*const div = document.createElement('div');
-    div.id = 'manualLoc';
-    div.className = 'allText';
-    div.innerHTML = '<br></br>Enter a location: <input type = "text" class = "allText" id = "address" /><br></br><br></br>';
-
-    document.getElementById('map').appendChild(div);*/
+    //intitalize map on Spokane Valley's location
+    latNum = 47.6732;
+    lngNum = -117.2394;
+    initMap(latNum, lngNum, rad);
 }
 
 //Function to intialize the Google map
@@ -85,6 +72,7 @@ function initMap(lati, longi, radi) {
         zoom: zoom,
     });
 
+    var service = new google.maps.places.PlacesService(map);
     //see what preferences are checked, and pass that info off to add markers later
     if (document.getElementById("basketball").checked) {
         bask_preqdata = {
@@ -95,8 +83,7 @@ function initMap(lati, longi, radi) {
 
         var basketball_keyword = new Array("basketball", "court");
 
-        var service = new google.maps.places.PlacesService(map);
-        service.nearbySearch(base_reqdata, function placeData(data, status) {
+        service.nearbySearch(bask_preqdata , function placeData(data, status) {
             gotPlaceData(data, status, basketball_keyword);
         });
     }
@@ -109,8 +96,7 @@ function initMap(lati, longi, radi) {
         }
 
         var baseball_keyword = new Array("baseball", "field");
-
-        var service = new google.maps.places.PlacesService(map);
+        
         service.nearbySearch(base_reqdata, function placeData(data, status) {
             gotPlaceData(data, status, baseball_keyword);
         });
@@ -132,14 +118,13 @@ function initMap(lati, longi, radi) {
 
         var soccer_keyword = new Array("soccer", "field");
 
-        var service = new google.maps.places.PlacesService(map);
-        service.nearbySearch(base_reqdata, function placeData(data, status) {
+        
+        service.nearbySearch(soc_reqdata, function placeData(data, status) {
             gotPlaceData(data, status, soccer_keyword);
         });
     }
 
     if (document.getElementById("tennis").checked) {
-
         tennis_reqdata = {
             radius: radi,
             location: (new google.maps.LatLng(lati, longi)),
@@ -148,8 +133,8 @@ function initMap(lati, longi, radi) {
 
         var tennis_keyword = new Array("tennis", "court");
 
-        var service = new google.maps.places.PlacesService(map);
-        service.nearbySearch(base_reqdata, function placeData(data, status) {
+        
+        service.nearbySearch(tennis_reqdata, function placeData(data, status) {
             gotPlaceData(data, status, tennis_keyword);
         });
 
@@ -163,24 +148,22 @@ function initMap(lati, longi, radi) {
         }
 
         var volleyball_keyword = new Array("volleyball", "court");
-
-        var service = new google.maps.places.PlacesService(map);
-        service.nearbySearch(base_reqdata, function placeData(data, status) {
+        
+        service.nearbySearch(volley_reqdata, function placeData(data, status) {
             gotPlaceData(data, status, volleyball_keyword);
         });
     }
     
     if (document.getElementById("snowboarding").checked) {
-        foot_reqdata = {
+        snow_reqdata = {
             radius: radi,
             location: (new google.maps.LatLng(lati, longi)),
             keyword: "snowboarding"
         }
 
         var snowboarding_keyword = new Array("snowboarding", "215436t345");
-
-        var service = new google.maps.places.PlacesService(map);
-        service.nearbySearch(base_reqdata, function placeData(data, status) {
+        
+        service.nearbySearch(snow_reqdata, function placeData(data, status) {
             gotPlaceData(data, status, snowboarding_keyword);
         });
 
@@ -190,13 +173,12 @@ function initMap(lati, longi, radi) {
         foot_reqdata = {
             radius: radi,
             location: (new google.maps.LatLng(lati, longi)),
-            keyword: "football"
+            keyword: "football field"
         }
 
         var football_keyword = new Array("football", "field");
-
-        var service = new google.maps.places.PlacesService(map);
-        service.nearbySearch(base_reqdata, function placeData(data, status) {
+        
+        service.nearbySearch(foot_reqdata, function placeData(data, status) {
             gotPlaceData(data, status, football_keyword);
         });
 
@@ -211,8 +193,7 @@ function initMap(lati, longi, radi) {
 
         var swimming_keyword = new Array("swimming", "pool");
 
-        var service = new google.maps.places.PlacesService(map);
-        service.nearbySearch(base_reqdata, function placeData(data, status) {
+        service.nearbySearch(swim_reqdata, function placeData(data, status) {
             gotPlaceData(data, status, swimming_keyword);
         });
 
@@ -224,10 +205,10 @@ function initMap(lati, longi, radi) {
             location: (new google.maps.LatLng(lati, longi)),
             keyword: "skiing"
         }
+
         var skiing_keyword = new Array("skiing", "resort");
 
-        var service = new google.maps.places.PlacesService(map);
-        service.nearbySearch(base_reqdata, function placeData(data, status) {
+        service.nearbySearch(ski_reqdata, function placeData(data, status) {
             gotPlaceData(data, status, skiing_keyword);
         });
     }
@@ -240,9 +221,8 @@ function initMap(lati, longi, radi) {
         }
 
         var rugby_keyword = new Array("rugby", "field");
-
-        var service = new google.maps.places.PlacesService(map);
-        service.nearbySearch(base_reqdata, function placeData(data, status) {
+        
+        service.nearbySearch(rug_reqdata, function placeData(data, status) {
             gotPlaceData(data, status, rugby_keyword);
         });
     }
@@ -255,9 +235,8 @@ function initMap(lati, longi, radi) {
         }
 
         var bowling_keyword = new Array("bowling", "alley");
-
-        var service = new google.maps.places.PlacesService(map);
-        service.nearbySearch(base_reqdata, function placeData(data, status) {
+        
+        service.nearbySearch(bowl_reqdat, function placeData(data, status) {
             gotPlaceData(data, status, bowling_keyword);
         });
     }
@@ -270,9 +249,8 @@ function initMap(lati, longi, radi) {
         }
 
         var weight_lifting_keyword = new Array("weight", "lifting");
-
-        var service = new google.maps.places.PlacesService(map);
-        service.nearbySearch(base_reqdata, function placeData(data, status) {
+        
+        service.nearbySearch(weight_reqdata, function placeData(data, status) {
             gotPlaceData(data, status, weight_lifting_keyword);
         });
     }
@@ -286,8 +264,7 @@ function initMap(lati, longi, radi) {
 
         var billiards_keyword = new Array("billiard", "tables");
 
-        var service = new google.maps.places.PlacesService(map);
-        service.nearbySearch(base_reqdata, function placeData(data, status) {
+        service.nearbySearch(bill_reqdata , function placeData(data, status) {
             gotPlaceData(data, status, billiards_keyword);
         });
 
@@ -302,8 +279,7 @@ function initMap(lati, longi, radi) {
 
         var climbing_keyword = new Array("climbing", "215436t345");
 
-        var service = new google.maps.places.PlacesService(map);
-        service.nearbySearch(base_reqdata, function placeData(data, status) {
+        service.nearbySearch(climb_reqdata, function placeData(data, status) {
             gotPlaceData(data, status, climbing_keyword);
         });
 
@@ -318,8 +294,7 @@ function initMap(lati, longi, radi) {
 
         var golf_keyword = new Array("golf", "course");
 
-        var service = new google.maps.places.PlacesService(map);
-        service.nearbySearch(base_reqdata, function placeData(data, status) {
+        service.nearbySearch(golf_reqdata, function placeData(data, status) {
             gotPlaceData(data, status, golf_keyword);
         });
     }
@@ -332,8 +307,7 @@ function initMap(lati, longi, radi) {
 
         var curling_keyword = new Array("curling", "215436t345");
 
-        var service = new google.maps.places.PlacesService(map);
-        service.nearbySearch(base_reqdata, function placeData(data, status) {
+        service.nearbySearch(curl_reqdata, function placeData(data, status) {
             gotPlaceData(data, status, curling_keyword);
         });
     }
@@ -347,8 +321,7 @@ function initMap(lati, longi, radi) {
 
         var cricket_keyword = new Array("cricket", "215436t345");
 
-        var service = new google.maps.places.PlacesService(map);
-        service.nearbySearch(base_reqdata, function placeData(data, status) {
+        service.nearbySearch(crick_reqdata, function placeData(data, status) {
             gotPlaceData(data, status, cricket_keyword);
         });
     }
@@ -362,8 +335,7 @@ function initMap(lati, longi, radi) {
 
         var skateboarding_keyword = new Array("skate", "park");
 
-        var service = new google.maps.places.PlacesService(map);
-        service.nearbySearch(base_reqdata, function placeData(data, status) {
+        service.nearbySearch(skate_reqdata, function placeData(data, status) {
             gotPlaceData(data, status, skateboarding_keyword);
         });
     }
@@ -461,7 +433,6 @@ function addMarkerHandler(marker, info, mdata, name, i, hasEvent) {
         var placesService = new google.maps.places.PlacesService(map);
 
         placesService.getDetails( {placeId: mdata[i].place_id}, function(results, status) {
-            console.log(results);
             //Get user ratings
             let p = document.createElement('p');
             p.className = "markInfo placeInfo";
@@ -718,8 +689,6 @@ function printEvent(response, results, x){
                 "event_id": response.event_id
             },
             success: function(response) {
-                console.log(response);
-                
                 //username found in database on event_id
                 if(!response.includes("[]")){
                     joinEventBtn.remove();
@@ -955,7 +924,6 @@ function hideEvents(){
 
 //Callback function that extracts information from Google Nearby Search GET request API calls
 function gotPlaceData(data, status, keyword) {
-
     data = validateLocations(data, keyword);
     
     if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -1000,9 +968,13 @@ function getLatLong() {
 //gets the location of input address
 function getLocationInput(){
     let address = $("#location").val();
-    let latreq = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address 
-    + "&key=" + myKey;
-    $.get(latreq, gotInputAddress, "json");
+    if(address !== ""){
+        let latreq = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address 
+        + "&key=" + myKey;
+        $.get(latreq, gotInputAddress, "json");
+    }else{
+        initMap(latNum, lngNum, rad);
+    }
 }
 
 //Helper function called in getLatLong to ensure the user types in a valid number for radius
@@ -1015,9 +987,7 @@ function gotInputAddress(data) {
     if(data.results.length == 0){
         $("#location").attr("placeholder", 'Enter a location'); 
         $("#location").val("");
-        if(latNum != null && lngNum != null){
-            initMap(latNum, lngNum, rad);
-        }
+        //initMap(latNum, lngNum, rad);
         return;
     }
     latNum = parseFloat(data["results"][0]["geometry"]["location"].lat);

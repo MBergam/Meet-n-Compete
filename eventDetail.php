@@ -87,10 +87,10 @@ function printEventDetails($conn, $event_id, $event_marker_id, $month, $day, $lo
         <div class="col-md-6" id="eventDetail">
             <div class="event-container">
                 <div class="date-container">
-                    <p><span class="month">'.$month.'</span>-
-                        <span class="day">'.$day.'</span></p>
-                    <p><span class="month">'.$event_start_time.'</span>-
-                        <span class="month">'.$event_duration.' min</span></p>
+                        <p><span class="month">'.$month.'</span>-
+                            <span class="day">'.$day.'</span></p>
+                        <p><span class="month">'.$event_start_time.'</span>-
+                            <span class="month">'.$event_duration.' min</span></p>
                 </div>
 
                 <div class="detail">
@@ -116,7 +116,6 @@ function printEventDetails($conn, $event_id, $event_marker_id, $month, $day, $lo
                             var isInEvent = false;
                             var membersJoined = document.getElementsByClassName("membersJoined");
                             for(member of membersJoined){
-                                console.log(member.text);
                                 if(member.text === document.getElementById("site_user").text){
                                     isInEvent = true;
                                 }
@@ -128,8 +127,10 @@ function printEventDetails($conn, $event_id, $event_marker_id, $month, $day, $lo
                             if(!isInEvent){
                                 var backBtn = document.createElement(\'button\');
                                 backBtn.className = "button";
-                                backBtn.onclick = "history.go(-1);";
                                 backBtn.innerHTML = "Back";
+                                //backBtn.onclick = "goBack()";
+                                backBtn.id = "detail-backBtn";
+                                
 
                                 var btn = document.createElement(\'input\');
                                 btn.className = "button";
@@ -157,14 +158,29 @@ function printEventDetails($conn, $event_id, $event_marker_id, $month, $day, $lo
 
                                 var buttonCont = document.getElementById("buttonCont");
                                 buttonCont.appendChild(form);
+                                var isClicked = false;
+                                goBack(isClicked);
                             }else{
                                 var backBtn = document.createElement(\'button\');
                                 backBtn.className = "button";
-                                backBtn.onclick = "history.go(-1);";
                                 backBtn.innerHTML = "Back";
+                                backBtn.id = "detail-backBtn";
+                                
 
                                 var buttonCont = document.getElementById("buttonCont");
                                 buttonCont.appendChild(backBtn);
+                                var isClicked = false;
+                                goBack(isClicked);
+                            }
+
+                            //sets Back button onclick and only goes back one page only
+                            function goBack(isClicked){
+                                document.getElementById("detail-backBtn").onclick = function(){
+                                    if(!isClicked){
+                                        history.go(-1);
+                                        isClicked = true;
+                                    }
+                                };
                             }
                         </script>
                         
