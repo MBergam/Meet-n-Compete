@@ -501,6 +501,9 @@ footer ul li a:hover{
 #eventDetail .event-container .detail .button-container .button {
     padding: 10px 50px;
 }
+#eventDetail .event-container .date-container p{
+    width: 100px;
+}
 .detail-img img{
     height: 350px;
 }
@@ -518,7 +521,7 @@ footer ul li a:hover{
     padding: 0 10px;
 }
 .event-container .date-container p{
-    width: 100px;
+    width: 70px;
     height: 80px;
     background-color: #B899DF;
     border: 2px solid #ffffff;
