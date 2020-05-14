@@ -5,6 +5,18 @@ $printNoEventMessage = true;// to print a message when there is no event to show
 if(isset($_SESSION['username']))
 {
     $userID = $_SESSION['username'];
+
+    //this automatically refreshes the page when you go to my-events or get redirected there
+    //this makes it so when a user joins an event and gets redirected to my-events, they will now see the event they just joined in their list
+    echo"<script language='javascript'>
+        window.onload = function() {
+            if(!window.location.hash) {
+                window.location = window.location + '#loaded';
+                window.location.reload();
+            }
+        }
+    </script>
+    ";
 }
 else{
     header("Location: register.php");
@@ -176,14 +188,14 @@ if(isset($_POST['btnLeaveEvent'])){
         
         //send notification to all member
         foreach($rows as $row){
-            $message = "Member ".$userID." had left the event " .$row['event_name']. ".";
+            $message = "Member ".$userID." has left the event " .$row['event_name']. ".";
             $notification->insertEventNotification($row['user_name'], $message);
         }
         // send notification to creator of that event
-        $message = "Member ".$userID." had left the event " .$row['event_name']. ".";
+        $message = "Member ".$userID." has left the event " .$row['event_name']. ".";
         $notification->insertEventNotification($row['creator'], $message);
         // send notification to user that had left event
-        $message = "You had left the event " .$_POST['hd_event_name']. ".";
+        $message = "You have left the event " .$_POST['hd_event_name']. ".";
         $notification->insertEventNotification($userID, $message);
         
     }
@@ -686,7 +698,7 @@ echo '
         </div>
     </main>';
 
-//for when a user clicks join event from upcoming events page
+//for when a user clicks join event from upcoming events page or from home page
 if (isset($_POST['btnJoin'])) {
 
     $user_name = $_SESSION['username'];
@@ -703,5 +715,6 @@ if (isset($_POST['btnJoin'])) {
     }
 
 }
+
 include 'footer.php';
 ?>
