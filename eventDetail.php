@@ -238,23 +238,5 @@ echo '
         </div>
     </main>';
 
-//for when a user clicks join event on this page
-if (isset($_POST['btnJoin'])) {
-
-    $user_name = strip_tags($_POST['hd_user_name']);//remove html tags
-    $event_id = strip_tags($_POST['hd_event_id']);//remove html tags
-    $event_join_date = date("Y-m-d"); //get current date
-
-    $join_already_check = mysqli_query($con, "select * from event_users where user_name = '$user_name' and event_id = '$event_id'");
-    $check_num_rows = mysqli_num_rows($join_already_check);
-    if($check_num_rows > 0){
-
-       //NOTE: may need to add code here to notify the user that they have already joined this event
-    } else {
-        $query = mysqli_query($con, "insert into event_users values('$event_id', '$user_name', '$event_join_date')");
-    }
-
-}
-
 include 'footer.php';
 ?>

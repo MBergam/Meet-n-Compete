@@ -5,18 +5,6 @@ $printNoEventMessage = true;// to print a message when there is no event to show
 if(isset($_SESSION['username']))
 {
     $userID = $_SESSION['username'];
-
-    //this automatically refreshes the page when you go to my-events or get redirected there
-    //this makes it so when a user joins an event and gets redirected to my-events, they will now see the event they just joined in their list
-    echo"<script language='javascript'>
-        window.onload = function() {
-            if(!window.location.hash) {
-                window.location = window.location + '#loaded';
-                window.location.reload();
-            }
-        }
-    </script>
-    ";
 }
 else{
     header("Location: register.php");
@@ -483,6 +471,7 @@ function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $locatio
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <input type="hidden" name="hd_event_id" value="'. $event_id .'" />
+                                <input type="hidden" name="hd_event_name" value="'. $event_name .'" />
                                 <script>
                                 function validateEdit(event_id){
                                     //remove all other errors if they have occured before (errors will show after this, this just makes it so that the errors arent displayed multiple times)
@@ -706,12 +695,21 @@ if (isset($_POST['btnJoin'])) {
     $event_join_date = date("Y-m-d"); //get current date
 
     $join_already_check = mysqli_query($con, "select * from event_users where user_name = '$user_name' and event_id = '$event_id'");
+    $creator_check = mysqli_query($con, "select * from events where user_name = '$user_name' and event_id = '$event_id'");
     $check_num_rows = mysqli_num_rows($join_already_check);
+    $creator_check_num_rows = mysqli_num_rows($creator_check);
     if($check_num_rows > 0){
-
-       //NOTE: may need to add code here to notify the user that they have already joined this event
+       // notify the user that they have already joined this event
+       echo '<script>alert("You already joined this event!!!");</script>'; 
+    }else if ($creator_check_num_rows > 0){
+        // notify the user that they are creators of this event
+        echo '<script>alert("You cannot join the event that was created by you!!!");</script>'; 
     } else {
         $query = mysqli_query($con, "insert into event_users values('$event_id', '$user_name', '$event_join_date')");
+        // Redirect to my-events.php page
+        $location = 'Location: my-events.php';
+        header($location);
+        die();
     }
 
 }
