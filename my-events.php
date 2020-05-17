@@ -157,7 +157,6 @@ function getEvent($conn, $event_id){
     }
 }
 
-
 // Leave Event handling
 if(isset($_POST['btnLeaveEvent'])){
     try {
@@ -178,14 +177,18 @@ if(isset($_POST['btnLeaveEvent'])){
         foreach($rows as $row){
             $message = "Member ".$userID." has left the event " .$row['event_name']. ".";
             $notification->insertEventNotification($row['user_name'], $message);
+            sendEmail($row['email'],"Leaving Event",$message);
         }
         // send notification to creator of that event
         $message = "Member ".$userID." has left the event " .$row['event_name']. ".";
         $notification->insertEventNotification($row['creator'], $message);
+        $email = getEmail($conn, $row['creator']);
+        sendEmail($email,"Leaving Event",$message);
         // send notification to user that had left event
         $message = "You have left the event " .$_POST['hd_event_name']. ".";
         $notification->insertEventNotification($userID, $message);
-        
+        $email = getEmail($conn, $userID);
+        sendEmail($email,"Leaving Event",$message);
     }
     catch (PDOException $e)
     {
@@ -209,10 +212,14 @@ if(isset($_POST['btnDeleteEvent'])){
         foreach($rows as $row){
             $message = "The event " .$row['event_name']. " that you joined was deleted.";
             $notification->insertEventNotification($row['user_name'], $message);
+            sendEmail($row['email'],"Deleting Event",$message);
         }
         // send notification to creator
         $message = "You had deleted the event " .$_POST['hd_event_name']. ".";
         $notification->insertEventNotification($userID, $message);
+        $email = getEmail($conn, $row['creator']);
+        
+        sendEmail($email,"Deleting Event",$message);
 
         $stmt = $conn->prepare('DELETE FROM `events` 
                                 WHERE `event_id` = ?');
@@ -257,10 +264,14 @@ if(isset($_POST['submitBtn'])){
         foreach($rows as $row){
             $message = "The event " .$row['event_name']. " that you joined was edited.";
             $notification->insertEventNotification($row['user_name'], $message);
+            sendEmail($row['email'],"Editing Event",$message);
         }
         // send notification to creator
         $message = "You had edited the event " .$_POST['hd_event_name']. ".";
         $notification->insertEventNotification($userID, $message);
+        
+        $email = getEmail($conn, $row['creator']);
+        sendEmail($email,"Editing Event",$message);
     }
     catch (PDOException $e)
     {

@@ -134,6 +134,7 @@ function printEventDetails($conn, $event_id, $event_marker_id, $month, $day, $lo
 
                                 var btn = document.createElement(\'input\');
                                 btn.className = "button";
+                                btn.setAttribute("style", "margin-left: 5px;"); 
                                 btn.type = "submit";
                                 btn.value = "Join Event";
                                 btn.name = "btnJoin";
