@@ -267,8 +267,6 @@ include 'submitEvent.php';
             </div>
         </div>
         <!-- Popup Div Ends Here -->
-        
-
         <section>
             <div id="upcoming-events" class="container box">
                 <div class="title-container">
@@ -277,57 +275,66 @@ include 'submitEvent.php';
                 </div>
 
                 <div class="f-container">
-                    <div class="event-container">
-                        <div class="date-container">
-                            <p><span class="month">Mar</span>
-                                <span class="day">1</span></p>
-                        </div>
-                        <div class="detail">
-                            <h3>Name of Events</h3>
-                            <h4>Glass Park, Spokane, WA</h4>
-                            <button class="button">More...</button>
-                            <button class="button">Join Event</button>
-                        </div>
-                    </div>
-                    <div class="event-container">
-                        <div class="date-container">
-                            <p><span class="month">Mar</span>
-                                <span class="day">1</span></p>
-                        </div>
-                        <div class="detail">
-                            <h3>Name of Events</h3>
-                            <h4>Glass Park, Spokane, WA</h4>
-                            <button class="button">More...</button>
-                            <button class="button">Join Event</button>
-                        </div>
-                    </div>
-                    <div class="event-container">
-                        <div class="date-container">
-                            <p><span class="month">Mar</span>
-                                <span class="day">1</span></p>
-                        </div>
-                        <div class="detail">
-                            <h3>Name of Events</h3>
-                            <h4>Glass Park, Spokane, WA</h4>
-                            <button class="button">More...</button>
-                            <button class="button">Join Event</button>
-                        </div>
-                    </div>
-                    <div class="event-container">
-                        <div class="date-container">
-                            <p><span class="month">Mar</span>
-                                <span class="day">1</span></p>
-                        </div>
-                        <div class="detail">
-                            <h3>Name of Events</h3>
-                            <h4>Glass Park, Spokane, WA</h4>
-                            <button class="button">More...</button>
-                            <button class="button">Join Event</button>
-                        </div>
-                    </div>
+                    <!-- get list of upcoming events to show -->
+                    <?php 
+                    try {
+                        $conn = new PDO("mysql:host=$servername;dbname=$database",$username,$password);
+                        $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+                        getEvents($conn);
+                    }
+                    catch (PDOException $e)
+                    {
+                        echo "Connection failed: " . $e->getMessage();
+                    }
+                    $conn = null;
+
+                    // Get list of event from events table
+                    function getEvents($conn){
+                        $stmt = $conn->query('SELECT `event_id`,`event_date`,`location`,`event_name`,`event_type`,`user_name` FROM `events` ORDER BY `event_date`, `event_start_time`');
+                        if($stmt->rowCount() > 0){
+                            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                            $current_date = date("Y-m-d");
+                            $count_current = 0;
+                            foreach ($results as $row){
+                                if($current_date <= $row['event_date'] && $count_current < 4){
+                                    $count_current++;
+                                    list($year, $month, $day) = explode("-", $row['event_date']);
+                                    printEvent($row['event_id'], monthConvert($month), $day, $row['location'], $row['event_name'], $row['event_type'], $row['user_name'] );
+                                }
+                            }
+                        }
+                        else {
+                            printNoEventMessage();
+                        }
+                    }
+                    //Print each of event to browser
+                    function printEvent($event_id, $month, $day, $location, $event_name, $event_type, $user_name)
+                    {
+                        $url = "eventDetail.php?item=" . urlencode($event_id);
+                        
+                        echo '<!-- layout each event !-->
+                        <div class="event-container">
+                            <div class="date-container">
+                                <p><span class="month">'.$month.'</span>
+                                    <span class="day">'.$day.'</span></p>
+                            </div>
+                            <div class="detail">
+                                <h3>'.$event_name.'</h3>
+                                <h5>Type: '.$event_type.'</h5>
+                                <h4>Location: '.$location.'</h4>
+                                <p>Created by <a href="'.$user_name.'">'.$user_name.'</a></p>
+                                <form method = "post" action="my-events.php">
+                                <a href="'.$url.'" class="button">Learn More</a>
+                                <input type="submit" name="btnJoin" value="Join Event" class="button">
+                                <input type="hidden" name="hd_event_id" value="'. $event_id .'" />
+                                </form>
+                            </div>
+                        </div>';
+                    }
+                    ?>
                 </div>
                 <div class="button-box">
-                    <a class="button" href="">View More</a>
+                    <a class="button" href="upcoming-events.php">View More</a>
                 </div>
             </div>
         </section>

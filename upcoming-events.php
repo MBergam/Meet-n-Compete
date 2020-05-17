@@ -15,9 +15,9 @@ catch (PDOException $e)
 }
 $conn = null;
 
-//SELECT `event_id`,`event_date`,`location`,`event_name` FROM `events` 
+// Get list of event from events table
 function getEvents($conn){
-    $stmt = $conn->query('SELECT `event_id`,`event_date`,`location`,`event_name` FROM `events` ORDER BY `event_date`, `event_start_time`');
+    $stmt = $conn->query('SELECT `event_id`,`event_date`,`location`,`event_name`,`event_type`,`user_name` FROM `events` ORDER BY `event_date`, `event_start_time`');
     if($stmt->rowCount() > 0){
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $current_date = date("Y-m-d");
@@ -26,7 +26,7 @@ function getEvents($conn){
             if($current_date <= $row['event_date']){
                 $count_current++;
                 list($year, $month, $day) = explode("-", $row['event_date']);
-                printEvent($row['event_id'], monthConvert($month), $day, $row['location'], $row['event_name']);
+                printEvent($row['event_id'], monthConvert($month), $day, $row['location'], $row['event_name'], $row['event_type'], $row['user_name'] );
             }
         }
     }
@@ -34,8 +34,8 @@ function getEvents($conn){
         printNoEventMessage();
     }
 }
-
-function printEvent($event_id, $month, $day, $location, $event_name)
+//Print each of event to browser
+function printEvent($event_id, $month, $day, $location, $event_name, $event_type, $user_name)
 {
     $url = "eventDetail.php?item=" . urlencode($event_id);
     
@@ -47,7 +47,9 @@ function printEvent($event_id, $month, $day, $location, $event_name)
         </div>
         <div class="detail">
             <h3>'.$event_name.'</h3>
-            <h4>'.$location.'</h4>
+            <h5>Type: '.$event_type.'</h5>
+            <h4>Location: '.$location.'</h4>
+            <p>Created by <a href="'.$user_name.'">'.$user_name.'</a></p>
             <form method = "post" action="my-events.php">
             <a href="'.$url.'" class="button">Learn More</a>
             <input type="submit" name="btnJoin" value="Join Event" class="button">
