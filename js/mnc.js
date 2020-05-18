@@ -26,6 +26,22 @@ $(document).ready(function () {
             }
         });
     });
+
+    //This is for about form
+    $('#update_about').click(function () {
+        $.ajax({
+            type: "POST",
+            url: "ajax_update_about.php",
+            data: $('form.about_post').serialize(),
+            success: function (msg) {
+                $("#about_form").modal('hide');
+                location.reload();
+            },
+            error: function () {
+                alert('Failed!');
+            }
+        });
+    });
 });
 
 $(document).click(function (e) {

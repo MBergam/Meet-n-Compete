@@ -62,7 +62,6 @@ if(isset($_GET['logout'])){
     <!--    JAVASCRIPT-->
     <script src="js/vendor/modernizr-3.6.0.min.js"></script>
     <script src="js/vendor/jquery-3.3.1.min.js"></script>
-    <script src="js/vendor/bootstrap.bundle.js"></script>
     <script src="js/vendor/parallax.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4&libraries=places"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -71,6 +70,7 @@ if(isset($_GET['logout'])){
     <script src = "meetncompete.js" async defer> </script>
     <script src = "js/jquery.timepicker.min.js"> </script>
     <script src="js/vendor/bootbox.min.js"></script>
+    <script src="js/vendor/bootstrap.bundle.js"></script>
 
     <script src="js/mnc.js"></script>
 

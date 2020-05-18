@@ -134,5 +134,20 @@ class User{
 
     }
 
+    public function updateAbout($update_content){
+        $username = $this->user['user_name'];
+        $update_content = strip_tags($update_content);
+        $check_about = mysqli_query($this->con, "select about_content from about where user_name = $username");
+        $row = mysqli_num_rows($check_about);
+        if($row == 0){
+            $insert_query = mysqli_query($this->con, "insert into about values ('$update_content', $username)");
+        }
+
+        elseif ($row > 0){
+            $update_about_query = mysqli_query($this->con, "update about set about_content = $update_content where user_name = $username");
+        }
+
+    }
+
 
 }

@@ -1171,6 +1171,15 @@ THIS CODE BELOW IS FOR PROFILE.PHP
     margin: 10px 0px 0px 7px;
 }
 
+#about_div input[type="submit"]{
+    width: 90%;
+    height: 30px;
+    border-radius: 5px;
+    margin: 7px 0 7px 7px;
+    border: none;
+    color: #ffffff;
+}
+
 .danger{
     background-color: #e74c3c;
 
