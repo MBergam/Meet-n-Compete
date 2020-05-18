@@ -504,7 +504,7 @@ footer ul li a:hover{
     width: 100px;
 }
 .detail-img img{
-    height: 100%;
+    min-height: 350px;
 }
 #buttonCont{
     margin-top: 20px;
