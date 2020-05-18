@@ -127,7 +127,7 @@ if(isset($_GET['logout'])){
                             <li><a href='settings.php'
                                 <i class='fa fa-cog fa-lg'></i>
                                 </a></li>
-                            <li><a href="?logout=true"><i class="fas fa-sign-out-alt"></i></a></li>
+                            <li><a href="header.php?logout=true"><i class="fas fa-sign-out-alt"></i></a></li>
                             <?php
                         }
                         else{
