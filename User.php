@@ -137,17 +137,28 @@ class User{
     public function updateAbout($update_content){
         $username = $this->user['user_name'];
         $update_content = strip_tags($update_content);
-        $check_about = mysqli_query($this->con, "select about_content from about where user_name = $username");
+        $check_about = mysqli_query($this->con, "select about_content from about where user_name = '$username'");
         $row = mysqli_num_rows($check_about);
         if($row == 0){
-            $insert_query = mysqli_query($this->con, "insert into about values ('$update_content', $username)");
+            $insert_query = mysqli_query($this->con, "insert into about values ('','$update_content', '$username')");
         }
 
-        elseif ($row > 0){
-            $update_about_query = mysqli_query($this->con, "update about set about_content = $update_content where user_name = $username");
+        else {
+            $update_about_query = mysqli_query($this->con, "update about set about_content='$update_content' where user_name='$username'");
         }
-
     }
+
+    public function getAbout($user_to_get_about){
+        $get_about_query = mysqli_query($this->con, "select about_content from about where user_name = '$user_to_get_about'");
+        $row = mysqli_num_rows($get_about_query);
+        if($row == 0){
+            return '';
+        }
+        else{
+            $about_content = mysqli_fetch_array($get_about_query);
+            return $about_content['about_content'];
+        }
+   }
 
 
 }

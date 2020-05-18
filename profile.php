@@ -128,7 +128,12 @@ if(!$logged_in_bool){
                         </div>
 
                         <div role="tabpanel" class="tab-pane fade" id="about_div">
-                            <input type="submit" class="deep_blue" data-toggle="modal" data-target="#about_form" value="Edit">
+                            <?php
+                                echo $profile_user_obj->getAbout($username);
+                                if($userLogin == $profile_user_obj->getUsername()){
+                                    echo "<input type=\"submit\" class=\"deep_blue\" data-toggle=\"modal\" data-target=\"#about_form\" value=\"Edit\">";
+                                }
+                            ?>
                         </div>
 
                         <div role="tabpanel" class="tab-pane fade" id="messages_div">
@@ -206,7 +211,7 @@ if(!$logged_in_bool){
 
                 <div class="modal-body">
 
-                    <p>Tell a story about yourself or something that will grab everyone attention!</p>
+                    <p>Tell a story about yourself or something that will grab everyone attention!(words limit: 500)</p>
                     <form class="about_post" action="" method="POST">
                         <div class="form-group">
                             <textarea class="form-control" name="post_body"></textarea>
