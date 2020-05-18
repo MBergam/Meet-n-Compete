@@ -180,7 +180,7 @@ include 'submitEvent.php';
             <input type="hidden" name="createEvtLocationToDB" id="createEvtLocationToDB" value="Event Location"></input>
             <p class="eventLocation" id="createEvtLocation">Event location</p>
             <div id="eventNameDiv">
-            <textarea id="evtName" name="eventName" placeholder="Event Name (Required)"></textarea>
+            <textarea id="evtName" name="eventName" maxlength="22" placeholder="Event Name (Required)"></textarea>
             </div>
             <div class="dropdown" id="dropdownSports">
                 <input type="hidden" name="sportTextToDB" id="sportTextToDB" value=""></input>

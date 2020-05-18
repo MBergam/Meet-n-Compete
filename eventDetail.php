@@ -114,21 +114,36 @@ function printEventDetails($conn, $event_id, $event_marker_id, $month, $day, $lo
                     <div id="buttonCont">
                         <script>
                             var isInEvent = false;
+                            var isLogged = true;
                             var membersJoined = document.getElementsByClassName("membersJoined");
-                            for(member of membersJoined){
-                                if(member.text === document.getElementById("site_user").text){
+                            if(document.getElementById("site_user") == null){
+                                isLogged = false;
+                            }else{
+                                for(member of membersJoined){
+                                    if(member.text === document.getElementById("site_user").text){
+                                        isInEvent = true;
+                                    }
+                                }
+                                if(\''.$user_name.'\' === document.getElementById("site_user").text){
                                     isInEvent = true;
                                 }
                             }
-                            if(\''.$user_name.'\' === document.getElementById("site_user").text){
-                                isInEvent = true;
-                            }
                             
-                            if(!isInEvent){
+                            if(!isInEvent && !isLogged){
                                 var backBtn = document.createElement(\'button\');
                                 backBtn.className = "button";
                                 backBtn.innerHTML = "Back";
-                                //backBtn.onclick = "goBack()";
+                                backBtn.id = "detail-backBtn";
+                                
+
+                                var buttonCont = document.getElementById("buttonCont");
+                                buttonCont.appendChild(backBtn);
+                                var isClicked = false;
+                                goBack(isClicked);
+                            }else if(!isInEvent && isLogged){
+                                var backBtn = document.createElement(\'button\');
+                                backBtn.className = "button";
+                                backBtn.innerHTML = "Back";
                                 backBtn.id = "detail-backBtn";
                                 
 
@@ -161,7 +176,7 @@ function printEventDetails($conn, $event_id, $event_marker_id, $month, $day, $lo
                                 buttonCont.appendChild(form);
                                 var isClicked = false;
                                 goBack(isClicked);
-                            }else{
+                            }else if(isInEvent){
                                 var backBtn = document.createElement(\'button\');
                                 backBtn.className = "button";
                                 backBtn.innerHTML = "Back";
