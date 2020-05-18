@@ -35,6 +35,10 @@ if(isset($_POST['post_message'])){
         </script>";
 }
 
+if(!$logged_in_bool){
+    header("Location: register.php");
+}
+
 
 ?>
 

@@ -1,6 +1,10 @@
 <?php
 include 'header.php';
 include 'settings_handler.php';
+
+if(!$logged_in_bool){
+    header("Location: register.php");
+}
 ?>
 
 <div class="main_column column">

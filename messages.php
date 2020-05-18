@@ -21,6 +21,11 @@ if(isset($_POST['post_message'])){
         $message_obj->sendMessage($user_to, $body, $date);
     }
 }
+
+if(!$logged_in_bool){
+    header("Location: register.php");
+}
+
 ?>
 <div class="row">
     <div class="col-lg-4">

@@ -1,6 +1,9 @@
 <?php
 include 'header.php';
 
+if(!$logged_in_bool){
+    header("Location: register.php");
+}
 ?>
 
 <div class="main_column column" id="main_column">

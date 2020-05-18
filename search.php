@@ -14,6 +14,9 @@ if(isset($_GET['type'])){
 else{
     $type = "name";
 }
+if(!$logged_in_bool){
+    header("Location: register.php");
+}
 
 ?>
 

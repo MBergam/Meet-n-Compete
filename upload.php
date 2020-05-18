@@ -7,7 +7,14 @@ $msg = "";
 
 if(isset($_FILES['image']['name'])){
 
-    //TODO: will going to implement remove previous image after uploading the new one
+    //Delete the current profile_picture
+
+    //getting the path to the current profile picture.
+    $profileDir = $_SERVER['DOCUMENT_ROOT'].'/Meet-n-Compete/'.$user['profile_picture'];
+    if(file_exists($profileDir)){
+        unlink($profileDir);
+    }//End of Delete current image
+
 
     //Delete users temp image
     $temppath = 'img/'.$profile_id.'_temp.jpeg';
@@ -42,7 +49,17 @@ if(isset($_FILES['image']['name'])){
         header("Location: ".$userLogin);
     }
 }//ADD Image
+
+if(!$logged_in_bool){
+    header("Location: register.php");
+}
+//else{
+//    $profileDir = $_SERVER['DOCUMENT_ROOT'].'/Meet-n-Compete/'.$user['profile_picture'];
+//    echo $profileDir;
+//}
 ?>
+
+
 <div id="Overlay" style=" width:100%; height:100%; border:0px #990000 solid; position:absolute; top:0px; left:0px; z-index:2000; display:none;"></div>
 <div class="main_column column">
 
