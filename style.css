@@ -205,6 +205,15 @@ main .content{
 .padding-inside{
     padding: 2rem 4rem !important;
 }
+.margin-right{
+    margin-right: .5rem !important;
+}
+.center-align{
+    margin: 0 auto !important;
+}
+.capitalize{
+    text-transform: capitalize !important;
+}
 /* Style for Preferences list */
 .sidebar-container{
     margin-top: 20px;
@@ -349,7 +358,6 @@ footer{
     background-color:#2b2b2b;
     padding:40px 0;
     text-align: left;
-    margin-top: 100px;
 }
 
 .footer-menu{
@@ -492,8 +500,14 @@ footer ul li a:hover{
 #eventDetail .event-container .detail .button-container .button {
     padding: 10px 50px;
 }
+#eventDetail .event-container .date-container p{
+    width: 100px;
+}
 .detail-img img{
-    height: 350px;
+    min-height: 350px;
+}
+#buttonCont{
+    margin-top: 20px;
 }
 /* End CSS for eventDetail page */
 .event-container .date-container{
@@ -816,7 +830,7 @@ textarea {
     font-family: 'Open Sans', sans-serif;
     padding-left: 8px;
     margin-top:0px;
-    margin-bottom:10px
+    margin-bottom:0px
 }
 
 #submitBtn{
@@ -877,7 +891,7 @@ textarea {
 }
 
 #evtTime {
-    margin-top: 20px;
+    margin-top: 5px;
     margin-bottom: 10px
 }
 
@@ -926,14 +940,10 @@ textarea {
 */
 .account_wrapper{
     /*background-color: #ada3a3;*/
-    margin: 0 auto;
-    top: 50px;
-    position: relative;
+    margin: 40px auto;
     padding: 0 10px;
     width: 75%;
     min-width: 950px;
-
-
 }
 
 /*this is for the profile box*/

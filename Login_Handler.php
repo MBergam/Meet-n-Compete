@@ -1,5 +1,4 @@
 <?php
-session_start();
 require 'config.php';
 if(isset($_POST['login_button'])){
     $username = $_POST['user_login'];
@@ -20,7 +19,7 @@ if(isset($_POST['login_button'])){
         }
 
         $_SESSION['username'] = $username;
-        header("Location: Logged.php");
+        header("Location: index.php");
         exit();
     }
     else{

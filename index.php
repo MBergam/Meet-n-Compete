@@ -1,87 +1,9 @@
 <?php
-//include 'header.php';
-//header("refresh:0");
-echo '
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+include 'header.php';
+include 'config.php';
+include 'submitEvent.php';
+?>
 
-    <title>Meet-N-Compete</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-
-
-
-    <link href="https://fonts.googleapis.com/css?family=Fjalla+One&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/normalize.css" />
-    <link rel="stylesheet" href="css/hover-min.css" />
-    <link rel="stylesheet" href="css/animate.min.css" />
-    <link rel="stylesheet" href="css/vendor/fontawesome-free-5.12.0-web/css/all.min.css" />
-    <link rel="stylesheet" href="style.css" />
-    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
-    <link rel="stylesheet" href="css/jquery.timepicker.css" />
-    
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
-    <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js" async defer></script>
-    <script src="js/vendor/modernizr-3.6.0.min.js"></script>
-    <script src="js/vendor/jquery-3.3.1.min.js"></script>
-    <script src="js/vendor/bootstrap.bundle.min.js"></script>
-    <script src="js/vendor/parallax.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4&libraries=places" async defer></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src = "meetncompete.js" async defer> </script>
-    <script src = "js/jquery.timepicker.min.js"> </script>
-
-</head>
-<body>
-    <header>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6">
-                    <a href=""><img id="logo" src="img/logo.png" alt=""></a>
-                </div>
-                <div class="col-sm-6">
-                    <div id="header-right" class="vertical-center">
-                        <ul class = "nav-login"><li><a href=\'register.php\'>Login</a></li></ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="register.php">Upcoming Events</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="register.php">My Events</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="register.php">Account</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
         <li data-target="#carouselIndicators" data-slide-to="0" class="active"></li>
@@ -119,7 +41,6 @@ echo '
                 <a class="button" type="submit" id="search">Search</a>
             </form>
         </article>
-
         <div class="container">
             <div class="row">
                 <div class="col-lg-8" id="mInfo">
@@ -241,11 +162,113 @@ echo '
                             Radius: <input type = "text" class = "allText" id = "radius" value="2" required minlength="1" maxlength="2" size="4" <p> miles</p>
                             </li>
                         </ul>
-                       
+                    
                     </div>
                 </div>
             </div>
         </div>
+        
+        <?php if(isset($_SESSION['username'])){ ?>
+        <div id="createEvtPopup">
+            <!-- Popup Div Starts Here -->
+            <div class="popupContact" id="popupCreateEvt">
+            <!-- Create New Event -->
+            <form action="#" id="createEventForm" method="post" name="createEventForm">
+            <a class="boxclose" id="createEvt_boxclose" onclick= "div_hide()"></a>
+            <h2 id="contact">Create Event</h2>
+            <hr>
+            <input type="hidden" name="createEvtLocationToDB" id="createEvtLocationToDB" value="Event Location"></input>
+            <p class="eventLocation" id="createEvtLocation">Event location</p>
+            <div id="eventNameDiv">
+            <textarea id="evtName" name="eventName" placeholder="Event Name (Required)"></textarea>
+            </div>
+            <div class="dropdown" id="dropdownSports">
+                <input type="hidden" name="sportTextToDB" id="sportTextToDB" value=""></input>
+                <button class="btn btn-default dropdown-toggle" type="button" name="sportText" id="sportText" data-toggle="dropdown">Select Sport</button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                <li role="presentation"><a role="menuitem" tabindex="-1">Baseball</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Basketball</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Billiards (Pool)</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Bowling</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Climbing</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Cricket</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Curling</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Football</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Golf/Discgolf</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Rugby</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Skateboarding</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Skiing </a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Snowboarding</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Soccer</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Swimming</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Tennis/Table Tennis</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Volleyball</a></li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">Weightlifting</a></li>
+                </ul>
+            </div>
+            <input type="hidden" name="evtTimeToDB" id="evtTimeToDB" value=""></input>
+            <p id="eventTime">Enter Time: <input type = "text" id ="evtTime" name="evtTime"></p>
+            <script>
+                var j = jQuery.noConflict();
+                j( function() {
+                    var dateToday = new Date();
+                    j( "#evtTime" ).timepicker({
+                        'step': 5,
+                        'scrollDefault': moment(new Date()).add(40, 'm').toDate()
+                     });
+                });
+            </script>
+            <input type="hidden" name="datepickerToDB" id="datepickerToDB" value=""></input>
+            <p id="eventDate">Enter Date: <input type = "text" name = "datepicker" id = "datepicker"></p>
+            <script>
+                var j = jQuery.noConflict();
+                j( function() {
+                    j( "#datepicker" ).datepicker({
+                        minDate: 0,
+                        maxDate: "+1m"
+                    });
+                } );
+            </script>
+            <div class="slidecontainer">
+                <p id="createEvtLength">Length: </p>
+                <input type="hidden" name="myRangeToDB" id="myRangeToDB" value=""></input>
+                <input type="range" min="15" max="120" value="30" class="slider" id="myRange">
+            </div>
+            <p id="sliderVal"></p>
+            <textarea id="desc" name="description" placeholder="Description (Optional)"></textarea>
+            <input name="submitBtn" id="submitBtn" value="Send">
+            </form>
+            </div>
+        </div>
+        <?php } ?>
+        <div id="seeEventsPopup">
+            <!-- Popup Div Starts Here -->
+            <div class="popupContact" id="popupSeeEvts">
+            <div id="seeEvents" class="f-container">
+            <a class="boxclose" id="seeEvts_boxclose" onclick= "hideEvents()"></a>
+            <h4 class="eventLocation" id="seeEventsLocation">Event location</h4>
+            </div>
+            </div>
+        </div>
+        <!-- Popup Div Ends Here -->
+
         <div id="promptAccountPopup">
             <!-- Popup Div Starts Here -->
             <div id="popupAccount">
@@ -257,7 +280,7 @@ echo '
             </div>
         </div>
         <!-- Popup Div Ends Here -->
-
+        
         <section>
             <div id="upcoming-events" class="container box">
                 <div class="title-container">
@@ -266,63 +289,71 @@ echo '
                 </div>
 
                 <div class="f-container">
-                    <div class="event-container">
-                        <div class="date-container">
-                            <p><span class="month">Mar</span>
-                                <span class="day">1</span></p>
-                        </div>
-                        <div class="detail">
-                            <h3>Name of Events</h3>
-                            <h4>Glass Park, Spokane, WA</h4>
-                            <button class="button">More...</button>
-                            <button class="button">Join Event</button>
-                        </div>
-                    </div>
-                    <div class="event-container">
-                        <div class="date-container">
-                            <p><span class="month">Mar</span>
-                                <span class="day">1</span></p>
-                        </div>
-                        <div class="detail">
-                            <h3>Name of Events</h3>
-                            <h4>Glass Park, Spokane, WA</h4>
-                            <button class="button">More...</button>
-                            <button class="button">Join Event</button>
-                        </div>
-                    </div>
-                    <div class="event-container">
-                        <div class="date-container">
-                            <p><span class="month">Mar</span>
-                                <span class="day">1</span></p>
-                        </div>
-                        <div class="detail">
-                            <h3>Name of Events</h3>
-                            <h4>Glass Park, Spokane, WA</h4>
-                            <button class="button">More...</button>
-                            <button class="button">Join Event</button>
-                        </div>
-                    </div>
-                    <div class="event-container">
-                        <div class="date-container">
-                            <p><span class="month">Mar</span>
-                                <span class="day">1</span></p>
-                        </div>
-                        <div class="detail">
-                            <h3>Name of Events</h3>
-                            <h4>Glass Park, Spokane, WA</h4>
-                            <button class="button">More...</button>
-                            <button class="button">Join Event</button>
-                        </div>
-                    </div>
+                    <!-- get list of upcoming events to show -->
+                    <?php 
+                    try {
+                        $conn = new PDO("mysql:host=$servername;dbname=$database",$username,$password);
+                        $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+                        getEvents($conn);
+                    }
+                    catch (PDOException $e)
+                    {
+                        echo "Connection failed: " . $e->getMessage();
+                    }
+                    $conn = null;
+
+                    // Get list of event from events table
+                    function getEvents($conn){
+                        $stmt = $conn->query('SELECT `event_id`,`event_date`,`location`,`event_name`,`event_type`,`user_name` FROM `events` ORDER BY `event_date`, `event_start_time`');
+                        if($stmt->rowCount() > 0){
+                            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                            $current_date = date("Y-m-d");
+                            $count_current = 0;
+                            foreach ($results as $row){
+                                if($current_date <= $row['event_date'] && $count_current < 4){
+                                    $count_current++;
+                                    list($year, $month, $day) = explode("-", $row['event_date']);
+                                    printEvent($row['event_id'], monthConvert($month), $day, $row['location'], $row['event_name'], $row['event_type'], $row['user_name'] );
+                                }
+                            }
+                        }
+                        else {
+                            printNoEventMessage();
+                        }
+                    }
+                    //Print each of event to browser
+                    function printEvent($event_id, $month, $day, $location, $event_name, $event_type, $user_name)
+                    {
+                        $url = "eventDetail.php?item=" . urlencode($event_id);
+                        
+                        echo '<!-- layout each event !-->
+                        <div class="event-container">
+                            <div class="date-container">
+                                <p><span class="month">'.$month.'</span>
+                                    <span class="day">'.$day.'</span></p>
+                            </div>
+                            <div class="detail">
+                                <h3>'.$event_name.'</h3>
+                                <h5>Type: '.$event_type.'</h5>
+                                <h4>Location: '.$location.'</h4>
+                                <p>Created by <a href="'.$user_name.'">'.$user_name.'</a></p>
+                                <form method = "post" action="my-events.php">
+                                <a href="'.$url.'" class="button">Learn More</a>
+                                <input type="submit" name="btnJoin" value="Join Event" class="button">
+                                <input type="hidden" name="hd_event_id" value="'. $event_id .'" />
+                                </form>
+                            </div>
+                        </div>';
+                    }
+                    ?>
                 </div>
                 <div class="button-box">
-                    <a class="button" href="">View More</a>
+                    <a class="button" href="upcoming-events.php">View More</a>
                 </div>
             </div>
         </section>
-        
-    </main>';
+    </main>
 
+<?php
 include 'footer.php';
-
 ?>

@@ -1,87 +1,8 @@
 <?php
-require 'config.php';
+include 'header.php';
 require 'register_handler.php';
 require 'Login_Handler.php';
-require 'submitEvent.php';
-
 ?>
-<html>
-<head>
-    <title>
-        PHP register
-    </title>
-    <link rel="stylesheet" type="text/css" href="register_style.css">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="./js/register.js"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-    <title>Meet-N-Compete</title>
-
-    <link href="https://fonts.googleapis.com/css?family=Fjalla+One&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/normalize.css" />
-    <link rel="stylesheet" href="css/hover-min.css" />
-    <link rel="stylesheet" href="css/animate.min.css" />
-    <link rel="stylesheet" href="css/vendor/fontawesome-free-5.12.0-web/css/all.min.css" />
-    <link rel="stylesheet" href="style.css" />
-
-    <script src="js/vendor/modernizr-3.6.0.min.js"></script>
-    <script src="js/vendor/jquery-3.3.1.min.js"></script>
-    <script src="js/vendor/bootstrap.bundle.min.js"></script>
-    <script src="js/vendor/parallax.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-</head>
-
-<body>
-<header>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6">
-                <a href=""><img id="logo" src="img/logo.png" alt=""></a>
-            </div>
-            <div class="col-sm-6">
-                <div id="header-right" class="vertical-center">
-                    <ul class = "nav-login">
-
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
-
-<nav class="navbar navbar-expand-md navbar-light bg-light">
-    <div class="container">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Upcoming Events</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">My Events</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Account</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
 
 <?php
     if(isset($_POST['register_button'])){
@@ -94,7 +15,7 @@ require 'submitEvent.php';
     }
 ?>
 
-<div class="wrapper">
+<div class="wrapper" id ="register-box">
 
     <div class="login_box">
         <div class="login_header">
@@ -113,7 +34,7 @@ require 'submitEvent.php';
                 if(isset($_SESSION['login_username'])){
                     echo $_SESSION['login_username'];
                 } ?>" required>
-
+                <br>
                 <label for="password">
                     <i class="fas fa-lock"></i>
                 </label>
@@ -126,7 +47,7 @@ require 'submitEvent.php';
                     echo "Username or password is incorrect<br>";
                 }
                 ?>
-                <a href="#" id="signup" class="signup">Need an account? Click here</a>
+                <a href="#" id="signup" class="signup" onclick="hideLogin();">Need an account? Click here</a>
                 <br>
             </form>
         </div>
@@ -202,17 +123,14 @@ require 'submitEvent.php';
                 }
                 ?>
                 <br>
-                <a href="#" id="signin" class="signin">Already have an account? Click here</a>
+                <a href="#" id="signin" class="signin" onclick="hideSignup();">Already have an account? Click here</a>
 
             </form>
         </div>
 
     </div>
 </div>
-</body>
-</html>
 
 <?php
 require 'footer.php';
-//$con->close();
 ?>

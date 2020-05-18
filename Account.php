@@ -1,6 +1,14 @@
 <?php
 include 'header.php';
 
+// Check for login to display this page
+if(isset($_SESSION['username']))
+{
+    $userID = $_SESSION['username'];
+}
+else{
+    header("Location: register.php");
+}
 
 if(isset($_POST['post'])){
 

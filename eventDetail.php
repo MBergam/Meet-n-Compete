@@ -67,43 +67,124 @@ function getItemDetail($conn, $itemID){
     if($stmt->rowCount() ==1 ){
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         list($year, $month, $day) = explode("-", $row['event_date']);
-        printEventDetails($row['event_id'], $row['event_marker_id'], monthConvert($month), $day, $row['location'], $row['event_name'], 
+        printEventDetails($conn, $row['event_id'], $row['event_marker_id'], monthConvert($month), $day, $row['location'], $row['event_name'], 
         $row['event_type'], $row['event_description'], $row['user_name'], $row['event_start_time'], $row['event_duration']);
     }
     else{
         echo "Data not found";
     }
 }
-function printEventDetails($event_id, $event_marker_id, $month, $day, $location, $event_name, $event_type, $event_description, $user_name, $event_start_time, $event_duration)
+function printEventDetails($conn, $event_id, $event_marker_id, $month, $day, $location, $event_name, $event_type, $event_description, $user_name, $event_start_time, $event_duration)
 {
+    $event_start_time = date("g:ia", strtotime($event_start_time));
     echo'
     <h1>'.$event_name.'</h1>
     <hr>
     <div class="row">
         <div class="col-md-6">
-            <div class="detail-img"><img src="img/'.$event_type.'.jpg" alt=""></div>
+            <div class="detail-img"><img src="img/'.strtolower($event_type).'.jpg" alt=""></div>
         </div>
         <div class="col-md-6" id="eventDetail">
             <div class="event-container">
                 <div class="date-container">
-                    <p><span class="month">'.$month.'</span>-
-                        <span class="day">'.$day.'</span></p>
-                    <p><span class="month">'.$event_start_time.'</span>-
-                        <span class="month">'.$event_duration.'&prime;</span></p>
+                        <p><span class="month">'.$month.'</span>-
+                            <span class="day">'.$day.'</span></p>
+                        <p><span class="month">'.$event_start_time.'</span>-
+                            <span class="month">'.$event_duration.' min</span></p>
                 </div>
 
                 <div class="detail">
-                    <h3>'.$event_type.'</h3>
-                    <h4>'.$location.'</h4>
-                    <p>'.$event_description.'</p>
-                    <h4>Member:</h4>
-                    <a href="">User 1</a>
-                    <a href="">User 2</a>
-                    <a href="">User 3</a>
-                    <div class="button-container">
+                    <h5>Type: '.$event_type.'</h5>
+                    <h4>Location: '.$location.'</h4>
+                    <p>Created by <a href="'.$user_name.'">'.$user_name.'</a></p>
+                    <p>Description: '.$event_description.'</p>
+                    '; 
+                    
+                    $rows = getJoinedMembers($conn, $event_id);
+                    echo'
+                    <h4>Members('.sizeof($rows).'):</h4>';
+                    if(sizeof($rows)==0){
+                        echo 'None';
+                    }else{
+                        foreach($rows as $row){
+                            echo '<a href="'.$row['user_name'].'" class="margin-right membersJoined">'.$row['user_name'].'</a>';
+                        }
+                    }
+                    echo '
+                    <div id="buttonCont">
+                        <script>
+                            var isInEvent = false;
+                            var membersJoined = document.getElementsByClassName("membersJoined");
+                            for(member of membersJoined){
+                                if(member.text === document.getElementById("site_user").text){
+                                    isInEvent = true;
+                                }
+                            }
+                            if(\''.$user_name.'\' === document.getElementById("site_user").text){
+                                isInEvent = true;
+                            }
+                            
+                            if(!isInEvent){
+                                var backBtn = document.createElement(\'button\');
+                                backBtn.className = "button";
+                                backBtn.innerHTML = "Back";
+                                //backBtn.onclick = "goBack()";
+                                backBtn.id = "detail-backBtn";
+                                
+
+                                var btn = document.createElement(\'input\');
+                                btn.className = "button";
+                                btn.setAttribute("style", "margin-left: 5px;"); 
+                                btn.type = "submit";
+                                btn.value = "Join Event";
+                                btn.name = "btnJoin";
+
+                                var joinEventHiddenIdToDB = document.createElement("input");
+                                joinEventHiddenIdToDB.type = "hidden";
+                                joinEventHiddenIdToDB.name = "hd_event_id";
+                                joinEventHiddenIdToDB.value = \''.$event_id.'\';
+
+                                var usernameHiddenToDB = document.createElement("input");
+                                usernameHiddenToDB.type = "hidden";
+                                usernameHiddenToDB.name = "hd_user_name";
+                                usernameHiddenToDB.value = document.getElementById("site_user").text;
+
+                                var form = document.createElement("form");
+                                form.method = "post";
+                                form.action = "my-events.php";
+                                form.appendChild(backBtn);
+                                form.appendChild(btn);
+                                form.appendChild(joinEventHiddenIdToDB);
+                                form.appendChild(usernameHiddenToDB);
+
+                                var buttonCont = document.getElementById("buttonCont");
+                                buttonCont.appendChild(form);
+                                var isClicked = false;
+                                goBack(isClicked);
+                            }else{
+                                var backBtn = document.createElement(\'button\');
+                                backBtn.className = "button";
+                                backBtn.innerHTML = "Back";
+                                backBtn.id = "detail-backBtn";
+                                
+
+                                var buttonCont = document.getElementById("buttonCont");
+                                buttonCont.appendChild(backBtn);
+                                var isClicked = false;
+                                goBack(isClicked);
+                            }
+
+                            //sets Back button onclick and only goes back one page only
+                            function goBack(isClicked){
+                                document.getElementById("detail-backBtn").onclick = function(){
+                                    if(!isClicked){
+                                        history.go(-1);
+                                        isClicked = true;
+                                    }
+                                };
+                            }
+                        </script>
                         
-                        <button class="button" onclick="history.go(-1);">Back</button>
-                        <button class="button">Join Event</button>
                     </div>
                 </div>
             </div>
@@ -157,46 +238,6 @@ function printEventDetails($event_id, $event_marker_id, $month, $day, $location,
 echo '
         </div>
     </main>';
-function monthConvert($month){
-    switch ($month){
-        case 1:
-            return "Jan";
-            break;
-        case 2:
-            return "Feb";
-            break;
-        case 3:
-            return "Mar";
-            break;
-        case 4:
-            return "Apr";
-            break;
-        case 5:
-            return "May";
-            break;
-        case 6:
-            return "Jun";
-            break;
-        case 7:
-            return "Jul";
-            break;
-        case 8:
-            return "Aug";
-            break;
-        case 9:
-            return "Sep";
-            break;
-        case 10:
-            return "Oct";
-            break;
-        case 11:
-            return "Nov";
-            break;
-        case 12:
-            return "Dec";
-            break;
-        default:
-    }
-}
+
 include 'footer.php';
 ?>

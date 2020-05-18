@@ -16,6 +16,7 @@ $database = $p_ini['Database']['database'];
 
 $user = "";
 $userLogin = "";
+$logged_in_bool=false;
 //THIS IS FOR LOGIN CHECK-KHANH's CODE
 if(isset($_SESSION['username'])){
     $userLogin = $_SESSION['username'];
@@ -23,8 +24,9 @@ if(isset($_SESSION['username'])){
     $user = mysqli_fetch_array($user_detail_query);
     $logged_in_bool  = true;
 }
-else{
-    header("Location: register.php");
+
+if(isset($_GET['logout'])){
+    logout();
 }
 //END OF LOGIN CHECK
 ?>
@@ -55,15 +57,15 @@ else{
     <link rel="stylesheet" href="style.css" />
     <link href ="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
     <link rel="stylesheet" href="css/jquery.timepicker.css" />
-
+    <link rel="stylesheet" type="text/css" href="register_style.css">
 
     <!--    JAVASCRIPT-->
     <script src="js/vendor/modernizr-3.6.0.min.js"></script>
     <script src="js/vendor/jquery-3.3.1.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="js/vendor/bootstrap.bundle.js"></script>
     <script src="js/vendor/parallax.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4&libraries=places"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"> </script>
     <script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
     <script src = "meetncompete.js" async defer> </script>
@@ -81,20 +83,6 @@ else{
             <div class="col-sm-6">
                 <a href=""><img id="logo" src="img/logo.png" alt=""></a>
             </div>
-            <!-- <div class="col-sm-6">
-                <div class="search">
-                    <form action="search.php" method="get" name="search_form">
-                        <input type="text" onkeyup="getLiveSearchUsers(this.value, '<?php echo $userLogin;?>')" name="q" placeholder="Search for friends..." autocomplete="off" id="search_text_input">
-                        <div class="button_holder">
-                            <img src="img/search--v2.png">
-                            
-                        </div>
-                    </form>
-
-                </div>
-                <div class="search_result"></div>
-                <div class="search_result_footer_empty"></div>
-            </div> -->
             <div class="col-sm-6">
                 <div id="header-right" class="vertical-center">
                     <ul class = "nav-login">
@@ -110,7 +98,7 @@ else{
                             $friend_requests = new User($con,$userLogin);
                             $num_friend_requests = $friend_requests->getNumberOfFriendRequests();
 
-                            echo "<li><a href='$userLogin'>$userLogin</a></li>";
+                            echo "<li><a id='site_user' href='$userLogin'>$userLogin</a></li>";
                             ?>
                             <li><a href='friendRequests.php'
                                 <i class="fa fa-users fa-lg"></i>
@@ -139,7 +127,7 @@ else{
                             <li><a href='settings.php'
                                 <i class='fa fa-cog fa-lg'></i>
                                 </a></li>
-                            <li><a href='Logout.php'><i class="fas fa-sign-out-alt"></i></a></li>
+                            <li><a href="header.php?logout=true"><i class="fas fa-sign-out-alt"></i></a></li>
                             <?php
                         }
                         else{
@@ -239,7 +227,7 @@ else{
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="Logged.php">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="upcoming-events.php">Upcoming Events</a>
@@ -252,10 +240,13 @@ else{
                 </li>
             </ul>
             <!-- Search session -->
+            <?php
+            if($logged_in_bool){?>
                 <form action="search.php" method="get" name="search_form" class="form-inline my-2 my-lg-0 search-form">
                     <input type="text" onkeyup="getLiveSearchUsers(this.value, '<?php echo $userLogin;?>')" name="q" placeholder="Search people..." autocomplete="off" id="search_text_input" class="form-control mr-sm-2">
                     <div class="search_result"></div>
                 </form>
+            <?php } ?>
             <!-- End Search session -->
         </div>
     </div>
