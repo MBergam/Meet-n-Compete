@@ -605,7 +605,7 @@ function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $locatio
                                 }
                                
                                 </script>
-                                <input type="submit" onclick="checkValues('.$event_id.')" name="submitBtn" id="editBtn" value="Edit" class="btn btn-primary">
+                                <input onclick="checkValues('.$event_id.')" name="submitBtn" id="editBtn" value="Edit" class="btn btn-primary">
                                 </form>
                             </div>
                             </div>
@@ -712,10 +712,35 @@ if (isset($_POST['btnJoin'])) {
     $creator_check_num_rows = mysqli_num_rows($creator_check);
     if($check_num_rows > 0){
        // notify the user that they have already joined this event
-       echo '<script>alert("You already joined this event!!!");</script>'; 
+       //echo '<script>alert("You already joined this event!!!");</script>'; 
+       echo '<div id="promptAccountPopup">
+                <!-- Popup Div Starts Here -->
+                <div id="popupAccount">
+                    <form action="#" id="createEventForm" method="post" name="createEventForm">
+                    <a class="boxclose" id="boxclose" onclick= "div_hide()"></a>
+                    <p id="promptForAccount"></p>
+                    </form>
+                </div>
+            </div>
+            <!-- Popup Div Ends Here -->
+            <script>
+            document.getElementById(\'promptAccountPopup\').style.display = "block";
+            document.getElementById(\'promptForAccount\').innerHTML = "<b>You already joined this event!</b>";</script>';
     }else if ($creator_check_num_rows > 0){
         // notify the user that they are creators of this event
-        echo '<script>alert("You cannot join the event that was created by you!!!");</script>'; 
+        echo '<div id="promptAccountPopup">
+                <!-- Popup Div Starts Here -->
+                <div id="popupAccount">
+                    <form action="#" id="createEventForm" method="post" name="createEventForm">
+                    <a class="boxclose" id="boxclose" onclick= "div_hide()"></a>
+                    <p id="promptForAccount"></p>
+                    </form>
+                </div>
+            </div>
+            <!-- Popup Div Ends Here -->
+            <script>
+            document.getElementById(\'promptAccountPopup\').style.display = "block";
+            document.getElementById(\'promptForAccount\').innerHTML = "<b>You cannot join an event that was created by you!</b>";</script>';
     } else {
         $query = mysqli_query($con, "insert into event_users values('$event_id', '$user_name', '$event_join_date')");
         // Redirect to my-events.php page

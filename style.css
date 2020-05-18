@@ -650,7 +650,7 @@ div#popupAccount {
 
 .see-event-container{
     width: 444px;
-    height: 137px;
+    height: 175px;
 }
 
 #seeEvents {
@@ -918,12 +918,11 @@ textarea {
     font-weight: 600;
 }
 
-
-
-
-
-
-
+.joinedEventBtn{
+    color: #137ebe;
+    font-weight: bold;
+    font-size: 20px;
+}
 
 
 

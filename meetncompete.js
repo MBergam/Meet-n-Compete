@@ -16,10 +16,13 @@ var myKey = "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4";
 
 //Function called when the document is first loaded - gets the user's location either manually or by requesting permission
 function start() {
-    $("a[role='menuitem']").click(dropdownTxtChange);
+    //if statement checks to see if user is on Home page or not. If not, this Javascript doesn't do anything
+    if(document.getElementById('map') != null && document.getElementById('search') != null){
+        $("a[role='menuitem']").click(dropdownTxtChange);
     
-    getLocation();
-    $("#search").click(getLatLong);
+        getLocation();
+        $("#search").click(getLatLong);
+    }
 }
 
 //Asks user for permission to get their location
@@ -664,8 +667,10 @@ function printEvent(response, results, x){
     }
     
     var h4 = document.createElement('h4');
-    h4.innerText = results.name;
-    
+    h4.innerText = "Type: " + response.event_type;
+
+    var createdBy = document.createElement('p');
+    createdBy.innerHTML = "Created by <a href="+ response.user_name + ">" + response.user_name + "</a>";
 
     var a1 = document.createElement('a');
     a1.className = "button";
@@ -682,29 +687,46 @@ function printEvent(response, results, x){
     joinEventBtn.value = "Join Event";
     joinEventBtn.className = "button joinEvtButton float-right";
     joinEventBtn.onclick = function(){
-        //take away join event button if user is on there
-        $.ajax({
-            url: "event-users.php",
-            data: {
-                "event_id": response.event_id
-            },
-            success: function(response) {
-                //username found in database on event_id
-                if(!response.includes("[]")){
-                    joinEventBtn.remove();
-                    $("#header3_" + x).html($("#header3_" + x).html() + "<span style='color: #B899DF;'> (Joined)</span>");
+        if(response.user_name === document.getElementById("site_user").text){
+            joinEventBtn.remove();
+            var joinedEventBtn = document.createElement("p");
+            //joinedEventBtn.type = "button";
+            joinedEventBtn.innerHTML = "Your Event";
+            joinedEventBtn.className = "joinedEventBtn float-right";
+
+            joinEventContainer.appendChild(joinedEventBtn);
+        }else{
+            //take away join event button if user is on there
+            $.ajax({
+                url: "event-users.php",
+                data: {
+                    "event_id": response.event_id,
+                    "user_id": document.getElementById("site_user").text
+                },
+                success: function(response) {
+                    //username found in database on event_id
+                    if(!response.includes("[]")){
+                        joinEventBtn.remove();
+                        var joinedEventBtn = document.createElement("p");
+                        //joinedEventBtn.type = "button";
+                        joinedEventBtn.innerHTML = "Already Joined";
+                        joinedEventBtn.className = "joinedEventBtn float-right";
+
+                        joinEventContainer.appendChild(joinedEventBtn);
+                        //$("#header3_" + x).html($("#header3_" + x).html() + "<span style='color: #B899DF;'> (Joined)</span>");
+                    }
+                    //User can join event because they have not joined it yet
+                    else{
+                        joinEventBtn.type = "submit";
+                        joinEventBtn.onclick = function(){};
+                        joinEventBtn.click();
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr);
                 }
-                //User can join event because they have not joined it yet
-                else{
-                    joinEventBtn.type = "submit";
-                    joinEventBtn.click();
-                }
-            },
-            error: function(xhr) {
-                console.log(xhr);
-            }
-        });
-        
+            });
+        }
     };
 
     var joinEventHiddenIdToDB = document.createElement("input");
@@ -719,6 +741,7 @@ function printEvent(response, results, x){
     date_container.appendChild(p);
     detail.appendChild(h3);
     detail.appendChild(h4);
+    detail.appendChild(createdBy);
     detail.appendChild(joinEventContainer);
     event_container.appendChild(date_container);
     event_container.appendChild(detail);

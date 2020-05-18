@@ -11,7 +11,7 @@ $database = $p_ini['Database']['database'];
 
 $this_event_id = $_GET['event_id'];
 
-$userID = $_SESSION['username'];
+$userID = $_GET['user_id'];
 
 try{
     $conn = new PDO("mysql:host=$servername;dbname=$database",$username,$password);
