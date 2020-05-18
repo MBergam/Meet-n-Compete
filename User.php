@@ -137,10 +137,11 @@ class User{
     public function updateAbout($update_content){
         $username = $this->user['user_name'];
         $update_content = strip_tags($update_content);
+        $update_content = mysqli_real_escape_string($this->con, $update_content);
         $check_about = mysqli_query($this->con, "select about_content from about where user_name = '$username'");
         $row = mysqli_num_rows($check_about);
         if($row == 0){
-            $insert_query = mysqli_query($this->con, "insert into about values ('','$update_content', '$username')");
+            $insert_query = mysqli_query($this->con, 'insert into about values ("","$update_content", "$username")');
         }
 
         else {
