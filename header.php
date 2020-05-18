@@ -16,6 +16,7 @@ $database = $p_ini['Database']['database'];
 
 $user = "";
 $userLogin = "";
+$logged_in_bool=false;
 //THIS IS FOR LOGIN CHECK-KHANH's CODE
 if(isset($_SESSION['username'])){
     $userLogin = $_SESSION['username'];
