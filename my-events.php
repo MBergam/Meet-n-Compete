@@ -2,6 +2,7 @@
 include 'header.php';
 
 $printNoEventMessage = true;// to print a message when there is no event to show
+// Check for login to display this page
 if(isset($_SESSION['username']))
 {
     $userID = $_SESSION['username'];

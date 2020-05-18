@@ -23,9 +23,6 @@ if(isset($_SESSION['username'])){
     $user = mysqli_fetch_array($user_detail_query);
     $logged_in_bool  = true;
 }
-else{
-    header("Location: register.php");
-}
 //END OF LOGIN CHECK
 ?>
 
@@ -55,7 +52,7 @@ else{
     <link rel="stylesheet" href="style.css" />
     <link href ="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
     <link rel="stylesheet" href="css/jquery.timepicker.css" />
-
+    <link rel="stylesheet" type="text/css" href="register_style.css">
 
     <!--    JAVASCRIPT-->
     <script src="js/vendor/modernizr-3.6.0.min.js"></script>
@@ -225,7 +222,7 @@ else{
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="Logged.php">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="upcoming-events.php">Upcoming Events</a>
@@ -238,10 +235,13 @@ else{
                 </li>
             </ul>
             <!-- Search session -->
+            <?php
+            if($logged_in_bool){?>
                 <form action="search.php" method="get" name="search_form" class="form-inline my-2 my-lg-0 search-form">
                     <input type="text" onkeyup="getLiveSearchUsers(this.value, '<?php echo $userLogin;?>')" name="q" placeholder="Search people..." autocomplete="off" id="search_text_input" class="form-control mr-sm-2">
                     <div class="search_result"></div>
                 </form>
+            <?php } ?>
             <!-- End Search session -->
         </div>
     </div>

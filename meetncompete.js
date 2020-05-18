@@ -1038,3 +1038,12 @@ function validateLocations(data, keyword){
     }
     return newArray;
 }
+
+function hideLogin(){
+    $(".login_form").hide();
+    $(".signup_form").show();
+}
+function hideSignup(){
+    $(".login_form").show();
+    $(".signup_form").hide();
+}

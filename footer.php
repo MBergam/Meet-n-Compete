@@ -9,7 +9,7 @@
                         <li><a href="index.php">Home</a></li>
                         <li><a href="upcoming-events.php">Upcoming Events</a></li>
                         <li><a href="my-events.php">My Events</a></li>
-                        <li><a href="">Account</a></li>
+                        <li><a href="Account.php">News Feed</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">

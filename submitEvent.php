@@ -68,7 +68,7 @@ if(isset($_POST['submitBtn'])){
     //$join_query = mysqli_query($con, "insert into event_users values ('$event_id', '$user_name', '$date')"); //add the creator of the event as a user of the event in the event_users table
     
     
-    header("Location: Logged.php");
+    header("Location: index.php");
 
 }
 

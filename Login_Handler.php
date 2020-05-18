@@ -20,7 +20,7 @@ if(isset($_POST['login_button'])){
         }
 
         $_SESSION['username'] = $username;
-        header("Location: Logged.php");
+        header("Location: index.php");
         exit();
     }
     else{

@@ -267,6 +267,19 @@ include 'submitEvent.php';
             </div>
         </div>
         <!-- Popup Div Ends Here -->
+
+        <div id="promptAccountPopup">
+            <!-- Popup Div Starts Here -->
+            <div id="popupAccount">
+            <form action="#" id="createEventForm" method="post" name="createEventForm">
+            <a class="boxclose" id="boxclose" onclick= "div_hide()"></a>
+            <p id="promptForAccount"></p>
+            <a href="register.php" class="loginSignup button" id="redirectButton">Login/Signup</a>
+            </form>
+            </div>
+        </div>
+        <!-- Popup Div Ends Here -->
+        
         <section>
             <div id="upcoming-events" class="container box">
                 <div class="title-container">

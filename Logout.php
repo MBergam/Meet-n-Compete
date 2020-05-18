@@ -1,5 +1,5 @@
 <?php
-
-session_destroy();
-unset($_SESSION['username']);
-header("Location: register.php");
+session_start();
+session_destroy(); // Destroy all session
+header("Location: index.php");
+?>
