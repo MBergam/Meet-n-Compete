@@ -79,4 +79,9 @@ function monthConvert($month){
         default:
     }
 }
+
+function logout(){
+    session_destroy();
+    header("Location: index.php");
+}
 ?>

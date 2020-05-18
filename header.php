@@ -24,6 +24,10 @@ if(isset($_SESSION['username'])){
     $user = mysqli_fetch_array($user_detail_query);
     $logged_in_bool  = true;
 }
+
+if(isset($_GET['logout'])){
+    logout();
+}
 //END OF LOGIN CHECK
 ?>
 
@@ -123,7 +127,7 @@ if(isset($_SESSION['username'])){
                             <li><a href='settings.php'
                                 <i class='fa fa-cog fa-lg'></i>
                                 </a></li>
-                            <li><a href='Logout.php'><i class="fas fa-sign-out-alt"></i></a></li>
+                            <li><a href="?logout=true"><i class="fas fa-sign-out-alt"></i></a></li>
                             <?php
                         }
                         else{

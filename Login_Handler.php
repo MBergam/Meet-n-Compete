@@ -1,5 +1,4 @@
 <?php
-session_start();
 require 'config.php';
 if(isset($_POST['login_button'])){
     $username = $_POST['user_login'];
