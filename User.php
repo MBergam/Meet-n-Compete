@@ -141,7 +141,7 @@ class User{
         $check_about = mysqli_query($this->con, "select about_content from about where user_name = '$username'");
         $row = mysqli_num_rows($check_about);
         if($row == 0){
-            $insert_query = mysqli_query($this->con, 'insert into about values ("","$update_content", "$username")');
+            $insert_query = mysqli_query($this->con, "insert into about values ('','$update_content', '$username')");
         }
 
         else {
