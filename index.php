@@ -2,8 +2,18 @@
 include 'header.php';
 include 'config.php';
 include 'submitEvent.php';
-?>
 
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$database",$username,$password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+    $results = getPreferences($conn);
+}
+catch (PDOException $e)
+{
+    echo "Connection failed: " . $e->getMessage();
+}
+$conn = null;
+?>
 <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
         <li data-target="#carouselIndicators" data-slide-to="0" class="active"></li>
@@ -50,114 +60,20 @@ include 'submitEvent.php';
                     <div class="sidebar-container">
                         <h2 class ="w3-light-grey">Preferences</h2>
                         <ul class="w3-card w3-light-grey w3-ul">
-                            <li>
-                                <label class="label-container">Baseball
-                                    <input type="checkbox" checked="checked" id="baseball">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="label-container">Basketball
-                                    <input type="checkbox" id="basketball">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="label-container">Billiards
-                                    <input type="checkbox" id="billiards">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="label-container">Bowling
-                                    <input type="checkbox" id="bowling">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="label-container">Climbing
-                                    <input type="checkbox" id="climbing">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="label-container">Cricket
-                                    <input type="checkbox" id="cricket">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="label-container">Curling
-                                    <input type="checkbox" id="curling">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="label-container">Football
-                                    <input type="checkbox" id="football">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="label-container">Golf
-                                    <input type="checkbox" id="golf">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="label-container">Rugby
-                                    <input type="checkbox" id="rugby">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="label-container">Skateboarding
-                                    <input type="checkbox" id="skateboarding">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="label-container">Skiing
-                                    <input type="checkbox" id="skiing">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="label-container">Snowboarding
-                                    <input type="checkbox" id="snowboarding">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="label-container">Soccer
-                                    <input type="checkbox" id="soccer">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="label-container">Swimming
-                                    <input type="checkbox" id="swimming">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="label-container">Tennis
-                                    <input type="checkbox" id="tennis">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="label-container">Volleyball
-                                    <input type="checkbox" id="volleyball">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="label-container">Weightlifting
-                                    <input type="checkbox" id="weightlifting">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </li>
+                            <?php
+                                foreach($results as $row){
+                                    echo '
+                                    <li>
+                                        <label class="label-container">'.$row['preference'].'
+                                            <input type="checkbox" id="'.strtolower($row['preference']).'">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </li>';
+                                }
+                            ?>
+                            <script>
+                                $("#basketball").prop('checked', true);
+                            </script>
                             <li>
                             Radius: <input type = "text" class = "allText" id = "radius" value="2" required minlength="1" maxlength="2" size="4" <p> miles</p>
                             </li>
@@ -186,41 +102,12 @@ include 'submitEvent.php';
                 <input type="hidden" name="sportTextToDB" id="sportTextToDB" value=""></input>
                 <button class="btn btn-default dropdown-toggle" type="button" name="sportText" id="sportText" data-toggle="dropdown">Select Sport</button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                <li role="presentation"><a role="menuitem" tabindex="-1">Baseball</a></li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1">Basketball</a></li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1">Billiards (Pool)</a></li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1">Bowling</a></li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1">Climbing</a></li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1">Cricket</a></li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1">Curling</a></li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1">Football</a></li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1">Golf/Discgolf</a></li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1">Rugby</a></li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1">Skateboarding</a></li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1">Skiing </a></li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1">Snowboarding</a></li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1">Soccer</a></li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1">Swimming</a></li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1">Tennis/Table Tennis</a></li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1">Volleyball</a></li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1">Weightlifting</a></li>
+                <?php
+                    foreach($results as $row){
+                        echo '<li role="presentation"><a role="menuitem" tabindex="-1">'.$row['preference'].'</a></li>';
+                        echo '<li role="presentation" class="divider"></li>';
+                    }
+                ?>
                 </ul>
             </div>
             <input type="hidden" name="evtTimeToDB" id="evtTimeToDB" value=""></input>
