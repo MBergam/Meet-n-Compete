@@ -239,7 +239,7 @@ function initMap(lati, longi, radi) {
 
         var bowling_keyword = new Array("bowling", "alley");
         
-        service.nearbySearch(bowl_reqdat, function placeData(data, status) {
+        service.nearbySearch(bowl_reqdata, function placeData(data, status) {
             gotPlaceData(data, status, bowling_keyword);
         });
     }
