@@ -23,7 +23,7 @@
                         <a class="social-icon" href=""><i class="fab fa-instagram"></i></a>
                     </div>
                     <div class="icon-border">
-                        <a class="social-icon" href=""><i class="fab fa-youtube"></i></a>
+                        <a class="social-icon" href="https://www.youtube.com/channel/UCgtm1WLbVV37aVUQWTfJwWw/featured"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
             </div>
