@@ -1,12 +1,17 @@
 <?php
 include 'header.php';
 
+// get preference from event type select
+if(isset($_GET["preferences"])){
+    $_SESSION['preference']=$_GET["preferences"];
+}
+
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$database",$username,$password);
     //set the error code to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
     //echo "Connected successfully<br>";
-    printCarouselIndicators();
+    printCarouselIndicators($conn);
     getEvents($conn);
 }
 catch (PDOException $e)
@@ -14,10 +19,23 @@ catch (PDOException $e)
     echo "Connection failed: " . $e->getMessage();
 }
 $conn = null;
-
+$stmt = $conn->prepare('SELECT email FROM users
+                            WHERE user_name = ?');
+    $stmt->bindValue(1,$user_name,PDO::PARAM_STR);
+    $stmt->execute();
+    $results = $stmt->fetch(PDO::FETCH_ASSOC);
 // Get list of event from events table
 function getEvents($conn){
-    $stmt = $conn->query('SELECT `event_id`,`event_date`,`location`,`event_name`,`event_type`,`user_name` FROM `events` ORDER BY `event_date`, `event_start_time`');
+    if($_SESSION['preference'] == "all" || !isset($_SESSION['preference'])){
+        $stmt = $conn->query('SELECT `event_id`,`event_date`,`location`,`event_name`,`event_type`,`user_name` FROM `events` 
+                              ORDER BY `event_date`, `event_start_time`');
+    }else{
+        $stmt = $conn->prepare('SELECT `event_id`,`event_date`,`location`,`event_name`,`event_type`,`user_name` FROM `events` 
+                              WHERE event_type = ?
+                              ORDER BY `event_date`, `event_start_time`');
+        $stmt->bindValue(1,$_SESSION['preference'],PDO::PARAM_STR);
+        $stmt->execute();
+    }
     if($stmt->rowCount() > 0){
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $current_date = date("Y-m-d");
@@ -28,6 +46,9 @@ function getEvents($conn){
                 list($year, $month, $day) = explode("-", $row['event_date']);
                 printEvent($row['event_id'], monthConvert($month), $day, $row['location'], $row['event_name'], $row['event_type'], $row['user_name'] );
             }
+        }
+        if($count_current == 0){
+            printNoEventMessage();
         }
     }
     else {
@@ -58,7 +79,7 @@ function printEvent($event_id, $month, $day, $location, $event_name, $event_type
         </div>
     </div>';
 }
-function printCarouselIndicators(){
+function printCarouselIndicators($conn){
     echo'
     <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -91,6 +112,26 @@ function printCarouselIndicators(){
         <div class="title-container">
             <h1>Upcoming events</h1>
             <hr>
+        </div>
+        <div class="container" id="event-type-select">
+            <form>
+                <label for="preferences">Event types:</label>
+                <select name="preferences" id="preferences" onchange="this.form.submit()">
+                    ';
+                    if($_SESSION['preference'] == "all" || !isset($_SESSION['preference'])){
+                        echo'<option value="all" selected>All types</option>';
+                    }
+                    $results = getPreferences($conn);
+                    foreach($results as $row){
+                        if($row['preference'] == $_SESSION['preference']){
+                            echo '<option value="'.$row['preference'].'" selected>'.$row['preference'].'</option>';
+                        }else{
+                            echo '<option value="'.$row['preference'].'">'.$row['preference'].'</option>';
+                        }
+                    }
+                    echo'
+                </select>
+            </form>
         </div>
         <div class="f-container">
     ';

@@ -509,6 +509,9 @@ footer ul li a:hover{
 #buttonCont{
     margin-top: 20px;
 }
+#event-type-select{
+    text-align: center;
+}
 /* End CSS for eventDetail page */
 .event-container .date-container{
     display: flex;
