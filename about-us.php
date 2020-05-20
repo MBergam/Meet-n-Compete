@@ -38,9 +38,8 @@ include 'header.php';
                 <p>As many people have experienced, finding people to organize pick up games with can be difficult. 
                     Often a person will head over to a local park just to find out that the park is already being used, 
                     there aren’t enough people, or the people that are there are all different ages.</p>
-                <p>This project will help bring a solution to these problems, allowing users to view events and locations via a map, 
-                    while also being able to create events of their own for others to see and join.</p>
-                <p>Meet-N-Compete will provide an online means to help people organize pick-up games and reduce the difficulties and confusion that usually accompany.</p>
+                <p>As founders, our number 1 goal was to find a solution to these problems by applying our programming skills.</p>
+                <p>Meet-N-Compete provides an online means for people to Organize, Create, & Join pick-up games, thereby making it easier for people to get out there and compete in their favorite sports.</p>
             </div>
         </section>
             

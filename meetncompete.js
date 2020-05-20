@@ -239,7 +239,7 @@ function initMap(lati, longi, radi) {
 
         var bowling_keyword = new Array("bowling", "alley");
         
-        service.nearbySearch(bowl_reqdat, function placeData(data, status) {
+        service.nearbySearch(bowl_reqdata, function placeData(data, status) {
             gotPlaceData(data, status, bowling_keyword);
         });
     }
@@ -641,6 +641,7 @@ function convertMonth(month){
         </div>
     </div>
 */
+
 function printEvent(response, results, x){
     var event_container = document.createElement('div');
     event_container.className = "event-container see-event-container";
@@ -917,6 +918,7 @@ function validTime(text, date){
     return false;
 }
 
+//when a user is creating an event and selects a sport on the popup form
 function dropdownTxtChange(evt){
     $("#sportText").html(evt.target.text);
 
@@ -925,7 +927,7 @@ function dropdownTxtChange(evt){
     document.getElementById('sportTextToDB').value = typeOfSport; //for sending type of sport to DB
 }
 
-//Function to Hide Popup
+//Function to hide 'create event' Popup
 function div_hide(){
     //Guest User clicks on the close button
     if(document.getElementById('createEvtPopup') == null){
@@ -1062,10 +1064,13 @@ function validateLocations(data, keyword){
     return newArray;
 }
 
+
 function hideLogin(){
     $(".login_form").hide();
     $(".signup_form").show();
 }
+
+
 function hideSignup(){
     $(".login_form").show();
     $(".signup_form").hide();
