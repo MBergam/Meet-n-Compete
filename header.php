@@ -48,7 +48,6 @@ if(isset($_GET['logout'])){
 
 
     <!--    CSS-->
-    <!--    <link rel="stylesheet" href="css/dropdown.css" />-->
     <link rel="stylesheet" href="css/bootstrap.min.css" >
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/hover-min.css" />
@@ -98,9 +97,9 @@ if(isset($_GET['logout'])){
                             $friend_requests = new User($con,$userLogin);
                             $num_friend_requests = $friend_requests->getNumberOfFriendRequests();
 
-                            echo "<li><a id='site_user' href='$userLogin'>$userLogin</a></li>";
+                            echo "<li class='menu-icon' ><a id='site_user' href='$userLogin'>$userLogin</a></li>";
                             ?>
-                            <li><a href='friendRequests.php'
+                            <li class="menu-icon"><a href='friendRequests.php' title="Friend Request">
                                 <i class="fa fa-users fa-lg"></i>
                                 <?php
                                 if($num_friend_requests > 0)
@@ -108,7 +107,7 @@ if(isset($_GET['logout'])){
                                 ?>
                                 </a></li>
                             <!--                                this is for the message-->
-                            <li><a href="javascript:void(0);" onclick="getDropdownData('<?php echo $userLogin; ?>', 'message')"
+                            <li class="menu-icon"><a href="javascript:void(0);" onclick="getDropdownData('<?php echo $userLogin; ?>', 'message')"  title="Message">
                                 <i class='fa fa-envelope fa-lg'></i>
                                 <?php
                                 if($num_messages > 0)
@@ -117,17 +116,17 @@ if(isset($_GET['logout'])){
                                 </a></li>
 
                             <!--                                This is for the notification-->
-                            <li><a href="javascript:void(0);" onclick="getDropdownData('<?php echo $userLogin; ?>', 'notification')"
+                            <li class="menu-icon"><a href="javascript:void(0);" onclick="getDropdownData('<?php echo $userLogin; ?>', 'notification')"  title="Notification">
                                 <i class='fa fa-bell fa-lg'></i>
                                 <?php
                                 if($num_notifications > 0)
                                     echo '<span class="notification_badge" id="unread_notification"> '.$num_notifications.'</span>';
                                 ?>
                                 </a></li>
-                            <li><a href='settings.php'
+                            <li class="menu-icon"><a href='settings.php'  title="Account Setting">
                                 <i class='fa fa-cog fa-lg'></i>
                                 </a></li>
-                            <li><a href="header.php?logout=true"><i class="fas fa-sign-out-alt"></i></a></li>
+                            <li><a href="header.php?logout=true" title="Log out"><i class="fas fa-sign-out-alt"></i></a></li>
                             <?php
                         }
                         else{

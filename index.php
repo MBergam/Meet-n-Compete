@@ -100,12 +100,11 @@ $conn = null;
             </div>
             <div class="dropdown" id="dropdownSports">
                 <input type="hidden" name="sportTextToDB" id="sportTextToDB" value=""></input>
-                <button class="btn btn-default dropdown-toggle" type="button" name="sportText" id="sportText" data-toggle="dropdown">Select Sport</button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                <button class="btn btn-light dropdown-toggle" type="button" name="sportText" id="sportText" data-toggle="dropdown">Select Sport</button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="sportText">
                 <?php
                     foreach($results as $row){
-                        echo '<li role="presentation"><a role="menuitem" tabindex="-1">'.$row['preference'].'</a></li>';
-                        echo '<li role="presentation" class="divider"></li>';
+                        echo '<li role="presentation"><a class="dropdown-item" role="menuitem" tabindex="-1">'.$row['preference'].'</a></li>';
                     }
                 ?>
                 </ul>

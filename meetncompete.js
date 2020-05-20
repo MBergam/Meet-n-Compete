@@ -481,7 +481,7 @@ function addMarkerHandler(marker, info, mdata, name, i, hasEvent) {
             if(hasEvent){
                 //Create 'See Events' button
                 let seeEventsButton = document.createElement("button");
-                seeEventsButton.className = "seeEvents button button-small markInfo";
+                seeEventsButton.className = "seeEvents button button-small font-small markInfo";
                 seeEventsButton.innerHTML = "See Events";
                 seeEventsButton.onclick = function(){ 
                     //Guest User clicks on See Events
