@@ -166,6 +166,12 @@ $conn = null;
             </div>
         </div>
         <!-- Popup Div Ends Here -->
+
+        <!-- embedded youtube tutorial video-->
+        <section class="youtubevid">
+        <iframe width="750" height="385" src="https://www.youtube.com/embed/WitE0XJnML4" frameborder="0" class="youtubevid" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </section>
+
         
         <section>
             <div id="upcoming-events" class="container box">

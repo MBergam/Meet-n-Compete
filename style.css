@@ -922,6 +922,14 @@ textarea {
 
 .placeInfo{
     font-weight: 600;
+    text-align: center;
+}
+
+.youtubevid{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
 }
 
 .joinedEventBtn{

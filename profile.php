@@ -115,9 +115,6 @@ if(!$logged_in_bool){
                         <li class="nav-item">
                             <a class="nav-link" href="#messages_div" aria-controls="messages_div" role="tab" data-toggle="tab">Messages</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link " href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                        </li>
                     </ul>
                     <br>
 
