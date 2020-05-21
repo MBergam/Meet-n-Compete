@@ -21,7 +21,7 @@ catch (PDOException $e)
 $conn = null;
 // Get list of event from events table
 function getEvents($conn){
-    if($_SESSION['preference'] == "all" || !isset($_SESSION['preference'])){
+    if(!isset($_SESSION['preference']) || $_SESSION['preference'] == "all"){
         $stmt = $conn->query('SELECT `event_id`,`event_date`,`location`,`event_name`,`event_type`,`user_name` FROM `events` 
                               ORDER BY `event_date`, `event_start_time`');
     }else{
