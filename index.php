@@ -210,115 +210,26 @@ $conn = null;
                     //Print each of event to browser
                     function printEvent($event_id, $month, $day, $location, $event_name, $event_type, $user_name)
                     {
-                        echo '<script>
-                                    var event_container = document.createElement(\'div\');
-                                    event_container.className = "event-container";
-
-                                    var date_container = document.createElement(\'div\');
-                                    date_container.className = "date-container";
-
-                                    var p = document.createElement(\'p\');
-
-                                    p.innerHTML = "<span class=\'month\'>" + "'.$month.'"
-                                    + "</span><span class=\'day\'>" + "'.$day.'"  + "</span>";
-
-                                    var detail = document.createElement(\'div\');
-                                    detail.className = "detail";
-                                
-                                    var h3 = document.createElement(\'h3\');
-                                    h3.innerText = "'.$event_name.'";
-                                    
-                                    var h5 = document.createElement(\'h5\');
-                                    h5.innerText = "Type: " + "'.$event_type.'";
-
-                                    var h4 = document.createElement(\'h5\');
-                                    h4.innerText = "Location: " + "'.$location.'";
-                                
-                                    var createdBy = document.createElement(\'p\');
-                                    createdBy.innerHTML = "Created by <a href="+ "'.$user_name.'"+ ">" + "'.$user_name.'" + "</a>";
-                                
-                                    var a1 = document.createElement(\'a\');
-                                    a1.href = "eventDetail.php?item=" + encodeURIComponent('.$event_id.');
-                                    a1.className = "button";
-                                    a1.innerText = "Learn More";
-                                
-                                    var joinEventContainer'.$event_id.' = document.createElement(\'form\');
-                                    joinEventContainer'.$event_id.'.method = "post";
-                                    joinEventContainer'.$event_id.'.action = "my-events.php";
-                                
-                                    var joinEventBtn'.$event_id.' = document.createElement("input");
-                                    joinEventBtn'.$event_id.'.type = "button";
-                                    joinEventBtn'.$event_id.'.name = "btnJoin";
-                                    joinEventBtn'.$event_id.'.value = "Join Event";
-                                    joinEventBtn'.$event_id.'.className = "button float-right";
-                                    if(document.getElementById("site_user") !== null){
-                                            joinEventBtn'.$event_id.'.onclick = function(){
-                                                if(\''.$user_name.'\' === document.getElementById("site_user").text){
-                                                    joinEventBtn'.$event_id.'.remove();
-                                                    var joinedEventBtn'.$event_id.' = document.createElement("p");
-                                                    joinedEventBtn'.$event_id.'.innerHTML = "Your Event";
-                                                    joinedEventBtn'.$event_id.'.className = "joinedEventBtn float-right";
-                                        
-                                                    joinEventContainer'.$event_id.'.appendChild(joinedEventBtn'.$event_id.');
-                                                }else{
-                                                    //take away join event button if user is on there
-                                                    $.ajax({
-                                                        url: "event-users.php",
-                                                        data: {
-                                                            "event_id": '.$event_id.',
-                                                            "user_id": document.getElementById("site_user").text
-                                                        },
-                                                        success: function(data) {
-                                                            //username found in database on event_id
-                                                            if(!data.includes("[]")){
-                                                                joinEventBtn'.$event_id.'.remove();
-                                                                var joinedEventBtn'.$event_id.' = document.createElement("p");
-                                                                
-                                                                joinedEventBtn'.$event_id.'.innerHTML = "Already Joined";
-                                                                joinedEventBtn'.$event_id.'.className = "joinedEventBtn float-right";
-                                        
-                                                                joinEventContainer'.$event_id.'.appendChild(joinedEventBtn'.$event_id.');
-                                                            }
-                                                            //User can join event because they have not joined it yet
-                                                            else{
-                                                                joinEventBtn'.$event_id.'.type = "submit";
-                                                                joinEventBtn'.$event_id.'.onclick = function(){};
-                                                                joinEventBtn'.$event_id.'.click();
-                                                            }
-                                                        },
-                                                        error: function(xhr) {
-                                                            console.log(xhr);
-                                                        }
-                                                    });
-                                                }
-                                            };
-                                    }else{
-                                        joinEventBtn'.$event_id.'.type = "submit";
-                                    }
-                                
-                                    var joinEventHiddenIdToDB'.$event_id.' = document.createElement("input");
-                                    joinEventHiddenIdToDB'.$event_id.'.type = "hidden";
-                                    joinEventHiddenIdToDB'.$event_id.'.name = "hd_event_id";
-                                    joinEventHiddenIdToDB'.$event_id.'.value = '.$event_id.';
-                                
-                                    joinEventContainer'.$event_id.'.appendChild(a1);
-                                    joinEventContainer'.$event_id.'.appendChild(joinEventBtn'.$event_id.');
-                                    joinEventContainer'.$event_id.'.appendChild(joinEventHiddenIdToDB'.$event_id.');
-                                
-                                    date_container.appendChild(p);
-                                    detail.appendChild(h3);
-                                    detail.appendChild(h5);
-                                    detail.appendChild(h4);
-                                    detail.appendChild(createdBy);
-                                    detail.appendChild(joinEventContainer'.$event_id.');
-                                    event_container.appendChild(date_container);
-                                    event_container.appendChild(detail);
-                                
-                                    //Put the event_container inside of the upcoming events container, so it now displays on the page
-                                    var container = document.getElementById("upcoming-events-container");
-                                    container.appendChild(event_container);
-                                </script>
-                            ';
+                        $url = "eventDetail.php?item=" . urlencode($event_id);
+                        
+                        echo '<!-- layout each event !-->
+                        <div class="event-container">
+                            <div class="date-container">
+                                <p><span class="month">'.$month.'</span>
+                                    <span class="day">'.$day.'</span></p>
+                            </div>
+                            <div class="detail">
+                                <h3>'.$event_name.'</h3>
+                                <h5>Type: '.$event_type.'</h5>
+                                <h4>Location: '.$location.'</h4>
+                                <p>Created by <a href="'.$user_name.'">'.$user_name.'</a></p>
+                                <form method = "post" action="my-events.php">
+                                <a href="'.$url.'" class="button">Learn More</a>
+                                <input type="submit" name="btnJoin" value="Join Event" class="button">
+                                <input type="hidden" name="hd_event_id" value="'. $event_id .'" />
+                                </form>
+                            </div>
+                        </div>';
                     }
                     ?>
                 </div>
