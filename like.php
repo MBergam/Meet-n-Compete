@@ -1,23 +1,3 @@
-<html>
-<head>
-    <title></title>
-    <link rel="stylesheet" href="style.css" />
-</head>
-
-<body>
-
-<style type="text/css">
-    *{
-        font-family: Arial, Helvetica, SansSerif;
-    }
-    body{
-        background-color: #ffffff;
-    }
-    form{
-        position: absolute;
-        top: 0;
-    }
-</style>
 <?php
 session_start();
 include 'config.php';
@@ -44,7 +24,29 @@ else{
 if(isset($_GET['post_id'])) {
     $post_id = $_GET['post_id'];
 }
+?>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="style.css" />
+</head>
 
+<body>
+
+<style type="text/css">
+    *{
+        font-family: Arial, Helvetica, SansSerif;
+    }
+    body{
+        background-color: #ffffff;
+    }
+    form{
+        position: absolute;
+        top: 0;
+    }
+</style>
+
+<?php
 $get_likes = mysqli_query($con, "select likes, added_by from posts where id = '$post_id'");
 $row = mysqli_fetch_array($get_likes);
 $total_likes = $row['likes'];
