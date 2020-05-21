@@ -144,6 +144,20 @@ $conn = null;
             </div>
         </div>
         <?php } ?>
+        <!-- This chunk of html is for guest users that will need to be redirected to register.php to sign in -->
+        <?php if(!isset($_SESSION['username'])){ ?>
+            <div id="promptAccountPopup">
+            <!-- Popup Div Starts Here -->
+            <div id="popupAccount">
+            <form action="#" id="createEventForm" method="post" name="createEventForm">
+            <a class="boxclose" id="boxclose" onclick= "div_hide()"></a>
+            <p id="promptForAccount"></p>
+            <a href="register.php" class="loginSignup button" id="redirectButton">Login/Signup</a>
+            </form>
+            </div>
+            </div>
+            <!-- Popup Div Ends Here -->
+        <?php } ?>
         <div id="seeEventsPopup">
             <!-- Popup Div Starts Here -->
             <div class="popupContact" id="popupSeeEvts">
@@ -155,17 +169,7 @@ $conn = null;
         </div>
         <!-- Popup Div Ends Here -->
 
-        <div id="promptAccountPopup">
-            <!-- Popup Div Starts Here -->
-            <div id="popupAccount">
-            <form action="#" id="createEventForm" method="post" name="createEventForm">
-            <a class="boxclose" id="boxclose" onclick= "div_hide()"></a>
-            <p id="promptForAccount"></p>
-            <a href="register.php" class="loginSignup button" id="redirectButton">Login/Signup</a>
-            </form>
-            </div>
-        </div>
-        <!-- Popup Div Ends Here -->
+        
    
         <section>
             <div id="upcoming-events" class="container box">
