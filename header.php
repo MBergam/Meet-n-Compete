@@ -79,10 +79,10 @@ if(isset($_GET['logout'])){
 <header>
     <div class="container">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-lg-6">
                 <a href=""><img id="logo" src="img/logo.png" alt=""></a>
             </div>
-            <div class="col-sm-6">
+            <div class="col-lg-6">
                 <div id="header-right" class="vertical-center">
                     <ul class = "nav-login">
                         <?php
@@ -216,7 +216,7 @@ if(isset($_GET['logout'])){
 
 </script>
 
-<nav class="navbar navbar-expand-md navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-light">
     <div class="container">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -238,15 +238,15 @@ if(isset($_GET['logout'])){
                     <a class="nav-link" href="Account.php">News Feed</a>
                 </li>
             </ul>
-            <!-- Search session -->
-            <?php
-            if($logged_in_bool){?>
-                <form action="search.php" method="get" name="search_form" class="form-inline my-2 my-lg-0 search-form">
-                    <input type="text" onkeyup="getLiveSearchUsers(this.value, '<?php echo $userLogin;?>')" name="q" placeholder="Search people..." autocomplete="off" id="search_text_input" class="form-control mr-sm-2">
-                    <div class="search_result"></div>
-                </form>
-            <?php } ?>
-            <!-- End Search session -->
         </div>
+        <!-- Search session -->
+        <?php
+        if($logged_in_bool){?>
+            <form action="search.php" method="get" name="search_form" class="form-inline my-2 my-lg-0 search-form">
+                <input type="text" onkeyup="getLiveSearchUsers(this.value, '<?php echo $userLogin;?>')" name="q" placeholder="Search people..." autocomplete="off" id="search_text_input" class="form-control mr-sm-2">
+                <div class="search_result"></div>
+            </form>
+        <?php } ?>
+        <!-- End Search session -->
     </div>
 </nav>

@@ -81,10 +81,10 @@ function printEventDetails($conn, $event_id, $event_marker_id, $month, $day, $lo
     <h1>'.$event_name.'</h1>
     <hr>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-lg-6">
             <div class="detail-img"><img src="img/'.strtolower($event_type).'.jpg" alt=""></div>
         </div>
-        <div class="col-md-6" id="eventDetail">
+        <div class="col-lg-6" id="eventDetail">
             <div class="event-container">
                 <div class="date-container">
                         <p><span class="month">'.$month.'</span>-

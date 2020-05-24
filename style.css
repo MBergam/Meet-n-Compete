@@ -67,7 +67,7 @@ nav.bg-light{
     background-color:#524c4c !important;
 }
 
-.navbar-expand-md .navbar-nav .nav-link{
+.navbar-expand-lg .navbar-nav .nav-link{
     padding-right:1.5rem;
     padding-left:1.5rem;
     color:#fff;
@@ -77,7 +77,7 @@ nav.bg-light{
     text-transform: uppercase;
 }
 
-.navbar-expand-md .navbar-nav .nav-link:hover,.navbar-nav .nav-item.active .nav-link{
+.navbar-expand-lg .navbar-nav .nav-link:hover,.navbar-nav .nav-item.active .nav-link{
     /* background-color: rgba(96, 94, 92, 0.78); */
     color:#273353;
     text-decoration: none;
@@ -489,9 +489,11 @@ footer ul li a:hover{
 #eventDetail .event-container .date-container p{
     height: 100px;
 }
+#eventDetail .event-container .detail a{
+    display: inline-block;
+}
 #eventDetail .event-container .detail .button-container{
-    position: absolute;
-    bottom: 20px;
+    margin-top: 1rem;
 }
 #eventDetail .event-container .detail .button-container .button {
     padding: 10px 50px;
@@ -512,6 +514,9 @@ footer ul li a:hover{
     margin: 10px 0;
     border: 1px solid cadetblue;
 }
+.btn {
+    width: 100px;
+}
 #dropdownSports a:hover{
     background-color: #aaaaaa;
 }
@@ -527,13 +532,13 @@ footer ul li a:hover{
 }
 .event-container .date-container p{
     width: 70px;
-    height: 80px;
+    height: 90px;
     background-color: #B899DF;
     border: 2px solid #ffffff;
     border-radius: 5px;
     text-align: center;
     padding-top: 10px;
-    line-height: 1.5rem;
+    line-height: 1.6rem;
     margin: 1rem 0;
 }
 .event-container .date-container p .month{
@@ -577,7 +582,7 @@ footer ul li a:hover{
     line-height: 18px;
 }
 .font-small{
-    font-size: 1rem !important;
+    font-size: 14px !important;
 }
 .md-height{
     height: 360px;
@@ -655,14 +660,12 @@ div#popupAccount {
 }
 
 .see-event-container{
-    width: 444px;
-    height: 175px;
+    width: 85% !important;
 }
 
 #seeEvents {
     max-width:600px;
     min-width:250px;
-    padding:10px 50px;
     border:2px solid gray;
     border-radius:10px;
     font-family: 'Open Sans', sans-serif;
@@ -1012,7 +1015,7 @@ textarea:focus{
 }
 
 .post_form input[type = "submit"]{
-    width: 10%;
+    width: 50px;
     height: 60px;
     border: none;
     border-radius: 10px;
@@ -1162,9 +1165,7 @@ THIS CODE BELOW IS FOR PROFILE.PHP
 }
 
 .profile_main_column{
-    min-width: 675px;
-    /*float: right;*/
-    width: 70%;
+    width: 100%;
     z-index: -1;
 }
 
@@ -1219,7 +1220,7 @@ THIS CODE BELOW IS FOR PROFILE.PHP
 }
 
 #accept_button{
-    width: 10%;
+    width: 100px;
     height: 30px;
     border-radius: 5px;
     margin: 5px;
@@ -1229,7 +1230,7 @@ THIS CODE BELOW IS FOR PROFILE.PHP
 }
 
 #ignore_button{
-    width: 10%;
+    width: 100px;
     height: 30px;
     border-radius: 5px;
     margin: 5px;
@@ -1262,7 +1263,6 @@ THIS CODE BELOW IS FOR PROFILE.PHP
     background-color: #9fcdff;
     color: whitesmoke;
     border-radius: 5px;
-    width: 8%;
     height: 60px;
     margin-top: 26px;
     position: absolute;
@@ -1336,7 +1336,7 @@ THIS CODE BELOW IS FOR PROFILE.PHP
 }
 
 .resultDisplay:hover{
-    background-color: #ebebeb;
+    background-color: #eae6f7;
     text-decoration: none;
 }
 
@@ -1358,7 +1358,7 @@ THIS CODE BELOW IS FOR PROFILE.PHP
 }
 
 .dropdown_data_window{
-    background-color: #fff;
+    background-color: #f7f7f7;
     border: none !important;
     width: 300px;
     position: absolute;
@@ -1437,7 +1437,7 @@ THIS CODE BELOW IS FOR PROFILE.PHP
     position: relative;
 }
 .search_result{
-    background-color: #fff;
+    background-color: #f9f9f9;
     width: 300px;
     position: absolute;
     left: 0;
@@ -1509,4 +1509,123 @@ THIS CODE BELOW IS FOR PROFILE.PHP
     max-width: 100%;
     display: block;
     margin: 5px auto;
+}
+
+
+/* Mobile responsive start */
+@media only screen and (max-width: 1200px) {
+    .navbar-expand-lg .navbar-nav .nav-link{
+        padding-right:1rem;
+        padding-left:1rem;
+    }
+    .event-container{
+        width: 50%;
+    }
+}
+@media only screen and (max-width: 991px) {
+    #header-right{
+        float: none;
+        margin: 1rem auto;
+    }
+    .vertical-center{
+        position: unset;
+    }
+    .dropdown_data_window{
+        top: 165px;
+        right: none;
+        left: 240px;
+    }
+    nav ul li a::after{
+        display: none;
+    }
+    .event-container{
+        width: 65%;
+        margin: 1rem 0;
+    }
+    .footer-center{
+        text-align: center;
+    }
+    .footer-center img{
+        width: 50%;
+    }
+    .footer-menu{
+        margin: 1.5rem auto;
+    }
+
+    .account_wrapper{
+        min-width: unset;
+    }
+    .profile_main_column{
+        margin-top: 1rem;
+    }
+}
+@media only screen and (max-width: 768px) {
+    #search-bar .text-box input[type="text"]{
+        width: 20rem;
+    }
+    .event-container{
+        width: 85%;
+    }
+    .youtubevid iframe{
+        width: 90%;
+    }
+}
+@media only screen and (max-width: 568px) {
+    .navbar-expand-lg .navbar-nav .nav-link {
+        font-size: 14px;
+    }
+    #header-right ul li a {
+        font-size: 14px;
+        padding-right: .5rem;
+    }
+    #header-right ul .menu-icon::after{
+        padding-right: .5rem;
+    }
+    #search-bar .text-box input[type="text"]{
+        width: 13rem;
+    }
+    #search-bar #search{
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+    .dropdown_data_window{
+        left: 60px;
+        top: 155px;
+    }
+    .form-control{
+        width: 280px;
+    }
+    .event-container{
+        padding: 10px;
+    }
+    .event-container .date-container{
+        padding: 0 5px;
+    }
+    .event-container .detail{
+        min-width: 220px;
+        padding: 0 10px;
+    }
+    .event-container .detail h3 {
+        font-size: 1.8rem;
+    }
+    .event-container .detail h4, h5 {
+        font-size: 1rem;
+    }
+    .f-container{
+        margin: 1rem 0;
+        padding: 0;
+    }
+    .event-container .detail .button{
+        float: none !important;
+        width:150px;
+        margin-bottom:1rem;
+        margin-right: 20px;
+        text-align: center;
+    }
+    .user_details{
+        width: 260px;
+    }
+    .footer-menu{
+        font-size: 10px;
+    }
 }

@@ -1,10 +1,10 @@
     <footer>
         <div class="container">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-lg-3 footer-center">
                     <a href=""><img src="img/logo.png" alt=""></a>
                 </div>
-                <div class="col-md-6">
+                <div class="col-lg-6">
                     <ul class = "footer-menu">
                         <li><a href="index.php">Home</a></li>
                         <li><a href="upcoming-events.php">Upcoming Events</a></li>
@@ -12,7 +12,7 @@
                         <li><a href="Account.php">News Feed</a></li>
                     </ul>
                 </div>
-                <div class="col-md-3">
+                <div class="col-lg-3 footer-center">
                     <div class="icon-border">
                         <a class="social-icon" href=""><i class="fab fa-facebook-f"></i></a>
                     </div>

@@ -52,7 +52,7 @@ if(!$logged_in_bool){
 
     <div class="container account_wrapper">
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <div class="profile_left column">
                     <img src="<?php echo $user_array['profile_picture'];?>">
                     <div class="profile_info">
