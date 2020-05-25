@@ -1,5 +1,4 @@
 <?php
-//session_start();
 include 'header.php';
 // get the id of event selected
 if(isset($_GET['item']))
@@ -12,9 +11,7 @@ try {
     //set the error code to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
     printCarouselIndicators();
-    //echo "Connected successfully<br>";
-    //echo "Event Selected: ". $itemSelected;
-    //echo '<button onclick="history.go(-1);">Back</button>';
+   
     getItemDetail($conn,$itemSelected);
 }
 catch (PDOException $e)
