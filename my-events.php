@@ -605,7 +605,7 @@ function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $locatio
                                 }
                                
                                 </script>
-                                <input onclick="checkValues('.$event_id.')" name="submitBtn" id="editBtn" value="Edit" class="btn btn-primary">
+                                <input type="button" onclick="checkValues('.$event_id.')" name="submitBtn" id="editBtn" value="Edit" class="btn btn-primary">
                                 </form>
                             </div>
                             </div>
