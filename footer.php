@@ -7,9 +7,9 @@
                 <div class="col-lg-6">
                     <ul class = "footer-menu">
                         <li><a href="index.php">Home</a></li>
-                        <li><a href="upcoming-events.php">Upcoming Events</a></li>
-                        <li><a href="my-events.php">My Events</a></li>
-                        <li><a href="Account.php">News Feed</a></li>
+                        <li><a href="upcoming_events.php">Upcoming Events</a></li>
+                        <li><a href="my_events.php">My Events</a></li>
+                        <li><a href="account.php">News Feed</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-3 footer-center">
@@ -31,7 +31,7 @@
             <div id="copyright">
                 <ul class = "nav-copyright">
                     <li><a href="">© 2020 Meet-N-Compete</a></li>
-                    <li><a class="white" href="about-us.php">About Us</a></li>
+                    <li><a class="white" href="about_us.php">About Us</a></li>
                 </ul>
             </div>
         </div>

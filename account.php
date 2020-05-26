@@ -45,7 +45,7 @@ if(isset($_POST['post'])){
     if($uploadOK){
         $post = new Post($con,$userLogin);
         $post->submitPost($_POST['post_text'], 'none', $imageName);
-        header("Location: Account.php");
+        header("Location: account.php");
     }
 
     else{
@@ -86,7 +86,7 @@ if(isset($_POST['post'])){
 
                 <div class="col-lg-8">
                     <div class="main_column_new_feed column">
-                        <form class="post_form" action="Account.php" method="POST" enctype="multipart/form-data">
+                        <form class="post_form" action="account.php" method="POST" enctype="multipart/form-data">
                             <input type="file" name="fileToUpload" id="fileToUpload">
                             <textarea name="post_text" id="post_text" placeholder="What are you thinking...? "></textarea>
                             <input type="submit" name="post" id="post_button" value="Post">

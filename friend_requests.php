@@ -33,7 +33,7 @@ if(!$logged_in_bool){
                             $delete_request = mysqli_query($con,"delete from friend_requests where user_to = '$userLogin' and user_from = '$user_from'");
 
                             echo "You are now friends!";
-                            header("Location: friendRequests.php");
+                            header("Location: friend_requests.php");
 
                         }
 
@@ -41,11 +41,11 @@ if(!$logged_in_bool){
                             $delete_request = mysqli_query($con,"delete from friend_requests where user_to = '$userLogin' and user_from = '$user_from'");
 
                             echo "Requests is ignored!";
-                            header("Location: friendRequests.php");
+                            header("Location: friend_requests.php");
                         }
 
                         ?>
-                        <form action="friendRequests.php" method="post">
+                        <form action="friend_requests.php" method="post">
                             <input type="submit" name="accept_request<?php echo $user_from;?>" id="accept_button" value="Accept">
                             <input type="submit" name="ignore_request<?php echo $user_from;?>" id="ignore_button" value="Ignore">
                         </form>

@@ -1,7 +1,7 @@
 <?php
 include 'header.php';
 require 'register_handler.php';
-require 'Login_Handler.php';
+require 'login_handler.php';
 ?>
 
 <?php

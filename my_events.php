@@ -196,7 +196,7 @@ if(isset($_POST['btnLeaveEvent'])){
         echo "Connection failed: " . $e->getMessage();
     }
     $conn = null;
-    $location = 'Location: my-events.php';
+    $location = 'Location: my_events.php';
     header($location);
     die();
 }
@@ -238,7 +238,7 @@ if(isset($_POST['btnDeleteEvent'])){
         echo "Connection failed: " . $e->getMessage();
     }
     $conn = null;
-    $location = 'Location: my-events.php';
+    $location = 'Location: my_events.php';
     header($location);
     die();
 }
@@ -279,14 +279,14 @@ if(isset($_POST['submitBtn'])){
         echo "Connection failed: " . $e->getMessage();
     }
     $conn = null;
-    $location = 'Location: my-events.php';
+    $location = 'Location: my_events.php';
     header($location);
     die();
 }
 // Layout Joined Events
 function printJoinEvents($conn, $event_id, $event_date, $month, $day, $location, $event_name, $event_type, $event_description, $user_name, $event_start_time, $event_duration)
 {
-    $url = "eventDetail.php?item=" . urlencode($event_id);
+    $url = "event_detail.php?item=" . urlencode($event_id);
     $event_start_time = date("g:ia", strtotime($event_start_time));
     echo'
     <div class="row">
@@ -341,13 +341,13 @@ function printJoinEvents($conn, $event_id, $event_date, $month, $day, $location,
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <p>Do you want to leave the event <span class="capitalize">'.$event_name.'</span></p>
+                                <p>Do you want to leave the event <span class="capitalize">'.$event_name. '</span></p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 
-                                <form action="my-events.php" method="post">
-                                    <input type="hidden" name="hd_event_id" value="'. $event_id .'" />
+                                <form action="my_events.php" method="post">
+                                    <input type="hidden" name="hd_event_id" value="' . $event_id .'" />
                                     <input type="hidden" name="hd_event_name" value="'. $event_name .'" />
                                     <input type="submit" name="btnLeaveEvent" value="Leave Event" class="btn btn-primary">
                                 </form>
@@ -366,7 +366,7 @@ function printJoinEvents($conn, $event_id, $event_date, $month, $day, $location,
 
 function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $location, $event_name, $event_type, $event_description, $user_name, $event_start_time, $event_duration)
 {            
-    $url = "eventDetail.php?item=" . urlencode($event_id);
+    $url = "event_detail.php?item=" . urlencode($event_id);
     $event_start_time = date("g:ia", strtotime($event_start_time));
     echo'
     <div class="row">
@@ -413,7 +413,7 @@ function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $locatio
                     </div>
 
                     <!-- Edit Modal -->
-                    <div class="modal fade" id="editModal'.$event_id.'" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
+                    <div class="modal fade" id="editModal'.$event_id. '" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                             <div class="modal-header">
@@ -423,8 +423,8 @@ function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $locatio
                                 </button>
                             </div>
                             <div class="modal-body center-align">
-                                <form action="my-events.php" id="createEventForm" method="post">
-                                <h2 id="contact" class="capitalize">'.$event_name.'</h2>
+                                <form action="my_events.php" id="createEventForm" method="post">
+                                <h2 id="contact" class="capitalize">' .$event_name.'</h2>
                                 <hr>
                                 <p id="createEvtLocation">'.$location.'</p>
                                 <select name="preferences" id="preferences">';
@@ -623,13 +623,13 @@ function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $locatio
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <p>Do you want to delete the event <span class="capitalize">'.$event_name.'</span></p>
+                                <p>Do you want to delete the event <span class="capitalize">'.$event_name. '</span></p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-                                <form action="my-events.php" method="post">
-                                    <input type="hidden" name="hd_event_id" value="'. $event_id .'" />
+                                <form action="my_events.php" method="post">
+                                    <input type="hidden" name="hd_event_id" value="' . $event_id .'" />
                                     <input type="hidden" name="hd_event_name" value="'. $event_name .'" />
                                     <input type="submit" name="btnDeleteEvent" value="Delete Event" class="btn btn-primary">
                                 </form>
@@ -646,7 +646,7 @@ function printCurrentEvent($conn, $event_id, $event_date, $month, $day, $locatio
 }
 function printPastEvent($conn, $event_id, $month, $day, $location, $event_name, $event_type, $event_description, $user_name, $event_start_time, $event_duration)
 {
-    $url = "eventDetail.php?item=" . urlencode($event_id);
+    $url = "event_detail.php?item=" . urlencode($event_id);
     $event_start_time = date("g:ia", strtotime($event_start_time));
     echo'
     <div class="row">
@@ -743,8 +743,8 @@ if (isset($_POST['btnJoin'])) {
             document.getElementById(\'promptForAccount\').innerHTML = "<b>You cannot join an event that was created by you!</b>";</script>';
     } else {
         $query = mysqli_query($con, "insert into event_users values('$event_id', '$user_name', '$event_join_date')");
-        // Redirect to my-events.php page
-        $location = 'Location: my-events.php';
+        // Redirect to my_events.php page
+        $location = 'Location: my_events.php';
         header($location);
         die();
     }

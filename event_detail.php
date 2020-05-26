@@ -163,7 +163,7 @@ function printEventDetails($conn, $event_id, $event_marker_id, $month, $day, $lo
 
                                 var form = document.createElement("form");
                                 form.method = "post";
-                                form.action = "my-events.php";
+                                form.action = "my_events.php";
                                 form.appendChild(backBtn);
                                 form.appendChild(btn);
                                 form.appendChild(joinEventHiddenIdToDB);

@@ -1,7 +1,7 @@
 <?php
 include 'header.php';
 include 'config.php';
-include 'submitEvent.php';
+include 'submit_event.php';
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$database",$username,$password);
@@ -214,7 +214,7 @@ $conn = null;
                     //Print each of event to browser
                     function printEvent($event_id, $month, $day, $location, $event_name, $event_type, $user_name)
                     {
-                        $url = "eventDetail.php?item=" . urlencode($event_id);
+                        $url = "event_detail.php?item=" . urlencode($event_id);
                         
                         echo '<!-- layout each event !-->
                         <div class="event-container">
@@ -226,9 +226,9 @@ $conn = null;
                                 <h3>'.$event_name.'</h3>
                                 <h5>Type: '.$event_type.'</h5>
                                 <h4>Location: '.$location.'</h4>
-                                <p>Created by <a href="'.$user_name.'">'.$user_name.'</a></p>
-                                <form method = "post" action="my-events.php">
-                                <a href="'.$url.'" class="button">Learn More</a>
+                                <p>Created by <a href="'.$user_name.'">'.$user_name. '</a></p>
+                                <form method = "post" action="my_events.php">
+                                <a href="' .$url.'" class="button">Learn More</a>
                                 <input type="submit" name="btnJoin" value="Join Event" class="button">
                                 <input type="hidden" name="hd_event_id" value="'. $event_id .'" />
                                 </form>
@@ -238,7 +238,7 @@ $conn = null;
                     ?>
                 </div>
                 <div class="button-box">
-                    <a class="button" href="upcoming-events.php">View More</a>
+                    <a class="button" href="upcoming_events.php">View More</a>
                 </div>
             </div>
         </section>

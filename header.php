@@ -5,7 +5,7 @@ include 'User.php';
 include 'Post.php';
 include 'Message.php';
 include 'Notification.php';
-include 'common-functions.php';
+include 'common_functions.php';
 
 ////THIS IS THE DATABASE CREDENTIALS FOR WHOEVER USING PDO CONNECTING METHOD
 $p_ini = parse_ini_file("config.ini",true);
@@ -56,7 +56,7 @@ if(isset($_GET['logout'])){
     <link rel="stylesheet" href="style.css" />
     <link href ="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
     <link rel="stylesheet" href="css/jquery.timepicker.css" />
-    <link rel="stylesheet" type="text/css" href="register_style.css">
+<!--    <link rel="stylesheet" type="text/css" href="register_style.css">-->
 
     <!--    JAVASCRIPT-->
     <script src="js/vendor/modernizr-3.6.0.min.js"></script>
@@ -99,7 +99,7 @@ if(isset($_GET['logout'])){
 
                             echo "<li class='menu-icon' ><a id='site_user' href='$userLogin'>$userLogin</a></li>";
                             ?>
-                            <li class="menu-icon"><a href='friendRequests.php' title="Friend Request">
+                            <li class="menu-icon"><a href='friend_requests.php' title="Friend Request">
                                 <i class="fa fa-users fa-lg"></i>
                                 <?php
                                 if($num_friend_requests > 0)
@@ -229,13 +229,13 @@ if(isset($_GET['logout'])){
                     <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="upcoming-events.php">Upcoming Events</a>
+                    <a class="nav-link" href="upcoming_events.php">Upcoming Events</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="my-events.php">My Events</a>
+                    <a class="nav-link" href="my_events.php">My Events</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="Account.php">News Feed</a>
+                    <a class="nav-link" href="account.php">News Feed</a>
                 </li>
             </ul>
         </div>

@@ -19,7 +19,7 @@ if(isset($_POST['add_friend'])){
     $user->sendRequest($username);
 }
 if(isset($_POST['respond_request'])){
-    header("Location: friendRequests.php");
+    header("Location: friend_requests.php");
 }
 if(isset($_POST['post_message'])){
     if(isset($_POST['message_body'])){

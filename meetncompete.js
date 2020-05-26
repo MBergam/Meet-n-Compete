@@ -379,7 +379,7 @@ function addMarker(LatLng, name, mdata, i) {
     //Database call to find events with the same place_id as the location data
     //If so, a blue marker will indicate that the location has an event
     $.ajax({
-        url: "event-data.php",
+        url: "event_data.php",
         data: {
             "place_id": mdata[i].place_id
         },
@@ -495,7 +495,7 @@ function addMarkerHandler(marker, info, mdata, name, i, hasEvent) {
                         $('.see-event-container').remove();
 
                         $.ajax({
-                            url: "event-data.php",
+                            url: "event_data.php",
                             data: {
                                 //passing in 'seeEvents' parameter makes the database query specifically for showing a list of events later on
                                 "place_id": mdata[i].place_id,
@@ -621,7 +621,7 @@ function convertMonth(month){
 }
 
 //Used to create the list of events in the popup window
-//This function does the exact code from upcoming-events.php's printEvent, but is translated to javascript and is created dynamically instead of at the beginning of page load
+//This function does the exact code from upcoming_events.php's printEvent, but is translated to javascript and is created dynamically instead of at the beginning of page load
 //HTML Code of what is being created in printEvent is shown below
 /*<div class="event-container">
         <div class="date-container">
@@ -632,7 +632,7 @@ function convertMonth(month){
             <h3>'.$event_name.'</h3>
             <h4>'.$location.'</h4>
             <a href="'.$url.'" class="button">Learn More</a>
-            <form method = "post" action="my-events.php">
+            <form method = "post" action="my_events.php">
             <input type="submit" name="btnJoin" value="Join Event" class="button">
             <input type="hidden" name="hd_event_id" value="'. $event_id .'" />
             </form>
@@ -674,11 +674,11 @@ function printEvent(response, results, x){
     var a1 = document.createElement('a');
     a1.className = "button";
     a1.innerText = "Learn More";
-    a1.href = "eventDetail.php?item=" + encodeURIComponent(response.event_id);
+    a1.href = "event_detail.php?item=" + encodeURIComponent(response.event_id);
 
     var joinEventContainer = document.createElement('form');
     joinEventContainer.method = "post";
-    joinEventContainer.action = "my-events.php";
+    joinEventContainer.action = "my_events.php";
 
     var joinEventBtn = document.createElement("input");
     joinEventBtn.type = "button";
@@ -697,7 +697,7 @@ function printEvent(response, results, x){
         }else{
             //take away join event button if user is on there
             $.ajax({
-                url: "event-users.php",
+                url: "event_users.php",
                 data: {
                     "event_id": response.event_id,
                     "user_id": document.getElementById("site_user").text
