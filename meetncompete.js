@@ -1,7 +1,5 @@
-//https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyDS3p3iX3eIPWNLMuFQNrPRKWyE5un7dtY
 
-//AIzaSyDS3p3iX3eIPWNLMuFQNrPRKWyE5un7dtY
-//AIzaSyAHoreTH9KWnvppgnaECTPBPkjosVlvGh8 -- MAX'S KEY
+//This file handles creating and populating the map with markers, as well as handling the create and see event popups
 
 //Ajax call to ready the document
 $(document).ready(start);
@@ -758,8 +756,6 @@ function check_empty() {
     //validateEvent shows what the user input needs to look like
     if(validateEvent()){
         document.getElementById('myRangeToDB').value = document.getElementById("myRange").value; //for sending event duration to DB
-        //document.getElementById('evtTimeToDB').value = (document.getElementById("evtTime").value).replace(/[a-z]/gi, '') //for sending event start time to db as a Time object hh:mm:ss
-        //document.getElementById('evtTimeToDB').value = document.getElementById("evtTime").value //for sending event start time as a 12hr time with am/pm to db as a varchar 
 
         //For sending event start time to db as 24hr time hh:mm
         var time = document.getElementById("evtTime").value;
@@ -958,23 +954,8 @@ function gotPlaceData(data, status, keyword) {
 
             addMarker(markLatLng, markName, data, i);
         }
-    }
+    } 
     
-    /* OLD WAY
-    //check all data to make sure that it is a proper location to play sports at
-    data = validateLocations(data, keyword);
-
-    //add all markers according to the nearby locations data 
-    for (i = 0; i < data.length; i++) {
-        let markLat = parseFloat(data[i]["geometry"]["location"].lat);
-        let markLong = parseFloat(data[i]["geometry"]["location"].lng);
-        let markName = data[i].name;
-
-        addMarker(markLat, markLong, markName, data, i);
-    }*/
-    
-    
-
 }
 
 //Function to get the Latitude and Longitude from the user -- either through requesting their location or them typing one in manually

@@ -139,7 +139,7 @@ $conn = null;
             </div>
             <p id="sliderVal"></p>
             <textarea id="desc" name="description" placeholder="Description (Optional)"></textarea>
-            <input name="submitBtn" id="submitBtn" value="Send">
+            <input name="submitBtn" id="submitBtn" value="Create Event">
             </form>
             </div>
         </div>
