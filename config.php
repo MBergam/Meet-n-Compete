@@ -6,10 +6,10 @@ $database = $db['Database']['database'];
 $DBusername = $db['Database']['username'];
 $DBpassword = $db['Database']['password'];
 
-//echo $servername." + ".$database." + ".$DBusername." + ".$DBpassword;
+// Set default timezone
+date_default_timezone_set("America/Los_Angeles");
 
-    $timezone = date_default_timezone_set("America/Chicago");
-    $con = mysqli_connect($servername, $DBusername,$DBpassword,$database);
+$con = mysqli_connect($servername, $DBusername,$DBpassword,$database);
 //$con=mysqli_init();
 //mysqli_real_connect($con, "meetncompete.mysql.database.azure.com", "mncadmin@meetncompete", "Mncteam2020!", "meetncompete", 3306);
 if(mysqli_connect_errno()){

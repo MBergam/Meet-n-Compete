@@ -7,9 +7,6 @@ include 'Message.php';
 include 'Notification.php';
 include 'common_functions.php';
 
-// Set default timezone
-date_default_timezone_set("America/Los_Angeles");
-
 ////THIS IS THE DATABASE CREDENTIALS FOR WHOEVER USING PDO CONNECTING METHOD
 $p_ini = parse_ini_file("config.ini",true);
 $servername = $p_ini['Database']['servername'];
