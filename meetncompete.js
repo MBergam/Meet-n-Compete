@@ -10,7 +10,6 @@ var rad = 2;
 var latNum = null;
 var lngNum = null;
 var info = null;
-var myKey = "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4";
 
 //Function called when the document is first loaded - gets the user's location either manually or by requesting permission
 function start() {
@@ -976,7 +975,7 @@ function getLocationInput(){
     let address = $("#location").val();
     if(address !== ""){
         let latreq = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address 
-        + "&key=" + myKey;
+        + "&key=" + "AIzaSyDcp7a_Sb-9QaDw_u_wp1esshBVYYbRhl4";
         $.get(latreq, gotInputAddress, "json");
     }else{
         initMap(latNum, lngNum, rad);
