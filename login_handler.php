@@ -9,7 +9,8 @@ if(isset($_POST['login_button'])){
 
     $check_login_query = mysqli_num_rows($check_database_query);
 
-    if($check_database_query == 1){
+
+    if($check_login_query == 1){
         $row = mysqli_fetch_array($check_database_query);
         $username = $row['user_name'];
 
