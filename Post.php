@@ -343,6 +343,7 @@ class Post{
                 $body = $row['body'];
                 $added_by = $row['added_by'];
                 $date_time = $row['date_added'];
+                $imagePath = $row['image'];
 
 
 
@@ -474,6 +475,16 @@ class Post{
                     }
                 }
 
+                if($imagePath != ""){
+                    $imageDiv = "<div class='postedImage'>
+                                        <img src=".$imagePath.">
+                                    </div>";
+                }
+
+                else{
+                    $imageDiv="";
+                }
+
                 $str .= "<div class = 'status_post' onClick=javascript:toggle$id()>
                         <div class = 'post_profile_pic'>
                             <img src = '$profile_picture' width='75' >
@@ -490,6 +501,7 @@ class Post{
                         <div id='post_body'>
                         $body
                         <br>
+                        $imageDiv
                         <br>
                         <br>
                         </div>

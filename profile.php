@@ -128,6 +128,7 @@ if(!$logged_in_bool){
                             <?php
                                 echo $profile_user_obj->getAbout($username);
                                 if($userLogin == $profile_user_obj->getUsername()){
+                                    echo "<br>";
                                     echo "<input type=\"submit\" class=\"deep_blue\" data-toggle=\"modal\" data-target=\"#about_form\" value=\"Edit\">";
                                 }
                             ?>
