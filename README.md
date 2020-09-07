@@ -12,6 +12,7 @@ number 1 goal was to find a solution to these problems by applying our
 programming skills to provide an online means for people to Organize, Create, &
 Join pick-up games, thereby making it easier for people to get out there and
 compete in their favorite sports.
+
 In short, Meet-N-Compete is a built-from-scratch dynamic website where
 people can organize pick-up games and events for 18 different sports at local
 parks around their area. We successfully implemented most of what we had
