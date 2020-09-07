@@ -21,3 +21,6 @@ There were also a few features we were not able to get to, or would like to have
 expanded on, however, time did not permit us to do so. Overall, we as a team are
 very proud and satisfied with what we were able to accomplish and learn while
 working on this project over these last two quarters.
+
+--Short Tutorial Video going over some of the main features of Meet-n-Compete--
+https://www.youtube.com/watch?v=WitE0XJnML4
