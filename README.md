@@ -23,4 +23,5 @@ very proud and satisfied with what we were able to accomplish and learn while
 working on this project over these last two quarters.
 
 --Short Tutorial Video going over some of the main features of Meet-n-Compete--
-https://www.youtube.com/watch?v=WitE0XJnML4
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/WitE0XJnML4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
