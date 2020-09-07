@@ -22,6 +22,5 @@ expanded on, however, time did not permit us to do so. Overall, we as a team are
 very proud and satisfied with what we were able to accomplish and learn while
 working on this project over these last two quarters.
 
---Short Tutorial Video going over some of the main features of Meet-n-Compete--
 
-[![Tutorial](https://img.youtube.com/vi/https://www.youtube.com/watch?v=WitE0XJnML4/0.jpg)](https://www.youtube.com/watch?v=WitE0XJnML4)
+## [![Short Tutorial Video going over some of the main features of Meet-n-Compete](https://img.youtube.com/vi/https://www.youtube.com/watch?v=WitE0XJnML4/0.jpg)](https://www.youtube.com/watch?v=WitE0XJnML4)
