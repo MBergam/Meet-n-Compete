@@ -24,4 +24,4 @@ working on this project over these last two quarters.
 
 --Short Tutorial Video going over some of the main features of Meet-n-Compete--
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/WitE0XJnML4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![Tutorial](https://img.youtube.com/vi/https://www.youtube.com/watch?v=WitE0XJnML4/0.jpg)](https://www.youtube.com/watch?v=WitE0XJnML4)
